@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Formación HSE · Material para estudiantes</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#1b2733;--mut:#5b6b7a;--acc:#d9731a;--bd:#dde3e9}
+@media (prefers-color-scheme:dark){:root{--bg:#10171e;--card:#18222c;--ink:#e8edf2;--mut:#98a7b5;--bd:#26333f}}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:40px 16px 16px;max-width:960px;margin:0 auto}
+h1{margin:0 0 6px;font-size:1.8rem}
+header p{margin:0;color:var(--mut)}
+main{max-width:960px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+a.card{display:block;background:var(--card);border:1px solid var(--bd);border-left:5px solid var(--acc);border-radius:10px;padding:18px;color:inherit;text-decoration:none;transition:transform .15s,box-shadow .15s}
+a.card:hover,a.card:focus-visible{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.12)}
+a.card h2{margin:0 0 6px;font-size:1.1rem}
+a.card p{margin:0;color:var(--mut);font-size:.92rem}
+footer{max-width:960px;margin:0 auto;padding:16px 16px 40px;color:var(--mut);font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Formación HSE</h1>
+  <p>Herramientas de consulta para futuros profesionales de Higiene, Seguridad y Ambiente en servicios de pozo.</p>
+</header>
+<main>
+  <a class="card" href="guia-inspecciones/"><h2>Guía de Inspecciones SGI</h2><p>Cómo se completa cada formulario de inspección.</p></a>
+  <a class="card" href="guia-mediciones-srt/"><h2>Guía de Mediciones SRT</h2><p>Mediciones de higiene y seguridad para SRT.</p></a>
+  <a class="card" href="herramientas-torre/"><h2>Herramientas en Equipos de Torre</h2><p>Herramientas y su uso en equipos de torre.</p></a>
+  <a class="card" href="estado-mecanico-pozos/"><h2>Estado mecánico de pozos terminados</h2><p>Lectura e interpretación del estado mecánico de un pozo.</p></a>
+  <a class="card" href="libro-drops/"><h2>Libro DROPS</h2><p>Objetos caídos: modelo 3D del equipo y registro de inspecciones.</p></a>
+</main>
+<footer>Material de formación. Algunos recursos usan fuentes de Google Fonts, por lo que requieren conexión a internet.</footer>
+</body>
+</html>
