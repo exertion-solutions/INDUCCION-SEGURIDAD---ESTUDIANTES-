@@ -1,0 +1,1253 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Libro DROPS (Copy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E9ECEA; --surface:#FFFFFF; --sunk:#F3F5F4; --ink:#1C262B; --muted:#5B686E; --line:#CBD2CF;
+  --red:#BF2F1B; --red-soft:#F6DDD8; --amber:#D99A00; --amber-soft:#FBEFCB; --green:#2E7A4A; --green-soft:#D9EEDF;
+  --steel:#34454D; --none:#8A969B; --none-soft:#E3E7E6;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif; --body:"Barlow","Segoe UI",Roboto,Arial,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11171A; --surface:#1A2226; --sunk:#151C1F; --ink:#E4E9E7; --muted:#98A5AA; --line:#2B363B;
+  --red:#E5533C; --red-soft:#3A201B; --amber:#F2B705; --amber-soft:#382E12; --green:#4DAE70; --green-soft:#17301F;
+  --steel:#9FB3BC; --none:#7E8B90; --none-soft:#232C30; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#11171A; --surface:#1A2226; --sunk:#151C1F; --ink:#E4E9E7; --muted:#98A5AA; --line:#2B363B;
+  --red:#E5533C; --red-soft:#3A201B; --amber:#F2B705; --amber-soft:#382E12; --green:#4DAE70; --green-soft:#17301F;
+  --steel:#9FB3BC; --none:#7E8B90; --none-soft:#232C30; color-scheme:dark;}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:16px/1.45 var(--body);-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;margin:0}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:.3rem 0}
+.wrap{max-width:720px;margin:0 auto;padding:14px 16px 110px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{padding:10px 16px;display:flex;align-items:center;gap:10px}
+.brand{font-family:var(--display);font-weight:700;font-size:1.15rem;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand i{display:inline-block;width:10px;height:22px;background:repeating-linear-gradient(135deg,var(--red) 0 4px,transparent 4px 7px);border:2px solid var(--red)}
+.eq-select{margin-left:auto;max-width:55%;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 10px;font-weight:600}
+.banner{background:var(--amber-soft);border:1px solid var(--amber);border-radius:6px;padding:8px 12px;font-size:.9rem;margin-bottom:12px}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.row{display:flex;gap:10px;align-items:center}
+.between{justify-content:space-between}
+.wrapflex{flex-wrap:wrap}
+.stack>*+*{margin-top:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:10px 14px;font-weight:600;min-height:44px}
+.btn.primary{background:var(--steel);border-color:var(--steel);color:var(--surface)}
+.btn.danger{background:var(--red);border-color:var(--red);color:#fff}
+.btn.ghost{background:transparent}
+.btn.block{width:100%}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.link{background:none;border:0;padding:0;color:var(--steel);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+label.f{display:block;font-size:.85rem;font-weight:600;color:var(--muted);margin:10px 0 4px}
+input.t,select.t,textarea.t{width:100%;border:1px solid var(--line);background:var(--sunk);border-radius:6px;padding:10px;min-height:44px}
+textarea.t{min-height:80px;resize:vertical}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--none-soft);color:var(--ink);white-space:nowrap}
+.chip.alto{background:var(--red-soft);color:var(--red)}
+.chip.medio{background:var(--amber-soft);color:var(--ink)}
+.chip.bajo{background:var(--green-soft);color:var(--green)}
+.chip.bien{background:var(--green-soft);color:var(--green)}
+.chip.mal{background:var(--red-soft);color:var(--red)}
+.chip.warn{background:var(--amber-soft)}
+
+/* Mástil */
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 18px}
+.summary div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px}
+.summary b{display:block;font-family:var(--display);font-size:1.7rem;line-height:1}
+.summary span{font-size:.8rem;color:var(--muted)}
+.summary .due b{color:var(--red)}
+.summary i.cnt{font-style:normal}
+.mast{position:relative;margin-top:6px}
+.mz{display:grid;grid-template-columns:62px 1fr;align-items:stretch;min-height:64px}
+.mz .truss{position:relative;display:flex;justify-content:center}
+.mz .truss span{display:block;height:100%;border-left:3px solid var(--steel);border-right:3px solid var(--steel);
+  background:repeating-linear-gradient(40deg,transparent 0 9px,var(--steel) 9px 11px,transparent 11px 20px),
+             repeating-linear-gradient(-40deg,transparent 0 9px,var(--steel) 9px 11px,transparent 11px 20px);opacity:.75}
+.mz .truss .crown{position:absolute;top:0;left:50%;transform:translateX(-50%);width:40px;height:12px;background:var(--steel);border-radius:2px}
+.mz .truss .floor{position:absolute;top:0;left:4px;right:4px;height:8px;background:var(--steel)}
+.mz .truss .deck,.mz .truss .pad{background:none}
+.mz .truss .deck{height:100%;width:52px;border-left:3px solid var(--steel);border-right:3px solid var(--steel);opacity:.55}
+.mz .truss .pad{width:44px;height:100%;border:2px dashed var(--line);border-radius:4px}
+.zb{display:flex;align-items:center;gap:10px;text-align:left;width:100%;margin:4px 0;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--none);border-radius:6px;padding:9px 12px;min-height:56px}
+.zb.alto{border-left-color:var(--red)} .zb.medio{border-left-color:var(--amber)} .zb.bajo{border-left-color:var(--green)}
+.zb .zn{font-family:var(--display);font-weight:600;font-size:1.08rem;line-height:1.15}
+.zb .zm{font-size:.8rem;color:var(--muted)}
+.zb .zc{margin-left:auto;text-align:right;flex:none}
+.obsn{display:inline-block;min-width:26px;padding:1px 7px;border-radius:99px;background:var(--red);color:#fff;font-weight:700;font-size:.85rem;text-align:center}
+.ground{display:flex;align-items:center;gap:10px;margin:10px 0 6px;font-size:.8rem;color:var(--muted)}
+.ground::before,.ground::after{content:"";flex:1;height:0;border-top:3px double var(--line)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+
+/* Items */
+.item{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px}
+.item .code{font-family:var(--display);font-weight:600;color:var(--muted);font-size:.9rem}
+.item h3{margin:2px 0 6px}
+.fx{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:.9rem;margin:8px 0}
+.fx dt{color:var(--muted);font-weight:600}
+.fx dd{margin:0}
+.fx .miss{color:var(--red);font-style:italic}
+.crit{font-size:.88rem;background:var(--sunk);border-radius:6px;padding:8px 10px;margin-top:6px}
+.refimg{width:100%;max-height:220px;object-fit:cover;border-radius:6px;margin:8px 0;border:1px solid var(--line)}
+.thumb{width:84px;height:84px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
+
+details{margin-top:10px;border:1px solid var(--line);border-radius:6px;background:var(--sunk)}
+details summary{cursor:pointer;padding:10px 12px;font-weight:600;min-height:44px;display:flex;align-items:center}
+details .detb{padding:0 12px 10px}
+details h4{font-family:var(--display);font-size:1rem;margin:10px 0 4px}
+details ul{margin:4px 0;padding-left:20px;font-size:.9rem}
+details li{margin:3px 0}
+main a{color:var(--steel);font-weight:600}
+.regbox{border-top:1px dashed var(--line);margin-top:12px;padding-top:4px}
+.btn[aria-pressed="true"]{border-color:var(--steel);background:var(--sunk)}
+/* Inspección */
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.seg button{min-height:48px;border:2px solid var(--line);background:var(--sunk);border-radius:6px;font-weight:700;font-family:var(--display);font-size:1.05rem}
+.seg button[aria-pressed="true"].b{background:var(--green);border-color:var(--green);color:#fff}
+.seg button[aria-pressed="true"].m{background:var(--red);border-color:var(--red);color:#fff}
+.seg button[aria-pressed="true"].n{background:var(--steel);border-color:var(--steel);color:var(--surface)}
+.seg.two{grid-template-columns:repeat(2,1fr)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 2px}
+.progress i{display:block;height:100%;background:var(--steel)}
+.zhead{position:sticky;top:calc(env(safe-area-inset-top,0px) + 58px);z-index:3;background:var(--bg);padding:10px 0 6px;display:flex;align-items:center;gap:8px}
+.choice{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--steel);border-radius:8px;padding:14px;margin-bottom:10px}
+.choice h3{margin-bottom:2px}
+
+/* Hallazgos */
+.filters{display:flex;gap:6px;margin:10px 0 12px;flex-wrap:wrap}
+.filters button{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 14px;font-weight:600;min-height:38px}
+.filters button[aria-pressed="true"]{background:var(--steel);color:var(--surface);border-color:var(--steel)}
+.hz{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:8px}
+.hz.cerrado{opacity:.7}
+
+/* Calculadora */
+.calcout{border-radius:8px;padding:14px;margin-top:12px;border:2px solid var(--line)}
+.calcout b{font-family:var(--display);font-size:1.6rem;display:block}
+.chartbox{overflow-x:auto;margin-top:12px}
+
+/* Tab bar */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs div{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tabs button{background:none;border:0;padding:8px 2px 10px;min-height:58px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.78rem;font-weight:600;color:var(--muted)}
+.tabs button svg{width:24px;height:24px}
+.tabs button[aria-current="page"]{color:var(--ink)}
+.tabs button[aria-current="page"] svg{color:var(--red)}
+.badge{background:var(--red);color:#fff;border-radius:99px;font-size:.7rem;padding:0 6px;margin-left:2px}
+
+/* Hoja modal */
+.sheet-bg{position:fixed;inset:0;background:rgba(10,15,18,.55);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);width:100%;max-width:720px;max-height:92%;overflow:auto;border-radius:14px 14px 0 0;padding:16px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.sheet .grab{width:44px;height:5px;background:var(--line);border-radius:9px;margin:0 auto 12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(80px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;z-index:30;max-width:90%;font-weight:600}
+.loader{padding:80px 20px;text-align:center;color:var(--muted)}
+/* Estado de zona durante la inspección */
+.mz{--tc:var(--steel)}
+.mz.st-ok{--tc:var(--green)} .mz.st-mal{--tc:var(--red)} .mz.st-pend{--tc:var(--none)}
+.mz .truss span{border-color:var(--tc)!important}
+.mz.st-ok .truss span,.mz.st-mal .truss span{background:repeating-linear-gradient(40deg,transparent 0 9px,var(--tc) 9px 11px,transparent 11px 20px),repeating-linear-gradient(-40deg,transparent 0 9px,var(--tc) 9px 11px,transparent 11px 20px)}
+.mz.st-ok .truss .pad,.mz.st-mal .truss .pad{background:none;border-color:var(--tc)}
+.zb .zp{display:block;height:4px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:6px;max-width:220px}
+.zb .zp i{display:block;height:100%;background:var(--tc)}
+.zb.alto.stz-mal,.zb.medio.stz-mal,.zb.bajo.stz-mal,.zb.stz-mal{border-left-color:var(--red)}
+.zb.stz-ok{border-left-color:var(--green)}
+.zb.stz-pend{border-left-color:var(--none)}
+.btn3d{display:inline-flex;align-items:center;gap:6px}
+.btn3d svg{width:18px;height:18px}
+.venc{font-weight:700;color:var(--red)} .vok{color:var(--muted)}
+.falta{color:var(--red);font-weight:600}
+/* Todos los equipos */
+table.tq{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:.9rem}
+table.tq th,table.tq td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left}
+table.tq th{font-family:var(--display);font-weight:600;background:var(--sunk)}
+table.tq td.n{text-align:right;font-family:var(--display);font-size:1.1rem;font-weight:700}
+table.tq td.n.r{color:var(--red)}
+.tqwrap{overflow-x:auto}
+/* Firma */
+.firma{width:100%;height:140px;background:var(--sunk);border:1px dashed var(--line);border-radius:6px;touch-action:none;display:block}
+/* Calculadora */
+.calcgrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+@media (min-width:560px){.calcgrid{grid-template-columns:minmax(0,1fr) 150px}}
+.fall{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:8px;height:230px;overflow:hidden}
+.fall .sc{position:absolute;left:8px;top:14px;bottom:30px;border-left:2px solid var(--line)}
+.fall .sc b{position:absolute;left:4px;font-size:.7rem;font-weight:600;color:var(--muted);white-space:nowrap;transform:translateY(-50%)}
+.fall .gr{position:absolute;left:0;right:0;bottom:0;height:30px;background:repeating-linear-gradient(135deg,var(--line) 0 3px,transparent 3px 8px);border-top:2px solid var(--steel)}
+.fall .ob{position:absolute;left:50%;top:14px;width:22px;height:22px;margin-left:-11px;background:var(--steel);border-radius:3px}
+.fall .fl{position:absolute;left:50%;bottom:30px;width:80px;height:80px;margin:0 0 -40px -40px;border-radius:50%;opacity:0}
+.fall .ln{position:absolute;right:8px;bottom:36px;font-size:.78rem;font-weight:600;text-align:right}
+.clegend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;margin-top:8px}
+.clegend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:5px;vertical-align:-2px}
+/* Visor 3D */
+#v3d{position:fixed;inset:0;z-index:40;background:#0E1417;display:none;flex-direction:column;color:#E4E9E7}
+#v3d.on{display:flex}
+#v3d .vh{display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));border-bottom:1px solid #2B363B}
+#v3d .vh h2{font-size:1.2rem;color:#E4E9E7}
+#v3d .vh button{margin-left:auto;background:#1A2226;color:#E4E9E7;border:1px solid #2B363B;border-radius:6px;min-height:44px;padding:8px 14px;font-weight:600}
+#v3d .cv{position:relative;flex:1;min-height:0}
+#v3d canvas{display:block;width:100%;height:100%}
+#v3d .rot{position:absolute;left:10px;top:10px;background:rgba(217,154,0,.92);color:#1C262B;font-size:.78rem;font-weight:700;padding:4px 9px;border-radius:4px;pointer-events:none}
+#v3d .tip{position:absolute;pointer-events:none;background:#1C262B;border:1px solid #98A5AA;color:#fff;font-size:.8rem;padding:4px 8px;border-radius:5px;transform:translate(-50%,-130%);white-space:nowrap;display:none}
+#v3d .vl{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.78rem;padding:8px 14px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid #2B363B}
+#v3d .vl i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+#v3d .msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#98A5AA}
+/* Cierre */
+.stamp{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(10,15,18,.45);pointer-events:none}
+.stamp div{background:var(--surface);border:3px solid var(--green);color:var(--green);border-radius:12px;padding:18px 26px;text-align:center;font-family:var(--display);font-weight:700;font-size:1.5rem;transform:rotate(-4deg)}
+.stamp svg{width:56px;height:56px;display:block;margin:0 auto 6px}
+.stamp small{display:block;font-size:.95rem;color:var(--ink)}
+/* Movimiento */
+@media (prefers-reduced-motion:no-preference){
+  .sheet{animation:up .18s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}}
+  .anim .mz{animation:zin .38s ease-out both}
+  @keyframes zin{from{opacity:0;transform:translateX(-14px)}}
+  .mz.st-mal .truss span{animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  .fall.go .ob{animation:caer var(--t) cubic-bezier(.55,0,1,.45) forwards}
+  @keyframes caer{to{top:178px}}
+  .fall.go .fl{animation:flash .5s ease-out var(--t) forwards}
+  @keyframes flash{0%{opacity:.85;transform:scale(.3)}100%{opacity:0;transform:scale(1.6)}}
+  .stamp div{animation:sello .55s cubic-bezier(.2,1.6,.4,1) both}
+  @keyframes sello{from{opacity:0;transform:rotate(-4deg) scale(1.6)}}
+  .stamp path{stroke-dasharray:40;stroke-dashoffset:40;animation:chk .35s .3s ease-out forwards}
+  @keyframes chk{to{stroke-dashoffset:0}}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.22s}
+}
+@media (prefers-reduced-motion:reduce){.fall .ob{top:178px!important}}
+@media (min-width:640px){.summary b{font-size:2rem}}
+</style>
+</head>
+<body>
+<div id="app"><div class="loader">Abriendo el libro…</div></div>
+<input type="file" id="fileIn" accept="image/*" capture="environment" hidden>
+<script>
+"use strict";
+/* ============ PLANTILLA RCCO (POWSG020-A3 / Libro DROPS Tacker Rev.03) ============ */
+const CT="Verificar visualmente que los elementos estén correctamente colocados: tuerca autofrenante o tuerca común con chaveta partida.";
+const ESL=" Verificar la condición de las eslingas de seguridad.";
+const NL=" Verificar que estén colocadas las arandelas Nord-Lock.";
+const BOL=" Verificar bolsillo contenedor de la roldana ante corte de eje (PO-WSG-020, 6.3.4).";
+const GC="Verificar condición de grilletes y de cables de seguridad.";
+const TIN="Verificar estado de soldadura del tintero y colocación de perno y seguro.";
+const NR="No requerida";
+// [descripción, fijación primaria, retención secundaria, aseguramiento de seguridad, criterio, riesgo]
+const PLANTILLA=[
+ {cod:"COR",nombre:"Corona",riesgo:"alto",pos:"alto",items:[
+  ["Polea de pistón","3 topes guía cable con bulones y tuercas autofrenantes o tuercas con chaveta partida","",NR,CT,"alto"],
+  ["Polea viajera","3 topes guía cable con bulones y tuercas autofrenantes o tuercas con chaveta partida","",NR,CT,"alto"],
+  ["Polea de punto muerto","3 topes guía cable con bulones y tuercas autofrenantes o tuercas con chaveta partida","",NR,CT,"alto"],
+  ["Polea de líneas 1, 2 y 3 de aparejo","3 topes guía cable con bulones y tuercas autofrenantes o tuercas con chaveta partida","",NR,CT,"alto"],
+  ["Poleas de izaje de cable de guinche","4 pastecas de pasaje 5/8 - 9/16 sujetas con bulones y tuercas autofrenantes","",NR,CT+BOL,"alto"],
+  ["Placa certificada de sujeción para T-5","Placa soldada sujeta con 4 bulones y tuercas autofrenantes","Arandelas Nord-Lock",NR,"Verificar condición de soldaduras y colocación de tuercas."+NL,"alto"],
+  ["Baliza de la corona","Baliza roscada","","Eslinga de seguridad 3 mm",CT+ESL,"alto"],
+  ["Banderas en cajón de corona","Grampas ancladas a la estructura con bulones, tuercas autofrenantes y prisioneros","Arandelas Nord-Lock","Eslinga de seguridad 3 mm",CT+ESL+NL,"alto"],
+  ["Dispositivo retráctil T5","Grillete","Eslinga","Eslinga de seguridad 4 mm","Verificar condición del grillete y del cable de seguridad.","alto"],
+  ["Amortiguador de corona: línea de vida T3","Grampas ancladas a la estructura con bulones y tuercas autofrenantes","Arandelas Nord-Lock","",CT+NL,"alto"],
+  ["Soporte de accesorios: banderas","Tintero soldado con mariposa sujeta con cadena","Arandela Nord-Lock","Eslinga de seguridad 6 mm",CT+ESL,"alto"]]},
+ {cod:"DCO",nombre:"Entre corona y piso de enganche",riesgo:"alto",pos:"alto",items:[
+  ["Luminarias en mástil (7 unidades)","Grampas, bulones y tuercas autofrenantes","Arandelas Nord-Lock","Eslinga de seguridad 3 mm",CT+ESL+NL,"alto"],
+  ["Reflector LED","Grampas, bulones y tuercas autofrenantes","Arandelas Nord-Lock","Eslinga de seguridad 3 mm",CT+ESL+NL,"alto"],
+  ["Depósito de purga","Grampas laterales a la estructura del mástil con bulones y tuercas autofrenantes","Arandelas Nord-Lock","Eslinga de seguridad 3 mm",CT+ESL+NL,"alto"],
+  ["Vientos posteriores del segundo tramo","2 grilletes de 4 elementos certificados en cáncamos del bloque de corona","",NR,CT,"alto"],
+  ["Vientos de carga","2 grilletes de 4 elementos certificados posicionados en chasis","",NR,GC,"alto"],
+  ["Vientos de carga trasero","Grilletes de 4 elementos a cáncamos soldados, con perno, tuerca y chaveta partida","Arandelas Nord-Lock",NR,GC+NL,"alto"],
+  ["Viento de anclaje terrestre trasero","2 grilletes de 4 elementos certificados posicionados en chasis","",NR,"Verificar condición de soldadura, estado de grilletes y cables de seguridad.","alto"],
+  ["Vientos frontales de segundo tramo","2 cáncamos certificados con perno y chaveta; grilletes de 4 elementos a cáncamos soldados","",NR,"Verificar condición de soldadura, estado de grilletes y cables de seguridad.","alto"],
+  ["Poleas superiores de piso de enganche","2 poleas soldadas con perno eje, tuerca castillo y chaveta partida","",NR,"Verificar soldadura de pastecas y condición de grampas."+BOL,"alto"]]},
+ {cod:"PE",nombre:"Piso de enganche",riesgo:"alto",pos:"alto",items:[
+  ["Caran block del enganchador","Sujeto a cáncamo con grillete","",NR,GC,"alto"],
+  ["Sujeción del cable del pirosalva","Cáncamos y grilletes de 4 elementos","",NR,GC,"alto"],
+  ["Pirosalva","Elemento original abulonado con 7 bulones","",NR,"Verificar condición del pirosalva y sus bulones.","alto"],
+  ["Rejilla de material desplegable","Abulonada con seguros y tuercas autofrenantes o con chaveta partida","Arandelas Nord-Lock",NR,CT+NL,"alto"],
+  ["Trampolín","Abulonado con tuercas autofrenantes","Arandelas Nord-Lock","Eslinga de seguridad 3/8\" con 4 eslabones engrampados",CT+" Chequear eslabones de la eslinga."+NL,"alto"],
+  ["Peines de piso de enganche","Abulonados con tuercas autofrenantes o con chaveta partida","Arandelas Nord-Lock","Eslinga de seguridad 3/8\"","Verificar condición de peines. "+CT+NL,"alto"],
+  ["Puerta de ingreso a piso de enganche","Bisagras soldadas","","Cadenas soldadas","Chequear eslabones de cadenas de seguridad y estado de soldaduras.","alto"],
+  ["Sujeción de piso de enganche","Cáncamo soldado","",NR,"Verificar soldadura del cáncamo.","alto"],
+  ["Cable de sujeción de seguridad de piso de enganche","Cable certificado con grillete a cáncamos de la estructura; 4 grampas de sujeción","","Cable de seguridad","Verificar estado de cables, grampas y grilletes.","alto"],
+  ["Viento de anclaje inferior","Grilletes a cáncamos soldados a la estructura","",NR,GC+" Verificar estado de soldadura.","alto"],
+  ["Puerta de ingreso pirosalva","Bisagras soldadas; perno pasador sujeto a cadena soldada","","Cadenas soldadas","Chequear eslabones de cadenas de seguridad y estado de soldaduras.","alto"],
+  ["Poleas de deslizamiento de piso de enganche","2 poleas viajeras abulonadas con tuercas autofrenantes, sujetas a cáncamos soldados","",NR,"Verificar perno de seguridad, condición de cables y ajuste de bulones y tuercas."+BOL,"alto"],
+  ["Vientos de sujeción superior","2 vientos con grilletes a cáncamos soldados; cable con grampa de sujeción","","Cadena de seguridad",GC+" Verificar grampa de sujeción.","alto"]]},
+ {cod:"DPE",nombre:"Entre piso de enganche y primera sección del mástil",riesgo:"alto",pos:"alto",items:[
+  ["Luminarias de mástil (5 unidades)","Grampas, bulones y tuercas autofrenantes","","Eslinga de seguridad 3 mm","Verificar condición y ajuste del bulón y la tuerca."+ESL,"alto"],
+  ["Reflectores LED (3 unidades, caballete de pivoteo)","Grampas de seguridad, tornillos y tuercas autofrenantes","","Eslinga de seguridad 3 mm",CT+ESL,"alto"],
+  ["Interruptor de alimentación de luz del segundo tramo","Bulones y tuercas autofrenantes","Arandelas Nord-Lock","Eslinga de seguridad 3 mm",CT+ESL+NL,"alto"],
+  ["Grilletes de rienda de carga primer tramo","2 grilletes de 4 elementos posicionados en chasis","",NR,"Verificar condición y ajuste del bulón y la tuerca.","alto"],
+  ["Polea de deslizamiento interior de piso de enganche","2 poleas viajeras abulonadas con tuercas autofrenantes, sujetas a cáncamos soldados","",NR,"Verificar perno de seguridad, condición de cables y ajuste de bulones y tuercas."+BOL,"alto"],
+  ["Caja de conexión eléctrica del mástil","Abulonada al mástil con tuercas autofrenantes","Arandelas Nord-Lock",NR,CT+NL,"alto"],
+  ["Soporte de stand pipe","Grampas cepo abulonadas a la estructura del mástil","",NR,"Verificar estado de las grampas y su correcto abulonado.","alto"],
+  ["Grampas en manguerote de cuello de cisne","Abulonadas con tuercas autofrenantes","Arandelas Nord-Lock","Grilletes de 4 elementos y eslinga de seguridad",CT+" Verificar eslinga de seguridad y grilletes."+NL,"alto"],
+  ["Pulmón de indicador de peso Martin Decker","Prensado a cable con grampa de sujeción","","Cadena de seguridad sujeta en grampa","Verificar ajuste de bulones y tuercas de grampa, eslabones de cadena y prensa del pulmón.","alto"]]},
+ {cod:"PT",nombre:"Piso de trabajo y escalera de acceso",riesgo:"",pos:"piso",items:[
+  ["Escaleras y plataformas de tránsito/trabajo","Escalera con perno y seguro; barandas en tinteros soldados con perno y seguro","",NR,"Verificar colocación de perno y seguros en escalera.",""],
+  ["Pernos de fijación a piso de trabajo","Bujes de escalera en cuna del piso de trabajo con pernos y seguros","",NR,"Verificar colocación de bujes en cuna de apoyo, pernos y seguros de fijación.",""],
+  ["Barandas y rodapié","Baranda en tintero soldado a estructura de piso, con pernos pasantes y seguro","",NR,"Verificar colocación de pernos pasantes y seguros de fijación.",""],
+  ["Baranda de plano inclinado","Baranda en tintero soldado a estructura de piso, con pernos pasantes y seguro","",NR,"Verificar colocación de pernos pasantes y seguros de fijación.",""],
+  ["Patas de apoyo de piso de trabajo","Pernos pasantes y seguro de fijación","",NR,"Verificar colocación de pernos pasantes y seguros de fijación.",""],
+  ["Pasadores de sujeción de aleros","Pasadores de aleros rebatibles con pernos y seguros de fijación","",NR,"Verificar colocación de pernos pasantes y seguros de fijación en pasadores.",""]]},
+ {cod:"BP",nombre:"Área de boca de pozo",riesgo:"medio",pos:"piso",items:[
+  ["Guinche","Cable de 9/16\" ojo/ojo con guardacabo, grillete de 4 cuerpos y giratorio","",NR,"Verificar estado del grillete certificado y ajuste de perno.","alto"],
+  ["Power swivel - cabeza rotativa","N/A","","N/A","No aplica en el RCCO vigente.","alto"],
+  ["Aparejo","Sostenido por 8 líneas de cable 1 1/8\" torsión derecha","",NR,"Verificar estado del aparejo, inspección y certificado vigente, freno de aparejo y cable.","alto"],
+  ["Eslinga de sujeción y anclaje","Grillete y eslinga de seguridad de 9/16\"","","Eslinga de seguridad de 1/2\"","Verificar eslinga de seguridad, grilletes y seguro en perno de grillete.","alto"]]},
+ {cod:"PRL",nombre:"Poste de retenida de llave hidráulica",riesgo:"",pos:"piso",items:[
+  ["Grampa superior de sujeción","Grampa con 8 bulones y tuercas autofrenantes","",NR,"Verificar visualmente que los elementos estén correctamente colocados (tuerca autofrenante).","medio"],
+  ["Grampa inferior de sujeción","Grampa con 8 bulones y tuercas autofrenantes","",NR,"Verificar visualmente que los elementos estén correctamente colocados (tuerca autofrenante).","medio"],
+  ["Sujeción de brazo de llave a poste de retenida","Perno pasante con cadena soldada y seguro; eslinga con grillete de 4 elementos","",NR,"Verificar seguro en perno pasante y que el grillete cuente con los 4 elementos.","medio"]]},
+ {cod:"SUB",nombre:"Subestructura y carrier",riesgo:"medio",pos:"piso",items:[
+  ["Pistones y tensores","6 tensores abulonados con seguros, tuerca autofrenante y chaveta partida","",NR,CT,"medio"],
+  ["Escaleras y plataformas de tránsito/trabajo","Escalera con perno y seguro; barandas en tinteros soldados con perno y seguro","",NR,"Verificar colocación de perno y seguros en escalera y barandas.","medio"],
+  ["Barandas y rodapié","Baranda en tintero soldado con perno y seguro","",NR,TIN,"medio"],
+  ["Artefactos de iluminación","Grampas, bulones y tuercas autofrenantes","Arandelas Nord-Lock","Eslinga de seguridad 3 mm",CT+ESL+NL,"medio"]]},
+ {cod:"CAS",nombre:"Casilla de maquinista",riesgo:"medio",pos:"suelo",items:[
+  ["Mangueras y comandos de izaje","Grampas cepo abulonadas a la estructura","",NR,"Verificar estado de las grampas y su correcto abulonado.","medio"],
+  ["Soporte y pernos","Casilla fijada en tinteros soldados con perno y seguro","",NR,TIN,"medio"],
+  ["Escaleras y pasadores","Escalera con perno y seguro; barandas en tinteros soldados con perno y seguro","",NR,"Verificar pasadores y colocación de perno y seguros en escalera y barandas.","medio"]]},
+ {cod:"PLA",nombre:"Plano inclinado y planchada",riesgo:"medio",pos:"suelo",items:[
+  ["Plano inclinado y pernos","Bandeja HCA","","","","medio"],
+  ["Barandas","Baranda en tintero soldado con perno y seguro","",NR,TIN,"medio"]]},
+ {cod:"PIL",nombre:"Piletas, bombas, generador, depósito y campamento",riesgo:"bajo",pos:"suelo",items:[
+  ["Luminarias","Soporte abulonado en base soldada; palmeras rebatibles con perno pasante y seguro; artefactos con grampa cepo y tuercas autofrenantes","","Eslinga de seguridad doble 3 mm","Verificar soldadura del soporte del mástil de luminaria. "+CT+ESL,"bajo"],
+  ["Barandas y rodapié","Baranda en tintero soldado con perno y seguro","",NR,TIN,"bajo"]]}
+];
+// Check list POWSG020-A1
+const CHECKLIST=[
+ "Verificar el aseguramiento de la baliza del equipo. ¿Encendido y/o intermitencia de la baliza?",
+ "Chequear los pernos y seguros varios del aparejo del equipo. ¿Aseguramiento correcto?",
+ "Verificar planilla de Inspección de Elementos para Trabajos y Rescate en Altura POSGI015-A1-0.",
+ "Verificar ojales, pernos y seguros inferior y superior de pistón principal.",
+ "Verificar el estado de los peines en el piso de enganche y su aseguramiento.",
+ "Chequear todos los grilletes, pasadores y seguros de las eslingas del piso de enganche.",
+ "Verificar el estado de la compuerta y triángulo del aseguramiento del pirosalva.",
+ "Estado de cable, guardacabo, seguro y gancho del guinche del equipo. ¿Aseguramiento correcto?",
+ "Verificar la correcta colocación de todos los pernos, tuercas y seguros en la corona.",
+ "Chequear la colocación de los seguros (alfiler-chaveta) de elevadores y amelas en el aparejo.",
+ "Verificar que todas las luminarias en la torre estén aseguradas correctamente (eslinga).",
+ "Chequear el estado de las eslingas y grampas colocadas en la línea del stand pipe y manguerote.",
+ "Verificar que seguros y pernos estén colocados en la cabeza de circulación o power swivel.",
+ "Control visual de poleas, eslingas y cabrestantes montados sobre la corona."
+];
+const REF_PUNTOS={"COR-1":{"c":"mastil","pg":1},"COR-2":{"c":"mastil","pg":1},"COR-3":{"c":"mastil","pg":1},"COR-4":{"c":"mastil","pg":2},"COR-5":{"c":"mastil","pg":2,"f":["texto-ambiguo"]},"COR-6":{"c":"mastil","pg":2},"COR-7":{"c":"mastil","pg":2},"COR-8":{"c":"mastil","pg":3},"COR-9":{"c":"mastil","pg":3},"COR-10":{"c":"mastil","pg":3,"f":["dudoso"]},"COR-11":{"c":"mastil","pg":3,"f":["dudoso"]},"DCO-1":{"c":"mastil","pg":4},"DCO-2":{"c":"mastil","pg":4},"DCO-3":{"c":"mastil","pg":4},"DCO-4":{"c":"vientos","pg":5},"DCO-5":{"c":"vientos","pg":5},"DCO-6":{"c":"vientos","pg":5},"DCO-7":{"c":"vientos","pg":6},"DCO-8":{"c":"vientos","pg":6},"DCO-9":{"c":"mastil","pg":6},"PE-1":{"c":"enganche","pg":7},"PE-2":{"c":"enganche","pg":7},"PE-3":{"c":"enganche","pg":7},"PE-4":{"c":"enganche","pg":8},"PE-5":{"c":"enganche","pg":8},"PE-6":{"c":"enganche","pg":8},"PE-7":{"c":"enganche","pg":9},"PE-8":{"c":"enganche","pg":9},"PE-9":{"c":"enganche","pg":9},"PE-10":{"c":"vientos","pg":10},"PE-11":{"c":"enganche","pg":10},"PE-12":{"c":"enganche","pg":10},"PE-13":{"c":"vientos","pg":11},"DPE-1":{"c":"mastil","pg":11},"DPE-2":{"c":"mastil","pg":11},"DPE-3":{"c":"mastil","pg":12},"DPE-4":{"c":"vientos","pg":12},"DPE-5":{"c":"mastil","pg":13},"DPE-6":{"c":"mastil","pg":13},"DPE-7":{"c":"mastil","pg":13},"DPE-8":{"c":"mastil","pg":14},"DPE-9":{"c":"mastil","pg":14},"BP-1":{"c":"malacate","pg":15},"BP-2":{"c":"aparejo","pg":15,"f":["no-aplica"]},"BP-3":{"c":"aparejo","pg":15},"BP-4":{"c":"aparejo","pg":15},"SUB-1":{"c":"camion","pg":16},"SUB-2":{"c":"subestructura","pg":16},"SUB-3":{"c":"subestructura","pg":16},"SUB-4":{"c":"subestructura","pg":17},"CAS-1":{"c":"cabina","pg":18},"CAS-2":{"c":"cabina","pg":18},"CAS-3":{"c":"cabina","pg":19},"PLA-1":{"c":"caballetes","pg":20,"f":["dudoso"]},"PLA-2":{"c":"caballetes","pg":20},"PIL-1":{"c":"circulacion","pg":21},"PIL-2":{"c":"circulacion","pg":21},"PT-1":{"c":"subestructura","pg":22},"PT-2":{"c":"subestructura","pg":22},"PT-3":{"c":"subestructura","pg":23},"PT-4":{"c":"subestructura","pg":23},"PT-5":{"c":"subestructura","pg":23},"PT-6":{"c":"subestructura","pg":24},"PRL-1":{"c":"llave","pg":24,"f":["texto-ambiguo"]},"PRL-2":{"c":"llave","pg":25,"f":["texto-ambiguo"]},"PRL-3":{"c":"llave","pg":25}};
+const COMPONENTES={"mastil":{"name":"Mástil telescópico y corona","riesgos":["Colapso o caída del mástil por sobrecarga, falla de vientos o terreno blando","Caída de objetos desde altura (herramientas, pernos, hielo)","Contacto con líneas eléctricas aéreas al izar o bajar el mástil"],"controles":["Inspección pre-uso de pasadores, trabas del tramo telescópico y soldaduras","Respetar la capacidad nominal de la placa del fabricante","Zona de exclusión durante izado/abatido del mástil","Casco con barbijo, botines de seguridad, guantes"]},"subestructura":{"name":"Subestructura y piso de trabajo","riesgos":["Resbalones y tropiezos por fluidos, barro o herramientas en el piso","Caída a distinto nivel por barandas faltantes o escalera obstruida","Aplastamiento de manos y pies en la zona de la mesa"],"controles":["Orden y limpieza permanente; material absorbente a mano","Barandas completas y rodapiés","Dos vías de escape libres desde el piso","Botines con puntera, guantes anti-impacto"]},"malacate":{"name":"Malacate","riesgos":["Atrapamiento en el tambor o en la línea en movimiento","Latigazo de cable ante corte de la línea","Falla de frenos con carga suspendida"],"controles":["Guardas colocadas en tambor y transmisión","Control de desgaste y programa de corrida y corte de la línea","Prueba de frenos al inicio de cada turno","Nadie en la línea de fuego del cable"]},"aparejo":{"name":"Aparejo (bloque viajero) y gancho","riesgos":["Golpe por el aparejo en movimiento","Choque del aparejo contra la corona (sobreizaje)","Caída de la carga por traba del gancho abierta","Atrapamiento de manos en la bisagra o la traba del elevador (referencia, pendiente de validación)","Elevador de varillas mal asentado o sin cerrar (referencia, pendiente de validación)","Desgaste o fisura en los ojos de las amelas y en los pasadores (referencia, pendiente de validación)"],"controles":["Dispositivo anti-choque de corona (crown-o-matic) probado","Traba de seguridad del gancho verificada","Nadie debajo de la carga suspendida","Comunicación clara maquinista–enganchador"]},"motor":{"name":"Motor y transmisión","riesgos":["Atrapamiento en poleas, correas y cardán","Quemaduras en escape y superficies calientes","Ruido elevado; incendio por pérdidas de combustible"],"controles":["Guardas fijas en partes móviles","Parada de emergencia (corte de aire) operativa","Protección auditiva","Extintor a mano y control de pérdidas"]},"cabina":{"name":"Cabina del maquinista y consola","riesgos":["Pérdida de visibilidad del piso y del enganchador","Operación con indicador de peso descalibrado","Fatiga del operador"],"controles":["Indicador de peso calibrado y visible","Señales acordadas y radio con el enganchador","Respeto de horas de trabajo y descanso","Solo personal habilitado en los mandos"]},"bop":{"name":"BOP (preventores)","riesgos":["Surgencia o descontrol de pozo","Presencia de H₂S u otros gases","Proyección de fluido a presión en conexiones","Erosión o lavado del choke por fluido a presión (referencia, pendiente de validación)","Gas en el retorno del choke manifold, incl. H₂S (referencia, pendiente de validación)","Golpe de ariete al maniobrar válvulas del choke manifold (referencia, pendiente de validación)"],"controles":["Verificar configuración y pruebas con el programa del pozo y procedimiento aplicable","Confirmar detección de gases y respuesta de emergencia según evaluación del sitio","Verificar el sistema de accionamiento y acceso a sus mandos"]},"llave":{"name":"Llave hidráulica, contrafuerza y cuñas","riesgos":["Atrapamiento de manos en mordazas y cuñas","Golpe por giro de la llave o de la línea de aguante","Latigazo de mangueras hidráulicas","Aplastamiento entre el brazo de reacción y el poste de retenida al girar la llave (referencia, pendiente de validación)","Pinzamiento de manos en palancas, válvulas de mando y patas de apoyo con resorte (referencia, pendiente de validación)","Caída de la llave por falla de la línea de suspensión o del cabo doble (referencia, pendiente de validación)"],"controles":["Verificar mordazas, puertas y mandos según el fabricante","Confirmar punto de reacción y sistema de retención de la llave","Seleccionar protección personal según la tarea","Verificar integridad y retención de mangueras según presión, fluido y fabricante"]},"caballetes":{"name":"Caballetes de tubería","riesgos":["Rodado de tubos y aplastamiento de piernas","Golpes al manipular tubería con el aparejo","Sobreesfuerzo en el manipuleo manual"],"controles":["Topes y cuñas laterales en caballetes","Uso de guía (sogas) para tubos suspendidos","Nunca pararse entre tubos y caballete","Técnica de levantamiento en equipo"]},"circulacion":{"name":"Sistema de circulación","riesgos":["Rotura de líneas de alta presión","Exposición a fluidos y químicos","Caída dentro de piletas o desde pasarelas","Gas o vapores en el golpeador y su venteo, incl. H₂S (referencia, pendiente de validación)","Rebalse de la pileta de ensayo (referencia, pendiente de validación)","Ingreso a espacio confinado por las bocas de inspección de la pileta (referencia, pendiente de validación)","Proyección de fluido a presión en cañerías y válvulas del golpeador (referencia, pendiente de validación)"],"controles":["Líneas de alta presión probadas y aseguradas","Válvula de alivio calibrada en la bomba","Antiparras, guantes de nitrilo, ropa ignífuga","Barandas en pasarelas de tanques"]},"vientos":{"name":"Vientos del mástil","riesgos":["Pérdida de estabilidad del mástil por anclaje flojo","Tropiezos o golpes contra los cables","Latigazo ante corte de un viento"],"controles":["Anclajes al terreno y puntos de amarre al carrier certificados, con tensión verificada","Vientos señalizados con banderines","Suspender la operación con viento fuerte según procedimiento","Inspección de grapas y guardacabos"]},"enganche":{"name":"Escalera y plataforma del enganchador","riesgos":["Caída de altura","Golpes con el aparejo o la tubería en movimiento","Caída de objetos hacia el piso","Atrapamiento de manos entre los dedos del peine al acomodar tubulares (referencia, pendiente de validación)","Caída de tubulares desde los peines por vuelco del tiro (referencia, pendiente de validación)","Puerta de ingreso o cadena de retención mal cerrada (referencia, pendiente de validación)"],"controles":["Arnés de cuerpo completo con línea de vida y anticaídas","Dispositivo de evacuación rápida (escape)","Herramientas amarradas","Comunicación permanente con el maquinista"]},"camion":{"name":"Camión portaequipo","riesgos":["Vuelco o hundimiento por terreno sin compactar","Atropellamiento durante el posicionamiento","Movimiento del camión con el mástil levantado"],"controles":["Terreno nivelado y compactado; bases bajo los gatos","Señalero durante las maniobras","Freno aplicado y calzas en ruedas","Chaleco reflectivo en la maniobra"]}};
+const REFERENCIAS=[{"t":"PO-WSG-020, 6.3.4: bolsillo contenedor en roldanas","r":"El procedimiento pide verificar que las roldanas tengan protección ante corte del eje (bolsillo contenedor) y eslinga de seguridad en las colgadas de los perfiles. Los ítems de poleas del Libro no mencionan el bolsillo.","p":["COR-1","COR-2","COR-3","COR-4","COR-5","DCO-9","PE-12","DPE-5"],"e":"Procedimiento Tacker"},{"t":"Alerta de seguridad: caída del giratorio del cable de winche","r":"En un equipo de otra empresa se desprendió el seguro del giratorio (destorcedor) del cable del winche; cayó desde unos 5,3 m y la eslinga vinculada golpeó el casco de un operario en boca de pozo. La alerta no declara la causa. Se cita como antecedente del punto guinche/giratorio, no como dato de Tacker.","p":["BP-1"],"e":"Antecedente externo"}];
+const COD_VIEJO={CO:"COR",CE:"DCO",PM:"DPE",LL:"PRL",SC:"SUB",CM:"CAS",PI:"PLA",PB:"PIL"};
+const VISOR_URL="https://apu242007.github.io/visor-equipo-de-torre/?mode=qhse&layers=zonas,drops";
+const FLAG_TXT={"dudoso":"Lectura dudosa del Libro","texto-ambiguo":"Texto ambiguo en el Libro","no-aplica":"No aplica según el Libro"};
+const MOTIVOS=["Operación de tijera","Operación de martilleo","Viento fuerte","Enganche o colisión","Sobrecarga","Otro"];
+const RIESGO_TXT={alto:"Riesgo alto",medio:"Riesgo medio",bajo:"Riesgo bajo","":"Sin clasificar"};
+const TIPO_TXT={rcco:"RCCO mensual",checklist:"Check list pre montaje/desmontaje",post:"Inspección post-evento"};
+const TIPO_MIN={rcco:"RCCO mensual",checklist:"check list pre montaje/desmontaje",post:"inspección post-evento"};
+const LIM_DIAS={alto:2,medio:7,bajo:15,"":7};
+// Sincronización opcional: URL del HTTP trigger de Power Automate (upsert en lista SharePoint por "clave"). Vacía = desactivada.
+const SYNC_URL="";
+// Modelo 3D ILUSTRATIVO generado con CadQuery (skill diseno-cad-solidworks): coordenadas en m, Y arriba.
+const MODELO_URL="equipo_drops.json";
+const PUNTOS3D={"DPE-1":[-0.683,3.911,0.853],"DPE-2":[-0.67,5.333,-0.833],"DPE-3":[0.657,6.756,-0.813],"DPE-4":[0.644,8.178,0.793],"DPE-5":[-0.631,9.6,0.773],"DPE-6":[-0.617,11.022,-0.754],"DPE-7":[0.604,12.444,-0.734],"DPE-8":[0.591,13.867,0.714],"DPE-9":[-0.578,15.289,0.694],"DCO-1":[-0.565,16.667,0.675],"DCO-2":[-0.553,18.0,-0.657],"DCO-3":[0.54,19.333,-0.638],"DCO-4":[0.528,20.667,0.62],"DCO-5":[-0.516,22.0,0.601],"DCO-6":[-0.503,23.333,-0.582],"DCO-7":[0.491,24.667,-0.564],"DCO-8":[0.479,26.0,0.545],"DCO-9":[-0.466,27.333,0.527],"COR-1":[1.66,28.15,-0.0],"COR-2":[1.422,28.27,-0.73],"COR-3":[0.783,28.39,-1.228],"COR-4":[-0.053,28.51,-1.336],"COR-5":[-0.822,28.63,-1.02],"COR-6":[-1.279,28.75,-0.38],"COR-7":[-1.279,28.87,0.38],"COR-8":[-0.822,28.99,1.02],"COR-9":[-0.053,29.11,1.336],"COR-10":[0.783,29.23,1.228],"COR-11":[1.422,29.35,0.73],"PE-1":[0.697,16.3,0.85],"PE-2":[1.497,16.3,-0.0],"PE-3":[2.297,16.3,-0.85],"PE-4":[3.097,16.3,0.85],"PE-5":[3.897,16.3,-0.0],"PE-6":[0.697,16.55,-0.85],"PE-7":[1.497,16.55,0.85],"PE-8":[2.297,16.55,-0.0],"PE-9":[3.097,16.55,-0.85],"PE-10":[3.897,16.55,0.85],"PE-11":[0.697,16.8,-0.0],"PE-12":[1.497,16.8,-0.85],"PE-13":[2.297,16.8,0.85],"PT-1":[-1.0,3.1,-1.65],"PT-2":[0.9,3.1,-1.65],"PT-3":[2.8,3.1,-1.65],"PT-4":[-1.0,3.1,1.65],"PT-5":[0.9,3.1,1.65],"PT-6":[2.8,3.1,1.65],"BP-1":[0.9,3.0,-0.9],"BP-2":[1.5,3.5,-0.0],"BP-3":[1.5,9.7,-0.0],"BP-4":[1.8,8.5,-0.0],"PRL-1":[2.4,4.5,-1.2],"PRL-2":[2.4,3.1,-1.2],"PRL-3":[2.1,3.8,-0.9],"SUB-1":[-1.1,1.5,1.8],"SUB-2":[-2.6,1.8,-1.55],"SUB-3":[2.9,1.2,-1.8],"SUB-4":[-5.0,2.2,1.25],"CAS-1":[-2.6,1.4,2.2],"CAS-2":[-3.6,0.4,3.3],"CAS-3":[-1.6,1.2,3.3],"PLA-1":[6.0,1.95,-0.0],"PLA-2":[12.0,1.3,-1.3],"PIL-1":[-0.5,5.8,-6.5],"PIL-2":[3.0,2.6,-5.3]};
+
+/* ============ Utilidades ============ */
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const hoy=()=>new Date().toISOString().slice(0,10);
+const fmtF=iso=>{if(!iso)return"—";const d=new Date(iso.length<=10?iso+"T12:00:00":iso);return d.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric"})};
+const dias=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
+const clone=o=>JSON.parse(JSON.stringify(o));
+function toast(msg){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2800)}
+
+/* ============ Almacenamiento ============ */
+const COLS=["equipos","libros","inspecciones","hallazgos"];
+const S={mode:"cargando",db:null,assets:null,downloads:null,readOnly:false,data:{equipos:{},libros:{},inspecciones:{},hallazgos:{}}};
+const LKEY="libroDrops.v1";
+const timers={},inflight={},queued={};
+function localSave(){if(S.mode!=="local")return;try{localStorage.setItem(LKEY,JSON.stringify(S.data))}catch(e){toast("No hay más espacio en este navegador. Borrá fotos o usá la versión publicada.")}}
+function localLoad(){try{const r=localStorage.getItem(LKEY);if(r){const d=JSON.parse(r);COLS.forEach(c=>S.data[c]=d[c]||{})}}catch(e){}}
+function put(col,obj,delay){
+  S.data[col][obj.id]=obj;
+  syncToServer(col,obj);
+  if(S.mode==="local"){localSave();return}
+  const path=col+"/"+obj.id;
+  clearTimeout(timers[path]);
+  if(delay){timers[path]=setTimeout(()=>{delete timers[path];dbWrite(path)},delay)}else dbWrite(path);
+}
+const syncT={};
+function syncToServer(col,obj){
+  if(!SYNC_URL||col==="libros")return;
+  clearTimeout(syncT[obj.id]);
+  syncT[obj.id]=setTimeout(()=>{const datos=clone(obj);
+    ["foto","firma"].forEach(k=>{if(datos[k]&&datos[k].data)delete datos[k]});
+    fetch(SYNC_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({coleccion:col,clave:col+"|"+obj.id,equipoId:obj.equipoId||obj.id,actualizado:new Date().toISOString(),datos})}).catch(()=>{})},1500);
+}
+async function dbWrite(path){
+  const [col,id]=path.split("/");const obj=S.data[col][id];if(!obj)return;
+  if(inflight[path]){queued[path]=true;return}
+  inflight[path]=true;
+  try{await S.db.doc(path).set(clone(obj))}
+  catch(e){dbError(e)}
+  inflight[path]=false;
+  if(queued[path]){delete queued[path];dbWrite(path)}
+}
+async function del(col,id){
+  delete S.data[col][id];
+  if(S.mode==="local"){localSave();return}
+  try{await S.db.doc(col+"/"+id).delete()}catch(e){dbError(e)}
+}
+function dbError(e){
+  const c=e&&e.code;
+  if(c==="invalid_argument"){if(!S.readOnly){S.readOnly=true;toast("Tu acceso es de solo lectura: los cambios no se guardan.");render()}}
+  else if(c==="quota_exceeded")toast("El libro llegó a su límite de registros. Borrá inspecciones viejas para seguir.");
+  else if(c==="revoked"){S.readOnly=true;render()}
+  else toast("No se pudo guardar. Revisá la conexión y volvé a intentar.");
+}
+async function initStore(){
+  const use=window.claude&&window.claude.use?window.claude.use.bind(window.claude):null;
+  const db=use?await use("db").catch(()=>null):null;
+  if(db){
+    S.db=db;S.mode="db";
+    let pending=COLS.length;
+    COLS.forEach(col=>{
+      db.collection(col).onSnapshot(snap=>{
+        const next={};
+        snap.docs.forEach(d=>{const path=col+"/"+d.id;
+          if(timers[path]||inflight[path])next[d.id]=S.data[col][d.id]||d.data();else next[d.id]=clone(d.data())});
+        Object.keys(S.data[col]).forEach(id=>{const p=col+"/"+id;if((timers[p]||inflight[p])&&!next[id])next[id]=S.data[col][id]});
+        S.data[col]=next;
+        if(pending>0){pending--;if(pending===0)boot();else return}
+        render();
+      },err=>{dbError(err)});
+    });
+    use("assets").then(a=>{S.assets=a;render()}).catch(()=>{});
+  }else{
+    S.mode="local";localLoad();boot();
+  }
+  if(use)use("downloads").then(d=>{S.downloads=d;render()}).catch(()=>{});
+}
+
+/* ============ Fotos ============ */
+let photoCb=null;
+function pedirFoto(cb){photoCb=cb;const f=$("#fileIn");f.value="";f.click()}
+$("#fileIn").addEventListener("change",async e=>{
+  const file=e.target.files&&e.target.files[0];if(!file||!photoCb)return;
+  const cb=photoCb;photoCb=null;
+  try{
+    const img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=URL.createObjectURL(file)});
+    const max=S.assets?1280:640;const k=Math.min(1,max/Math.max(img.width,img.height));
+    const c=document.createElement("canvas");c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);
+    c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+    if(S.assets){
+      const blob=await new Promise(r=>c.toBlob(r,"image/jpeg",.78));
+      toast("Subiendo foto…");
+      const up=await S.assets.upload(blob,{type:"image/jpeg"});
+      cb({asset:up.id});
+    }else cb({data:c.toDataURL("image/jpeg",.6)});
+  }catch(err){toast(S.assets?"No se pudo subir la foto. Probá de nuevo.":"No se pudo leer la foto.")}
+});
+const fotoSrc=f=>!f?"":f.asset?"/_blob/"+f.asset:f.data||"";
+
+/* ============ Estado de interfaz ============ */
+const UI={animZonas:true,todos:false,obsOpen:new Set(),open:new Set(),tab:"equipo",equipo:null,zona:null,insp:null,hfilter:"abiertos",sheet:null,calc:{m:"1",h:"4.56"},inspector:""};
+try{UI.inspector=localStorage.getItem("libroDrops.inspector")||"";UI.equipo=localStorage.getItem("libroDrops.equipo")||null}catch(e){}
+function setEquipo(id){UI.equipo=id;try{localStorage.setItem("libroDrops.equipo",id)}catch(e){}}
+
+/* ============ Consultas ============ */
+const equipos=()=>Object.values(S.data.equipos).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+const eqAct=()=>S.data.equipos[UI.equipo]||equipos()[0]||null;
+const libro=eq=>eq?S.data.libros[eq.id]:null;
+const insps=eq=>Object.values(S.data.inspecciones).filter(i=>eq&&i.equipoId===eq.id).sort((a,b)=>(b.creada||"").localeCompare(a.creada||""));
+const hallz=eq=>Object.values(S.data.hallazgos).filter(h=>eq&&h.equipoId===eq.id).sort((a,b)=>(b.creado||"").localeCompare(a.creado||""));
+function codigo(eq,z,it){return it.pid||(z.cod+"-"+it.art)}
+const refDe=it=>it&&it.pid&&REF_PUNTOS[it.pid]&&!it.propio?REF_PUNTOS[it.pid]:null;
+const refsDe=it=>it&&it.pid?REFERENCIAS.filter(x=>x.p.includes(it.pid)):[];
+function migrar(){
+  if(S.readOnly)return;
+  Object.values(S.data.libros).forEach(lb=>{
+    let cambio=false;const mapa={};
+    lb.zonas.forEach(z=>{if(COD_VIEJO[z.cod]){z.cod=COD_VIEJO[z.cod];cambio=true}
+      z.items.forEach(it=>{const pid=z.cod+"-"+it.art;if(it.pid!==pid&&!it.propio){it.pid=pid;cambio=true}
+        if(it.comp===undefined){it.comp=(REF_PUNTOS[it.pid]||{}).c||"";cambio=true}mapa[it.id]=it.pid})});
+    if(cambio){guardarLibro(lb);Object.values(S.data.hallazgos).forEach(h=>{if(h.equipoId===lb.equipoId&&mapa[h.itemId]&&h.codigo!==mapa[h.itemId]){h.codigo=mapa[h.itemId];put("hallazgos",h)}})}
+  });
+}
+function ultimaRCCO(eq){return insps(eq).find(i=>i.tipo==="rcco"&&i.estado==="cerrada")||null}
+function ultimoEstado(eq,itemId){
+  for(const i of insps(eq)){if(i.estado!=="cerrada"||i.tipo==="checklist")continue;const r=i.resultados&&i.resultados[itemId];if(r&&r.estado)return{estado:r.estado,fecha:i.fechaFin||i.fecha}}
+  return null;
+}
+function recurrencia(eq,itemId){return hallz(eq).filter(h=>h.itemId===itemId).length}
+function fichaIncompleta(it){return !it.primaria||!it.seguridad||!it.criterio||!it.riesgo}
+// Riesgo alto sin retención secundaria: dato a completar en la ficha (DROPS: fijación primaria + retención secundaria + aseguramiento)
+function sinSec(it){return it.riesgo==="alto"&&!it.secundaria&&it.primaria!=="N/A"}
+function sumarDias(n){const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)}
+function vencTxt(h){if(h.estado!=="abierto")return"";if(!h.fechaLimite)return`<span class="falta">Sin fecha límite</span>`;
+  const n=dias(hoy()+"T12:00:00",h.fechaLimite+"T12:00:00");
+  return n<0?`<span class="venc">Vencido hace ${-n} d</span>`:n===0?`<span class="venc">Vence hoy</span>`:`<span class="${n<=2?"venc":"vok"}">Vence en ${n} d</span>`}
+function estadoZona(i,z){
+  if(!i||i.tipo==="checklist"||!i.zonas.includes(z.id))return null;
+  const n=z.items.length,rs=z.items.map(it=>i.resultados[it.id]).filter(r=>r&&r.estado);
+  return{hechos:rs.length,total:n,st:rs.some(r=>r.estado==="mal")?"mal":rs.length===n?"ok":"pend"};
+}
+function rccoAvance(i,lb){const its=lb.zonas.filter(z=>i.zonas.includes(z.id)).flatMap(z=>z.items);return{hechos:its.filter(it=>i.resultados[it.id]&&i.resultados[it.id].estado).length,total:its.length}}
+
+/* ============ Calculadora (aprox. del gráfico PO-WSG-020 6.4.5) ============ */
+const CAL={m:[1,2,3,4,5,6,8,10],pa:[5.0,2.4,1.7,1.3,1.0,0.9,0.7,0.5],tr:[6.8,3.4,2.3,1.8,1.4,1.2,0.9,0.8],tp:[11,5.8,4.0,3.0,2.6,2.2,1.8,1.5]};
+function limite(arr,m){const x=CAL.m;if(m<=x[0])return arr[0];for(let i=1;i<x.length;i++)if(m<=x[i]){const t=(m-x[i-1])/(x[i]-x[i-1]);return arr[i-1]+t*(arr[i]-arr[i-1])}return arr[arr.length-1]}
+function consecuencia(m,h){
+  m=parseFloat(String(m).replace(",","."));h=parseFloat(String(h).replace(",","."));
+  if(!(m>0)||!(h>0))return null;
+  const e=m*9.8*h,fuera=m<1||m>10;
+  let c="fat";
+  if(h<=limite(CAL.pa,m))c="pa";else if(h<=limite(CAL.tr,m))c="tr";else if(h<=limite(CAL.tp,m))c="tp";
+  return{e,c,fuera};
+}
+const CONS={pa:{t:"Primeros auxilios",cls:"bajo"},tr:{t:"Tarea restringida",cls:"medio"},tp:{t:"Tiempo perdido",cls:"medio"},fat:{t:"Fatalidad",cls:"alto"}};
+
+/* ============ Acciones de datos ============ */
+function crearEquipo(nombre,desdePlantilla){
+  const id=uid(),eq={id,nombre:nombre.trim(),creado:new Date().toISOString()};
+  const zonas=(desdePlantilla?PLANTILLA:PLANTILLA.map(z=>({...z,items:[]}))).map(z=>({id:uid(),cod:z.cod,nombre:z.nombre,riesgo:z.riesgo,pos:z.pos,
+    items:z.items.map((r,i)=>({id:uid(),art:i+1,pid:z.cod+"-"+(i+1),comp:(REF_PUNTOS[z.cod+"-"+(i+1)]||{}).c||"",desc:r[0],primaria:r[1],secundaria:r[2],seguridad:r[3],criterio:r[4],riesgo:r[5],masa:"",altura:"",foto:null}))}));
+  put("equipos",eq);
+  put("libros",{id,equipoId:id,rev:1,actualizado:new Date().toISOString(),fuente:desdePlantilla?"Plantilla RCCO POWSG020-A3":"Libro vacío",zonas});
+  setEquipo(id);
+}
+function guardarLibro(lb){lb.actualizado=new Date().toISOString();put("libros",lb)}
+function inspFicha(eq,crear,zid){
+  let i=insps(eq).find(x=>x.estado==="abierta"&&x.tipo!=="checklist");
+  if(!i&&crear){if(insps(eq).some(x=>x.estado==="abierta")){toast("Hay un check list abierto. Cerralo para registrar desde las fichas.");return null}
+    i=nuevaInspeccion("rcco","",false);toast("Se inició una RCCO mensual con este registro.")}
+  if(i&&zid&&!i.zonas.includes(zid)){i.zonas.push(zid);put("inspecciones",i)}
+  return i||null;
+}
+function nuevaInspeccion(tipo,motivo,nav=true){
+  const eq=eqAct();const lb=libro(eq);
+  const zonas=tipo==="post"?lb.zonas.filter(z=>z.pos==="alto").map(z=>z.id):lb.zonas.map(z=>z.id);
+  const i={id:uid(),equipoId:eq.id,tipo,motivo:motivo||"",fecha:hoy(),pozo:"",inspector:UI.inspector,estado:"abierta",creada:new Date().toISOString(),
+    zonas,resultados:{},checklist:tipo==="checklist"?CHECKLIST.map(()=>({r:"",obs:""})):null,jefe:"",encargado:""};
+  put("inspecciones",i);if(nav){UI.insp=i.id;UI.tab="inspeccion"}return i;
+}
+function cerrarInspeccion(i){
+  const eq=eqAct(),lb=libro(eq);let n=0;
+  if(i.tipo==="checklist"){
+    i.checklist.forEach((c,k)=>{if(c.r==="no"&&!c.hallazgoId){
+      const h={id:uid(),equipoId:eq.id,inspeccionId:i.id,itemId:"A1-"+(k+1),codigo:"A1-"+String(k+1).padStart(2,"0"),zona:"Check list A1",item:CHECKLIST[k],
+        riesgo:"",descripcion:c.obs||"Ítem del check list respondido NO",responsable:"",fechaLimite:sumarDias(LIM_DIAS[""]),estado:"abierto",foto:null,creado:new Date().toISOString()};
+      put("hallazgos",h);c.hallazgoId=h.id;n++}});
+  }else{
+    lb.zonas.forEach(z=>z.items.forEach(it=>{const r=i.resultados[it.id];if(r&&r.estado==="mal"&&!r.hallazgoId){
+      const h={id:uid(),equipoId:eq.id,inspeccionId:i.id,itemId:it.id,codigo:codigo(eq,z,it),zona:z.nombre,item:it.desc,riesgo:it.riesgo,
+        descripcion:r.obs||"Observado en inspección",responsable:r.responsable||"",fechaLimite:sumarDias(LIM_DIAS[it.riesgo||""]),estado:"abierto",foto:r.foto||null,creado:new Date().toISOString()};
+      put("hallazgos",h);r.hallazgoId=h.id;n++}}));
+  }
+  i.estado="cerrada";i.fechaFin=new Date().toISOString();put("inspecciones",i);
+  UI.insp=null;UI.tab="hallazgos";UI.hfilter="abiertos";
+  toast(n?`Inspección cerrada. ${n>1?`Se abrieron ${n} hallazgos`:"Se abrió 1 hallazgo"}.`:"Inspección cerrada sin hallazgos.");
+}
+
+/* ============ Vistas ============ */
+const ICON={
+ equipo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 22 11 2h2l2 20M9.6 16h4.8M10.2 10h3.6M7 2h10"/></svg>',
+ inspeccion:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="m9 12 2 2 4-4M9 3h6v3H9z"/></svg>',
+ hallazgos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg>',
+ calc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M12 11v1M12 15v1M7 10v2M17 10v2M3 21h18M8 21l1.5-3h5L16 21"/></svg>'
+};
+const ICON3D='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg>';
+function render(){
+  if(S.mode==="cargando"||UI.firmando)return;
+  const a=document.activeElement,fid=a&&a.id,ss=a&&a.selectionStart,se=a&&a.selectionEnd,sy=window.scrollY;
+  const eq=eqAct();if(eq&&UI.equipo!==eq.id)setEquipo(eq.id);
+  let body;
+  if(!eq)body=vOnboarding();
+  else if(UI.todos)body=vTodos();
+  else if(UI.tab==="equipo")body=UI.zona?vZona(eq):vEquipo(eq);
+  else if(UI.tab==="inspeccion")body=UI.insp&&S.data.inspecciones[UI.insp]?vInspRun(eq,S.data.inspecciones[UI.insp]):vInspeccionar(eq);
+  else if(UI.tab==="hallazgos")body=vHallazgos(eq);
+  else body=vCalc();
+  const openH=eq?hallz(eq).filter(h=>h.estado==="abierto").length:0;
+  $("#app").innerHTML=`
+  <header class="top"><div class="wrap">
+    <span class="brand"><i></i>Libro DROPS</span>
+    ${equipos().length?`<select class="eq-select" id="eqSel" aria-label="Equipo">${equipos().length>1?`<option value="__todos" ${UI.todos?"selected":""}>Todos los equipos</option>`:""}${equipos().map(e=>`<option value="${e.id}" ${eq&&e.id===eq.id&&!UI.todos?"selected":""}>${esc(e.nombre)}</option>`).join("")}<option value="__nuevo">+ Nuevo equipo</option></select>`:""}
+  </div></header>
+  <main class="wrap">
+    ${S.mode==="local"?`<div class="banner">Vista previa: los datos se guardan solo en este navegador. En la versión publicada se comparten con el equipo.</div>`:""}
+    ${S.readOnly?`<div class="banner">Acceso de solo lectura: podés consultar el libro, pero los cambios no se guardan.</div>`:""}
+    ${body}
+  </main>
+  ${eq?`<nav class="tabs" aria-label="Secciones"><div>
+    ${[["equipo","Equipo"],["inspeccion","Inspeccionar"],["hallazgos","Hallazgos"],["calc","Calculadora"]].map(([k,t])=>`<button data-act="tab" data-v="${k}" ${UI.tab===k&&!UI.todos?'aria-current="page"':""}>${ICON[k]}<span>${t}${k==="hallazgos"&&openH?` <span class="badge">${openH}</span>`:""}</span></button>`).join("")}
+  </div></nav>`:""}
+  ${UI.sheet?`<div class="sheet-bg" data-act="closeSheet"><div class="sheet" role="dialog" aria-modal="true" data-stop><div class="grab"></div><button class="btn ghost" data-act="closeSheet" style="float:right;margin:-4px 0 6px 10px">Volver</button>${vSheet(eq)}</div></div>`:""}`;
+  if(fid){const el=document.getElementById(fid);if(el){el.focus({preventScroll:true});try{if(ss!=null)el.setSelectionRange(ss,se)}catch(e){}}}
+  window.scrollTo(0,sy);
+  afterRender();
+  if(V3.open&&V3.init){pintar3D()}
+}
+function boot(){if(S.mode==="cargando")return;migrar();render()}
+
+function vTodos(){
+  const filas=equipos().map(e=>{const lb=libro(e);if(!lb)return"";const hs=hallz(e).filter(h=>h.estado==="abierto");
+    const venc=hs.filter(h=>h.fechaLimite&&h.fechaLimite<hoy()).length;
+    const ab=insps(e).find(i=>i.estado==="abierta"&&i.tipo==="rcco");const u=ultimaRCCO(e);const vd=u?30-dias(u.fechaFin,new Date()):null;
+    const est=ab?(()=>{const a=rccoAvance(ab,lb);return `En curso ${a.hechos}/${a.total}`})():u?(vd<0?'<span class="venc">Vencida</span>':`Al día · vence en ${vd} d`):'<span class="venc">Sin hacer</span>';
+    const inc=lb.zonas.reduce((a,z)=>a+z.items.filter(fichaIncompleta).length,0),sec=lb.zonas.reduce((a,z)=>a+z.items.filter(sinSec).length,0);
+    return `<tr data-act="irEq" data-v="${e.id}" style="cursor:pointer"><td><b>${esc(e.nombre)}</b></td><td>${est}</td><td class="n ${hs.length?"r":""}">${hs.length}</td><td class="n ${venc?"r":""}">${venc}</td><td class="n">${inc}</td><td class="n">${sec}</td></tr>`}).join("");
+  return `<h1>Todos los equipos</h1><p class="small muted">Tocá un equipo para abrir su libro.</p>
+  <div class="tqwrap" style="margin-top:12px"><table class="tq"><thead><tr><th>Equipo</th><th>RCCO del mes</th><th>Hallazgos abiertos</th><th>Vencidos</th><th>Fichas incompletas</th><th>Sin ret. secundaria</th></tr></thead><tbody>${filas}</tbody></table></div>`;
+}
+function vOnboarding(){
+  return `<div class="stack" style="padding-top:20px">
+    <h1>Armá el libro DROPS del equipo</h1>
+    <p class="muted">El libro arranca con las 11 zonas y los ítems de la plantilla RCCO de Tacker (POWSG020-A3). Después podés completar, corregir y sumar componentes.</p>
+    <div class="panel">
+      <label class="f" for="nEq">Nombre del equipo</label>
+      <input class="t" id="nEq" value="TKR-05" autocomplete="off">
+      <label class="row small" style="margin-top:12px"><input type="checkbox" id="nPl" checked> Cargar la plantilla RCCO</label>
+      <button class="btn primary block" style="margin-top:14px" data-act="crearEquipo">Crear libro</button>
+    </div></div>`;
+}
+
+function vEquipo(eq){
+  const lb=libro(eq);if(!lb)return`<div class="loader">Cargando libro…</div>`;
+  const hs=hallz(eq),abiertos=hs.filter(h=>h.estado==="abierto");
+  const u=ultimaRCCO(eq);const vence=u?30-dias(u.fechaFin,new Date()):null;
+  const total=lb.zonas.reduce((a,z)=>a+z.items.length,0),inc=lb.zonas.reduce((a,z)=>a+z.items.filter(fichaIncompleta).length,0);
+  const abierta=insps(eq).find(i=>i.estado==="abierta");
+  const rcco=abierta&&abierta.tipo!=="checklist"?abierta:null;const av=rcco?rccoAvance(rcco,lb):null;
+  const sec=lb.zonas.reduce((a,z)=>a+z.items.filter(sinSec).length,0);
+  const grupo=(pos)=>lb.zonas.filter(z=>z.pos===pos);
+  const zBtn=(z,tr)=>{const ab=abiertos.filter(h=>z.items.some(it=>it.id===h.itemId)).length;const incz=z.items.filter(fichaIncompleta).length;const secz=z.items.filter(sinSec).length;
+    const ez=estadoZona(rcco,z);
+    return `<div class="mz${ez?" st-"+ez.st:""}"><div class="truss">${tr}</div><button class="zb ${z.riesgo}${ez?" stz-"+ez.st:""}" data-act="zona" data-v="${z.id}">
+      <span><span class="zn">${esc(z.nombre)}</span><br><span class="zm">${ez?`<b>${ez.hechos}/${ez.total} revisados</b>${ez.st==="mal"?" · con desvíos":""} · `:""}${z.items.length} ítems · ${RIESGO_TXT[z.riesgo||""]}${incz?` · <span class="falta">${incz} ficha${incz>1?"s":""} incompleta${incz>1?"s":""}</span>`:""}${secz?` · <span class="falta">${secz} sin retención secundaria</span>`:""}</span>
+      ${ez?`<span class="zp"><i style="width:${ez.hechos/ez.total*100}%"></i></span>`:""}</span>
+      <span class="zc">${ab?`<span class="obsn" title="Hallazgos abiertos">${ab}</span>`:""}</span></button></div>`};
+  const alto=grupo("alto"),piso=grupo("piso"),suelo=grupo("suelo");
+  const anim=UI.animZonas;UI.animZonas=false;
+  return `
+  <div class="row between wrapflex"><h1>${esc(eq.nombre)}</h1><span class="row"><button class="btn btn3d" data-act="v3d">${ICON3D}Ver en 3D</button><button class="link small" data-act="sheet" data-v="libroInfo">Datos del libro</button></span></div>
+  ${abierta?`<button class="choice" data-act="continuar" data-v="${abierta.id}" style="border-left-color:var(--amber);margin-top:12px"><h3>Continuar ${TIPO_MIN[abierta.tipo]}</h3><span class="small muted">Iniciada el ${fmtF(abierta.creada)}${av?` · ${av.hechos} de ${av.total} componentes revisados`:""}</span></button>`:""}
+  <div class="summary">
+    ${rcco&&rcco.tipo==="rcco"?`<div><b><i class="cnt" data-count="${av.hechos}">${av.hechos}</i>/${av.total}</b><span>RCCO en curso · desde ${fmtF(rcco.creada)}</span></div>`:
+    `<div class="${vence!==null&&vence<0||!u?"due":""}"><b>${u?(vence<0?"Vencida":`<i class="cnt" data-count="${vence}">${vence}</i> d`):"Sin hacer"}</b><span>${u?`RCCO mensual · última ${fmtF(u.fechaFin)}`:"RCCO mensual"}</span></div>`}
+    <div class="${abiertos.length?"due":""}"><b data-count="${abiertos.length}">${abiertos.length}</b><span>hallazgos abiertos</span></div>
+    <div><b data-count="${total}">${total}</b><span>ítems${inc?` · ${inc} a completar`:""}${sec?` · ${sec} sin ret. secundaria`:""}</span></div>
+  </div>
+  <h2>Zonas del equipo</h2>
+  <p class="small muted">Ordenadas por altura, de la corona al suelo. Tocá una zona para ver sus componentes.${rcco?" Durante la inspección, el color muestra el avance: gris pendiente, verde completa sin desvíos, rojo con desvíos.":""}</p>
+  <div class="mast${anim?" anim":""}">
+    ${alto.map((z,k)=>zBtn(z,`<span style="width:${22+k*7}px"></span>${k===0?'<i class="crown"></i>':""}`)).join("")}
+    ${piso.map((z,k)=>zBtn(z,`<span class="deck"></span>${k===0?'<i class="floor"></i>':""}`)).join("")}
+    <div class="ground">Nivel de suelo</div>
+    ${suelo.map(z=>zBtn(z,`<span class="pad"></span>`)).join("")}
+  </div>
+  <div class="legend"><span><i style="background:var(--red)"></i>Riesgo alto</span><span><i style="background:var(--amber)"></i>Riesgo medio</span><span><i style="background:var(--green)"></i>Riesgo bajo</span><span><i style="background:var(--none)"></i>Sin clasificar</span></div>
+  <p class="small muted" style="margin-top:8px">Clasificación de zonas según layout POWSG020-A2.</p>`;
+}
+
+function vZona(eq){
+  const lb=libro(eq);const z=lb&&lb.zonas.find(x=>x.id===UI.zona);if(!z){UI.zona=null;return vEquipo(eq)}
+  const fichaInsp=inspFicha(eq,false);const hayCk=!fichaInsp&&insps(eq).some(x=>x.estado==="abierta");
+  return `
+  <button class="link" data-act="back">‹ Todas las zonas</button>
+  <div class="row between wrapflex" style="margin:8px 0 4px"><h1>${esc(z.nombre)}</h1><span class="chip ${z.riesgo}">${RIESGO_TXT[z.riesgo||""]}</span></div>
+  <p class="small muted">${z.items.length} componentes. Los códigos coinciden con los puntos DROPS del modelo 3D. <button class="link" data-act="v3d" data-z="${z.id}">Ver la zona en 3D</button> · <a href="${VISOR_URL}" target="_blank" rel="noopener">Visor Digital Rig</a></p>
+  <div class="banner" style="margin-top:10px;background:var(--surface);border-color:var(--line)">${fichaInsp?`Lo que marques acá se registra en la ${TIPO_MIN[fichaInsp.tipo]} iniciada el ${fmtF(fichaInsp.creada)}. <button class="link" data-act="continuar" data-v="${fichaInsp.id}">Ir a la inspección</button>`:hayCk?"Hay un check list abierto: cerralo para registrar desde las fichas.":"Al marcar Bien, Mal o No corresponde se inicia una RCCO mensual."}</div>
+  <div style="margin-top:12px">
+  ${z.items.map(it=>{const ue=ultimoEstado(eq,it.id);const rec=recurrencia(eq,it.id);const cons=consecuencia(it.masa,it.altura);
+    return `<article class="item" id="it_${it.id}">
+      <div class="row between"><span class="code">${esc(codigo(eq,z,it))}</span>
+        <span class="row" style="gap:6px">${ue?`<span class="chip ${ue.estado==="bien"?"bien":ue.estado==="mal"?"mal":""}">${ue.estado==="bien"?"Bien":ue.estado==="mal"?"Mal":"No corresponde"} · ${fmtF(ue.fecha)}</span>`:""}</span></div>
+      <h3>${esc(it.desc)}</h3>
+      ${refDe(it)&&refDe(it).pg?`<p class="small muted" style="margin:-2px 0 6px">Libro DROPS Tacker 2024, pág. ${refDe(it).pg}</p>`:""}
+      <div class="row wrapflex" style="gap:6px"><span class="chip ${it.riesgo}">${RIESGO_TXT[it.riesgo||""]}</span>
+        ${(refDe(it)&&refDe(it).f||[]).map(f=>`<span class="chip warn">${FLAG_TXT[f]||esc(f)}</span>`).join("")}
+        ${rec>1?`<span class="chip warn">Hallazgo repetido ×${rec}</span>`:""}
+        ${cons?`<span class="chip ${CONS[cons.c].cls}">Consecuencia: ${CONS[cons.c].t}</span>`:""}
+        ${fichaIncompleta(it)?`<span class="chip warn">Ficha incompleta</span>`:""}${sinSec(it)?`<span class="chip alto">Riesgo alto sin retención secundaria</span>`:""}</div>
+      ${it.foto?`<img class="refimg" src="${esc(fotoSrc(it.foto))}" alt="Foto de referencia de ${esc(it.desc)}">`:""}
+      <dl class="fx">
+        <dt>Fijación primaria</dt><dd>${it.primaria?esc(it.primaria):'<span class="miss">Sin especificar</span>'}</dd>
+        <dt>Retención secundaria</dt><dd>${it.secundaria?esc(it.secundaria):'<span class="miss">Sin especificar</span>'}</dd>
+        <dt>Aseg. de seguridad</dt><dd>${it.seguridad?esc(it.seguridad):'<span class="miss">Sin especificar</span>'}</dd>
+      </dl>
+      ${it.criterio?`<div class="crit"><b>Qué verificar:</b> ${esc(it.criterio)}</div>`:""}
+      <div class="regbox">${vControles(fichaInsp,it,z.id)}</div>
+      ${vPeligros(it,"z"+it.id)}${vAntecedentes(it,"z"+it.id)}
+      <div class="row wrapflex" style="margin-top:10px"><button class="btn ghost btn3d" data-act="v3d" data-z="${z.id}" data-p="${esc(codigo(eq,z,it))}">${ICON3D}Ver en 3D</button>${S.readOnly?"":`<button class="btn ghost" data-act="editItem" data-v="${it.id}">Editar ficha</button>`}</div>
+    </article>`}).join("")}
+  </div>
+  ${S.readOnly?"":`<button class="btn block" data-act="editItem" data-v="__nuevo">+ Agregar componente</button>`}`;
+}
+
+function vInspeccionar(eq){
+  const lb=libro(eq);const list=insps(eq);
+  const abierta=list.find(i=>i.estado==="abierta");
+  return `<h1>Inspeccionar</h1>
+  <p class="muted small">Tipos de inspección según el procedimiento PO-WSG-020.</p>
+  ${abierta?`<button class="choice" data-act="continuar" data-v="${abierta.id}" style="border-left-color:var(--amber);margin-top:12px"><h3>Continuar ${TIPO_MIN[abierta.tipo]}</h3><span class="small muted">Iniciada el ${fmtF(abierta.creada)}</span></button>`:""}
+  ${S.readOnly?"":`<div style="margin-top:12px">
+  <button class="choice" data-act="nueva" data-v="rcco"><h3>RCCO mensual</h3><span class="small muted">Recorre las ${lb.zonas.length} zonas del libro. Cada componente se marca Bien, Mal o No corresponde.</span></button>
+  <button class="choice" data-act="nueva" data-v="checklist"><h3>Check list pre montaje / desmontaje</h3><span class="small muted">Los 14 puntos del POWSG020-A1. Se hace antes de cada montaje y desmontaje.</span></button>
+  <button class="choice" data-act="sheet" data-v="post"><h3>Inspección post-evento</h3><span class="small muted">Solo las zonas del mástil, después de tijera, martilleo, viento fuerte o un enganche.</span></button>
+  </div>`}
+  <h2 style="margin-top:22px">Historial</h2>
+  ${list.filter(i=>i.estado==="cerrada").length?list.filter(i=>i.estado==="cerrada").map(i=>{
+    const res=Object.values(i.resultados||{});const mal=i.tipo==="checklist"?(i.checklist||[]).filter(c=>c.r==="no").length:res.filter(r=>r.estado==="mal").length;
+    return `<div class="item"><div class="row between wrapflex"><h3>${TIPO_TXT[i.tipo]}${i.motivo?` · ${esc(i.motivo)}`:""}</h3><span class="chip ${mal?"mal":"bien"}">${mal?mal+" observaciones":"Sin observaciones"}</span></div>
+      <p class="small muted">${fmtF(i.fechaFin)}${i.pozo?` · Pozo ${esc(i.pozo)}`:""}${i.inspector?` · ${esc(i.inspector)}`:""}</p>
+      <div class="row wrapflex" style="margin-top:8px"><button class="btn primary" data-act="pdf" data-v="${i.id}">Exportar a PDF</button>
+      ${S.readOnly?"":`<button class="link small" data-act="borrarInsp" data-v="${i.id}">Borrar</button>`}</div></div>`}).join(""):`<p class="muted">Todavía no hay inspecciones cerradas para este equipo.</p>`}`;
+}
+
+function vControles(i,it,zid){
+  const r=(i&&i.resultados[it.id])||{};const obsAb=UI.obsOpen.has(it.id)||!!(r.obs||"").trim()||r.estado==="mal";
+  const b=(cls,v,t)=>`<button class="${cls}" aria-pressed="${r.estado===v}" data-act="res" data-v="${v}" data-it="${it.id}" data-z="${zid}">${t}</button>`;
+  return `<div class="seg">${b("b","bien","Bien")}${b("m","mal","Mal")}${b("n","nc","No corresp.")}</div>
+    ${obsAb?`<label class="f" for="o_${it.id}">${r.estado==="mal"?"Qué se observó (obligatorio)":"Observaciones"}</label><textarea class="t" id="o_${it.id}" data-obs="${it.id}" placeholder="${r.estado==="mal"?"Ej.: falta bolsillo contenedor en la pasteca":"Comentario sobre el estado del componente"}">${esc(r.obs)}</textarea>`:""}
+    ${r.estado==="mal"?`<label class="f" for="r_${it.id}">Responsable de corregir</label><input class="t" id="r_${it.id}" data-resp="${it.id}" value="${esc(r.responsable)}" placeholder="Opcional">`:""}
+    <div class="row wrapflex" style="margin-top:10px">${r.foto?`<img class="thumb" src="${esc(fotoSrc(r.foto))}" alt="Foto de ${esc(it.desc)}">`:""}
+      <button class="btn ghost" data-act="fotoRes" data-it="${it.id}" data-z="${zid}">${r.foto?"Cambiar foto":"Agregar foto"}</button>
+      <button class="btn ghost" data-act="obsTog" data-it="${it.id}" data-z="${zid}" aria-pressed="${obsAb}">Observaciones</button>
+      ${r.foto?`<button class="link small" data-act="quitarFotoRes" data-it="${it.id}">Quitar foto</button>`:""}</div>`;
+}
+function faltaCierre(i){return !(i.inspector||"").trim()?"Completá el nombre del inspector para cerrar.":!i.firma?"Falta la firma del inspector.":""}
+function faltanTxt(zonas,i){return zonas.map(z=>{const n=z.items.filter(it=>!(i.resultados[it.id]&&i.resultados[it.id].estado)).length;return n?`${esc(z.nombre)} (${n})`:""}).filter(Boolean).join(", ")}
+function vFirma(i){return `<div class="panel" style="margin-top:14px"><div class="row between"><h3>Firma del inspector</h3>${i.firma&&!S.readOnly?`<button class="link small" data-act="borrarFirma">Borrar firma</button>`:""}</div>
+  <p class="small muted">${i.firma?"Firmado. Fecha y hora del cierre se registran solas.":"Firmá con el dedo dentro del recuadro."}</p>
+  <canvas class="firma" id="firmaCv" aria-label="Recuadro para firmar"></canvas></div>`}
+function vInspRun(eq,i){
+  const lb=libro(eq);
+  const head=`<button class="link" data-act="salirInsp">‹ Salir (se guarda el avance)</button>
+    <h1 style="margin-top:8px">${TIPO_TXT[i.tipo]}</h1>${i.motivo?`<p class="muted">Motivo: ${esc(i.motivo)}</p>`:""}
+    <div class="panel" style="margin-top:10px">
+      <div class="row wrapflex" style="gap:10px">
+        <div style="flex:1;min-width:130px"><label class="f" for="iFecha">Fecha</label><input class="t" type="date" id="iFecha" data-bind="fecha" value="${esc(i.fecha)}"></div>
+        <div style="flex:1;min-width:130px"><label class="f" for="iPozo">Lugar / pozo</label><input class="t" id="iPozo" data-bind="pozo" value="${esc(i.pozo)}" placeholder="Ej.: LLL-1234"></div>
+      </div>
+      <label class="f" for="iInsp">Inspector</label><input class="t" id="iInsp" data-bind="inspector" value="${esc(i.inspector)}" placeholder="Nombre y puesto">
+    </div>`;
+  if(i.tipo==="checklist"){
+    const done=i.checklist.filter(c=>c.r).length;
+    return head+`<div style="margin:14px 0 6px" class="small muted">${done} de ${CHECKLIST.length} respondidos</div><div class="progress"><i style="width:${done/CHECKLIST.length*100}%"></i></div>
+    ${CHECKLIST.map((q,k)=>{const c=i.checklist[k];return `<article class="item"><span class="code">Punto ${k+1}</span><h3 style="font-family:var(--body);font-size:1rem;font-weight:600">${esc(q)}</h3>
+      <div class="seg two"><button class="b" aria-pressed="${c.r==="si"}" data-act="ck" data-k="${k}" data-v="si">Sí</button><button class="m" aria-pressed="${c.r==="no"}" data-act="ck" data-k="${k}" data-v="no">No</button></div>
+      ${c.r==="no"||UI.obsOpen.has("ck"+k)||(c.obs||"").trim()?`<label class="f" for="ck${k}">Observación</label><textarea class="t" id="ck${k}" data-ckobs="${k}" placeholder="Qué se encontró y qué se hizo">${esc(c.obs)}</textarea>`:""}
+      <div class="row wrapflex" style="margin-top:10px">${c.foto?`<img class="thumb" src="${esc(fotoSrc(c.foto))}" alt="Foto del punto ${k+1}">`:""}<button class="btn ghost" data-act="fotoCk" data-k="${k}">${c.foto?"Cambiar foto":"Agregar foto"}</button><button class="btn ghost" data-act="obsTog" data-it="ck${k}">Observaciones</button>${c.foto?`<button class="link small" data-act="quitarFotoCk" data-k="${k}">Quitar</button>`:""}</div></article>`}).join("")}
+    <div class="panel"><label class="f" for="iJefe">Jefe de equipo</label><input class="t" id="iJefe" data-bind="jefe" value="${esc(i.jefe)}">
+      <label class="f" for="iEnc">Encargado de turno</label><input class="t" id="iEnc" data-bind="encargado" value="${esc(i.encargado)}"></div>
+    ${vFirma(i)}
+    ${(()=>{const fo=i.checklist.filter(c=>c.r==="no"&&!(c.obs||"").trim()).length;const falta=faltaCierre(i);
+    const msg=done<CHECKLIST.length?`Respondé los ${CHECKLIST.length} puntos para cerrar.`:fo?`Describí qué se encontró en ${fo} punto${fo>1?"s":""} respondido${fo>1?"s":""} No: ese texto es el título del hallazgo.`:falta;
+    return `<button class="btn primary block" style="margin-top:14px" data-act="cerrarInsp" ${done<CHECKLIST.length||fo||falta?"disabled":""}>Cerrar inspección</button>
+    <button class="btn block" style="margin-top:8px" data-act="pdf" data-v="${i.id}">Exportar avance a PDF</button>
+    ${msg?`<p class="small muted" style="text-align:center">${msg}</p>`:""}`})()}`;
+  }
+  const zonas=lb.zonas.filter(z=>i.zonas.includes(z.id));
+  const items=zonas.flatMap(z=>z.items);const done=items.filter(it=>i.resultados[it.id]&&i.resultados[it.id].estado).length;
+  const faltaObs=items.filter(it=>{const r=i.resultados[it.id];return r&&r.estado==="mal"&&!(r.obs||"").trim()}).length;
+  return head+`<div style="margin:14px 0 2px" class="small muted">${done} de ${items.length} componentes verificados</div><div class="progress"><i style="width:${items.length?done/items.length*100:0}%"></i></div>
+  ${zonas.map(z=>`<div class="zhead"><h2>${esc(z.nombre)}</h2><span class="chip ${z.riesgo}">${RIESGO_TXT[z.riesgo||""]}</span></div>
+    ${z.items.map(it=>{const r=i.resultados[it.id]||{};const rec=recurrencia(eq,it.id);
+      return `<article class="item"><div class="row between"><span class="code">${esc(codigo(eq,z,it))}</span>${rec?`<span class="chip warn">Ya tuvo ${rec} hallazgo${rec>1?"s":""}</span>`:""}</div>
+      <h3>${esc(it.desc)}</h3>
+      ${it.foto?`<img class="refimg" src="${esc(fotoSrc(it.foto))}" alt="Cómo debe estar: ${esc(it.desc)}">`:""}
+      ${it.criterio?`<div class="crit">${esc(it.criterio)}</div>`:""}
+      ${vPeligros(it,"i"+it.id)}
+      ${vControles(i,it,z.id)}
+      </article>`}).join("")}`).join("")}
+  ${vFirma(i)}
+  <button class="btn primary block" style="margin-top:14px" data-act="cerrarInsp" ${done<items.length||faltaObs||faltaCierre(i)?"disabled":""}>Cerrar inspección</button>
+  <button class="btn block" style="margin-top:8px" data-act="pdf" data-v="${i.id}">Exportar avance a PDF</button>
+  <p class="small muted" style="text-align:center">${done<items.length?`Faltan ${items.length-done} componentes por verificar: ${faltanTxt(zonas,i)}.`:faltaObs?`Describí lo observado en ${faltaObs} componente${faltaObs>1?"s":""} marcado${faltaObs>1?"s":""} Mal.`:faltaCierre(i)||"Al cerrar, cada Mal se convierte en un hallazgo con fecha límite según el riesgo."}</p>`;
+}
+
+function vHallazgos(eq){
+  const hs=hallz(eq);const f=UI.hfilter;
+  const list=hs.filter(h=>f==="todos"||(f==="abiertos"?h.estado==="abierto":f==="cerrados"?h.estado==="cerrado":h.estado==="abierto"&&h.fechaLimite&&h.fechaLimite<hoy()));
+  const vencidos=hs.filter(h=>h.estado==="abierto"&&h.fechaLimite&&h.fechaLimite<hoy()).length;
+  return `<div class="row between wrapflex"><h1>Hallazgos</h1>${hs.length?`<button class="link small" data-act="csv">Descargar planilla</button>`:""}</div>
+  <div class="filters" role="group" aria-label="Filtrar">${[["abiertos","Abiertos"],["vencidos",`Vencidos${vencidos?` (${vencidos})`:""}`],["cerrados","Cerrados"],["todos","Todos"]].map(([k,t])=>`<button aria-pressed="${f===k}" data-act="hf" data-v="${k}">${t}</button>`).join("")}</div>
+  ${list.length?list.map(h=>{const rec=recurrencia(eq,h.itemId);const venc=h.estado==="abierto"&&h.fechaLimite&&h.fechaLimite<hoy();
+    return `<button class="hz ${h.estado}" data-act="sheet" data-v="h:${h.id}">
+      <div class="row between"><span class="code small muted" style="font-family:var(--display);font-weight:600">${esc(h.codigo)}</span><span class="chip ${h.estado==="cerrado"?"bien":venc?"mal":"warn"}">${h.estado==="cerrado"?"Cerrado":venc?"Vencido":"Abierto · "+dias(h.creado,new Date())+" d"}</span></div>
+      <h3 style="margin:4px 0 2px">${esc(h.descripcion)}</h3>
+      <p class="small muted">Ítem de origen: ${esc(h.item)}</p>
+      <p class="small">${vencTxt(h)}${h.estado==="abierto"?" · ":""}${h.responsable?esc(h.responsable):'<span class="falta">Sin responsable</span>'}<span class="muted"> · ${esc(h.zona)}${h.fechaLimite?` · Límite ${fmtF(h.fechaLimite)}`:""}${rec>1?` · Se repitió ${rec} veces`:""}</span></p>
+    </button>`}).join(""):`<p class="muted" style="margin-top:20px">${f==="abiertos"?"No hay hallazgos abiertos. Los componentes marcados Mal en una inspección aparecen acá.":"No hay hallazgos en este filtro."}</p>`}`;
+}
+
+function vCalc(){
+  const {m,h}=UI.calc;const r=consecuencia(m,h);
+  const W=360,H=236,px=v=>34+(v-1)/9*(W-46),py=v=>H-28-v/15*(H-50);
+  const curve=arr=>CAL.m.map((x,k)=>`${px(x)},${py(arr[k])}`).join(" ");
+  const area=(top,bot,col)=>`<polygon fill="${col}" points="${CAL.m.map((x,k)=>`${px(x)},${py(top?top[k]:15)}`).join(" ")} ${CAL.m.slice().reverse().map((x,k)=>`${px(x)},${py(bot?bot[CAL.m.length-1-k]:0)}`).join(" ")}"/>`;
+  const mm=parseFloat(String(m).replace(",",".")),hh=parseFloat(String(h).replace(",","."));
+  const col=r?(r.c==="pa"?"var(--green)":r.c==="fat"?"var(--red)":r.c==="tp"?"#E07A2E":"var(--amber)"):"var(--line)";
+  const v=r?Math.sqrt(2*9.8*hh):0,t=r?Math.sqrt(2*hh/9.8):0;
+  const pin=r&&!r.fuera&&hh<=15;const cx=pin?px(mm):0,cy=pin?py(hh):0;const prev=UI.calcPrev||{cx,cy};UI.calcNext={cx,cy};
+  const hmax=Math.max(5,Math.ceil((hh||0)/5)*5);
+  return `<h1>Calculadora de consecuencia</h1>
+  <p class="small muted">Masa del objeto contra altura de caída, como en el gráfico del PO-WSG-020 (6.4.5).</p>
+  <div class="panel" style="margin-top:12px"><div class="row" style="gap:10px">
+    <div style="flex:1"><label class="f" for="cM">Masa (kg)</label><input class="t" id="cM" inputmode="decimal" data-calc="m" value="${esc(m)}"></div>
+    <div style="flex:1"><label class="f" for="cH">Altura (m)</label><input class="t" id="cH" inputmode="decimal" data-calc="h" value="${esc(h)}"></div></div>
+    ${r?`<div class="calcout" style="border-color:${col}"><span class="small muted">Consecuencia potencial</span><b>${CONS[r.c].t}</b><span class="small">Energía de impacto: ${r.e.toLocaleString("es-AR",{maximumFractionDigits:1})} J · Velocidad al impacto: ${v.toLocaleString("es-AR",{maximumFractionDigits:1})} m/s (${(v*3.6).toLocaleString("es-AR",{maximumFractionDigits:0})} km/h) · Tiempo de caída: ${t.toLocaleString("es-AR",{maximumFractionDigits:2})} s</span>
+      ${r.fuera?`<p class="small" style="color:var(--red)">La masa está fuera del rango del gráfico del procedimiento (1 a 10 kg). Usá la calculadora DROPS oficial (POWSG020-A4).</p>`:""}</div>`:`<p class="small muted" style="margin-top:10px">Ingresá masa y altura mayores a cero.</p>`}
+  </div>
+  <div class="calcgrid">
+  <div class="chartbox" style="margin-top:0"><svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Gráfico de consecuencias por masa y altura">
+    ${area(null,CAL.tp,"var(--red)")}${area(CAL.tp,CAL.tr,"#E07A2E")}${area(CAL.tr,CAL.pa,"var(--amber)")}${area(CAL.pa,null,"var(--green)")}
+    <polyline fill="none" stroke="var(--surface)" stroke-width="1" points="${curve(CAL.pa)}"/><polyline fill="none" stroke="var(--surface)" stroke-width="1" points="${curve(CAL.tr)}"/><polyline fill="none" stroke="var(--surface)" stroke-width="1" points="${curve(CAL.tp)}"/>
+    ${[1,2,4,6,8,10].map(x=>`<text x="${px(x)}" y="${H-12}" font-size="10" text-anchor="middle" fill="var(--muted)">${x}</text>`).join("")}
+    ${[0,5,10,15].map(y=>`<text x="26" y="${py(y)+3}" font-size="10" text-anchor="end" fill="var(--muted)">${y}</text>`).join("")}
+    <text x="${(px(1)+px(10))/2}" y="${H-1}" font-size="10" text-anchor="middle" fill="var(--muted)">Masa (kg)</text><text x="4" y="11" font-size="10" fill="var(--muted)">Altura (m)</text>
+    ${pin?`<circle id="cPt" cx="${cx}" cy="${cy}" r="6" fill="var(--ink)" stroke="var(--surface)" stroke-width="2">${prev.cx&&(prev.cx!==cx||prev.cy!==cy)?`<animate attributeName="cx" from="${prev.cx}" to="${cx}" dur=".35s" begin="indefinite" fill="freeze"/><animate attributeName="cy" from="${prev.cy}" to="${cy}" dur=".35s" begin="indefinite" fill="freeze"/>`:""}</circle>`:""}
+  </svg>
+  <div class="clegend"><span><i style="background:var(--green)"></i>Primeros auxilios</span><span><i style="background:var(--amber)"></i>Tarea restringida</span><span><i style="background:#E07A2E"></i>Tiempo perdido</span><span><i style="background:var(--red)"></i>Fatalidad</span></div></div>
+  ${r?`<div class="fall" id="fallBox" style="--t:${Math.min(t,2.5).toFixed(2)}s" aria-label="Animación de la caída">
+    <div class="sc">${[hmax,hmax/2,0].map(y=>`<b style="top:${100-y/hmax*100}%">${y} m</b>`).join("")}</div>
+    <div class="ob" style="top:${(178-186*Math.min(hh,hmax)/hmax).toFixed(1)}px"></div><div class="fl" style="background:${col}"></div><div class="gr"></div>
+    <div class="ln">${(v*3.6).toLocaleString("es-AR",{maximumFractionDigits:0})} km/h</div>
+    <button class="link small" data-act="recaer" style="position:absolute;right:8px;top:8px">Repetir</button></div>`:""}
+  </div>
+  <p class="small muted" style="margin-top:10px">Curvas aproximadas a partir del gráfico del procedimiento, como orientación. Para registrar un incidente, confirmá con la planilla oficial POWSG020-A4. El cálculo supone un objeto romo y personal con EPP; la animación usa el tiempo de caída libre real (sin rozamiento), limitado a 2,5 s.</p>`;
+}
+
+/* ============ Peligros, controles y antecedentes ============ */
+function det(key,titulo,cuerpo){return `<details data-det="${key}" ${UI.open.has(key)?"open":""}><summary>${titulo}</summary><div class="detb">${cuerpo}</div></details>`}
+function vPeligros(it,key){
+  const c=COMPONENTES[it.comp];if(!c)return"";
+  const li=a=>a.map(x=>{const pend=/pendiente de validación/.test(x);return `<li>${esc(x.replace(/\s*\(referencia, pendiente de validación\)/,""))}${pend?' <span class="chip warn">Pendiente de validación</span>':""}</li>`}).join("");
+  return det("pel:"+key,`Peligros y controles · ${esc(c.name)}`,`
+    <p class="small muted">Referencia del visor Tacker Digital Rig para el componente asociado${it.propio?"":" (asociación inferida)"}. Son orientativos: verificá su aplicabilidad.</p>
+    <h4>Peligros y eventos de referencia</h4><ul>${li(c.riesgos)}</ul>
+    <h4>Controles orientativos</h4><ul>${li(c.controles)}</ul>`);
+}
+function vAntecedentes(it,key){
+  const rs=refsDe(it);let h="";
+  if(tuercaNota(it))h+=`<h4>Buena práctica</h4><p class="small">${tuercaNota(it)}</p>`;
+  rs.forEach(x=>h+=`<h4>${esc(x.t)}</h4><p class="small"><span class="chip">${esc(x.e)}</span> ${esc(x.r)}</p>`);
+  if(!h)return"";
+  return det("ant:"+key,"Antecedentes y referencias",h);
+}
+function tuercaNota(it){return /autofrenante|auto frenante/i.test(it.primaria||"")?"El Libro no especifica qué tipo de tuerca autofrenante se usa. Según DROPS Reliable Securing (2017), las tuercas de bloqueo por fricción (con inserto de nailon o metálicas) son adecuadas para conexiones no críticas, y la doble tuerca o contratuerca no es un método confiable. Conviene confirmar el tipo instalado. No es un requisito del procedimiento.":""}
+
+/* ============ Hojas (modales) ============ */
+let draft=null;
+function vSheet(eq){
+  const s=UI.sheet;
+  if(s==="nuevoEquipo")return `<h2>Nuevo equipo</h2><label class="f" for="nEq">Nombre del equipo</label><input class="t" id="nEq" placeholder="Ej.: TK-10" autocomplete="off">
+    <label class="row small" style="margin-top:12px"><input type="checkbox" id="nPl" checked> Cargar la plantilla RCCO</label>
+    <div class="row" style="margin-top:14px"><button class="btn primary" data-act="crearEquipo">Crear libro</button><button class="btn ghost" data-act="closeSheet">Cancelar</button></div>`;
+  if(s==="post")return `<h2>Inspección post-evento</h2><p class="small muted">Revisa las ${libro(eq).zonas.filter(z=>z.pos==="alto").length} zonas del mástil antes de reanudar la operación.</p>
+    <label class="f" for="pMot">Qué pasó</label><select class="t" id="pMot">${MOTIVOS.map(m=>`<option>${m}</option>`).join("")}</select>
+    <div class="row" style="margin-top:14px"><button class="btn primary" data-act="nuevaPost">Empezar inspección</button><button class="btn ghost" data-act="closeSheet">Cancelar</button></div>`;
+  if(s==="libroInfo"){const lb=libro(eq);const total=lb.zonas.reduce((a,z)=>a+z.items.length,0),inc=lb.zonas.reduce((a,z)=>a+z.items.filter(fichaIncompleta).length,0);
+    return `<h2>Libro de ${esc(eq.nombre)}</h2>
+    <dl class="fx"><dt>Origen</dt><dd>${esc(lb.fuente)}</dd><dt>Actualizado</dt><dd>${fmtF(lb.actualizado)}</dd><dt>Componentes</dt><dd>${total}</dd><dt>Fichas incompletas</dt><dd>${inc}</dd></dl>
+    <h3 style="margin-top:14px">Fuentes</h3>
+    <ul class="small"><li>Libro DROPS Tacker 2024 (RCCO Rev.03) y plantilla POWSG020-A3: componentes, fijaciones y criterios.</li><li>PO-WSG-020 Rev.02 y anexos A1 y A2: tipos de inspección, check list y zonas de riesgo.</li><li>Visor Tacker Digital Rig: códigos de punto, componente asociado, y peligros y controles orientativos.</li></ul>
+    <p class="small muted">Una ficha está incompleta si le falta la fijación primaria, el aseguramiento de seguridad, el criterio de verificación o la clasificación de riesgo.</p>
+    ${S.readOnly?"":`<label class="f" for="rnEq">Nombre del equipo</label><input class="t" id="rnEq" value="${esc(eq.nombre)}">
+    <div class="row wrapflex" style="margin-top:14px"><button class="btn primary" data-act="renombrar">Guardar nombre</button><button class="btn danger" data-act="borrarEquipo">Borrar equipo</button></div>`}`}
+  if(s.startsWith("h:")){const h=S.data.hallazgos[s.slice(2)];if(!h)return"";
+    return `<span class="code small muted" style="font-family:var(--display);font-weight:600">${esc(h.codigo)} · ${esc(h.zona)}</span><h2 style="margin-top:4px">${esc(h.descripcion)}</h2>
+    <p class="small muted">Ítem de origen: ${esc(h.item)}</p><p class="small muted">Detectado el ${fmtF(h.creado)}${h.riesgo?` · ${RIESGO_TXT[h.riesgo]}`:""}${h.estado==="abierto"?` · ${vencTxt(h)}`:""}</p>
+    ${h.foto?`<img class="refimg" src="${esc(fotoSrc(h.foto))}" alt="Foto del hallazgo">`:""}
+    ${h.estado==="cerrado"?`<div class="panel" style="margin-top:10px"><h3>Cerrado el ${fmtF(h.cierre.fecha)}${h.cierre.por?` por ${esc(h.cierre.por)}`:""}</h3><p>${esc(h.cierre.comentario)}</p>${h.cierre.foto?`<img class="refimg" src="${esc(fotoSrc(h.cierre.foto))}" alt="Foto del cierre">`:""}</div>
+      ${S.readOnly?"":`<button class="link small" style="margin-top:10px" data-act="reabrir" data-v="${h.id}">Reabrir hallazgo</button>`}`:
+    S.readOnly?"":`<label class="f" for="hResp">Responsable (obligatorio)</label><input class="t" id="hResp" data-hb="responsable" data-h="${h.id}" value="${esc(h.responsable)}">
+      <label class="f" for="hLim">Fecha límite (se propone según el riesgo: alto 2 d, medio 7 d, bajo 15 d)</label><input class="t" type="date" id="hLim" data-hb="fechaLimite" data-h="${h.id}" value="${esc(h.fechaLimite)}">
+      <div class="panel" style="margin-top:14px"><h3>Cerrar hallazgo</h3><p class="small muted">Para cerrar hacen falta la acción tomada y una foto de evidencia.</p><label class="f" for="hCom">Qué se hizo</label><textarea class="t" id="hCom" placeholder="Ej.: se colocó bolsillo contenedor y se verificó en campo">${esc(draft&&draft.com||"")}</textarea>
+        <div class="row" style="margin-top:10px">${draft&&draft.foto?`<img class="thumb" src="${esc(fotoSrc(draft.foto))}" alt="Foto del cierre">`:""}<button class="btn ghost" data-act="fotoCierre">${draft&&draft.foto?"Cambiar foto":"Foto de la corrección (obligatoria)"}</button></div>
+        <button class="btn primary block" style="margin-top:12px" data-act="cerrarH" data-v="${h.id}">Cerrar hallazgo</button></div>`}`}
+  if(s.startsWith("item:")){const d=draft;if(!d)return"";const lb=libro(eq);
+    const cons=consecuencia(d.masa,d.altura);
+    const fld=(k,l,ph)=>`<label class="f" for="d_${k}">${l}</label><textarea class="t" style="min-height:60px" id="d_${k}" data-draft="${k}" placeholder="${ph||""}">${esc(d[k])}</textarea>`;
+    return `<h2>${d.__nuevo?"Nuevo componente":"Editar ficha"}</h2>
+    <label class="f" for="d_desc">Descripción</label><input class="t" id="d_desc" data-draft="desc" value="${esc(d.desc)}">
+    ${d.__nuevo?`<label class="f" for="d_zona">Zona</label><select class="t" id="d_zona" data-draft="zonaId">${lb.zonas.map(z=>`<option value="${z.id}" ${z.id===d.zonaId?"selected":""}>${esc(z.nombre)}</option>`).join("")}</select>`:""}
+    ${fld("primaria","Fijación primaria","Ej.: bulones con tuercas autofrenantes")}
+    ${fld("secundaria","Retención secundaria","Ej.: arandelas Nord-Lock, chaveta partida, alambre de seguridad")}
+    ${fld("seguridad","Aseguramiento de seguridad","Ej.: eslinga de seguridad 3 mm, o No requerida")}
+    ${fld("criterio","Qué verificar en la inspección","")}
+    <label class="f" for="d_comp">Componente del equipo (peligros y controles)</label><select class="t" id="d_comp" data-draft="comp"><option value="">Sin asociar</option>${Object.entries(COMPONENTES).map(([k,c])=>`<option value="${k}" ${d.comp===k?"selected":""}>${esc(c.name)}</option>`).join("")}</select>
+    <label class="f" for="d_riesgo">Clasificación según riesgo</label><select class="t" id="d_riesgo" data-draft="riesgo">${["alto","medio","bajo",""].map(k=>`<option value="${k}" ${d.riesgo===k?"selected":""}>${RIESGO_TXT[k]}</option>`).join("")}</select>
+    <div class="row" style="gap:10px"><div style="flex:1"><label class="f" for="d_masa">Masa aprox. (kg)</label><input class="t" id="d_masa" inputmode="decimal" data-draft="masa" value="${esc(d.masa)}"></div>
+      <div style="flex:1"><label class="f" for="d_alt">Altura (m)</label><input class="t" id="d_alt" inputmode="decimal" data-draft="altura" value="${esc(d.altura)}"></div></div>
+    ${cons?`<p class="small">Consecuencia potencial: <b>${CONS[cons.c].t}</b> (${cons.e.toFixed(1)} J)${cons.fuera?" · fuera del rango del gráfico":""}</p>`:""}
+    <label class="f">Foto de referencia (cómo debe estar instalado)</label>
+    <div class="row">${d.foto?`<img class="thumb" src="${esc(fotoSrc(d.foto))}" alt="Foto de referencia">`:""}<button class="btn ghost" data-act="fotoItem">${d.foto?"Cambiar foto":"Agregar foto"}</button>${d.foto?`<button class="link small" data-act="quitarFotoItem">Quitar</button>`:""}</div>
+    <div class="row wrapflex" style="margin-top:16px"><button class="btn primary" data-act="guardarItem">Guardar ficha</button><button class="btn ghost" data-act="closeSheet">Cancelar</button>
+    ${d.__nuevo?"":`<button class="link small" style="margin-left:auto" data-act="borrarItem">Borrar componente</button>`}</div>`}
+  return "";
+}
+
+/* ============ Exportar ============ */
+async function fotoData(f){if(!f)return"";if(f.data)return f.data;try{const r=await fetch("/_blob/"+f.asset);const b=await r.blob();return await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(b)})}catch(e){return""}}
+async function guardarArchivo(nombre,contenido){
+  if(!S.downloads){toast("La descarga no está disponible en esta vista. Abrí la app publicada.");return}
+  try{await S.downloads.save({filename:nombre,data:contenido})}
+  catch(e){if(e&&e.code==="declined")return;if(e&&e.code==="extension_not_enabled"){toast("La descarga de PDF no está habilitada en esta vista.");return}if(e&&e.code==="rate_limited"){toast("Ya hay una descarga pendiente de confirmar.");return}toast("No se pudo descargar el archivo.")}
+}
+const PDF_LIBS=["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js","https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"];
+let pdfLibs=null;
+function cargarPDF(){
+  if(window.jspdf&&window.jspdf.jsPDF&&window.jspdf.jsPDF.API.autoTable)return Promise.resolve();
+  if(!pdfLibs)pdfLibs=PDF_LIBS.reduce((pr,src)=>pr.then(()=>new Promise((res,rej)=>{const sc=document.createElement("script");sc.src=src;sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)})),Promise.resolve()).catch(e=>{pdfLibs=null;throw e});
+  return pdfLibs;
+}
+async function imgInfo(f){
+  const data=await fotoData(f);if(!data)return null;
+  try{const im=await new Promise((res,rej)=>{const x=new Image();x.onload=()=>res(x);x.onerror=rej;x.src=data});
+    return{data,w:im.naturalWidth,h:im.naturalHeight,fmt:/^data:image\/png/.test(data)?"PNG":"JPEG"}}catch(e){return null}
+}
+const pdfTxt=v=>String(v??"").replace(/[\u2013\u2014]/g,"-").replace(/[\u201c\u201d]/g,'"').replace(/[\u2018\u2019]/g,"'").replace(/\u2082/g,"2");
+async function exportarPDF(id){
+  const eq=eqAct(),lb=libro(eq),i=S.data.inspecciones[id];if(!i)return;
+  if(!S.downloads){toast("La descarga no está disponible en esta vista. Abrí la app publicada.");return}
+  toast("Preparando el PDF…");
+  try{await cargarPDF()}catch(e){toast("No se pudo cargar el generador de PDF. Revisá la conexión a internet.");return}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
+  const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
+  const ROJO=[191,47,27],ACERO=[52,69,77];
+  const titulo=i.tipo==="rcco"?"REPORTE DE CONTROL DE CAÍDAS DE OBJETOS (RCCO) - POWSG020-A3":i.tipo==="checklist"?"CHECK LIST DE CAÍDAS DE OBJETOS - PO-WSG-020-A1":"INSPECCIÓN POST-EVENTO DE CAÍDA DE OBJETOS - PO-WSG-020 (6.3.5)";
+  const estadoTxt={bien:"Bien",mal:"Mal",nc:"No corresponde"};
+  const cab=()=>{doc.setFillColor(...ROJO);doc.rect(0,0,W,12,"F");doc.setTextColor(255);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text(pdfTxt(titulo),10,8);
+    doc.setFont("helvetica","normal");doc.setFontSize(9);doc.text(pdfTxt(eq.nombre),W-10,8,{align:"right"});doc.setTextColor(30)};
+  const body=[],meta=[];let cuenta={bien:0,mal:0,nc:0,sin:0};let head,colStyles,fotoCol;
+  if(i.tipo==="checklist"){
+    head=[["#","Inspección caída de objetos","Sí","No","Observaciones","Foto"]];fotoCol=5;
+    colStyles={0:{cellWidth:9},1:{cellWidth:110},2:{cellWidth:12,halign:"center"},3:{cellWidth:12,halign:"center"},4:{cellWidth:"auto"},5:{cellWidth:36}};
+    for(let k=0;k<CHECKLIST.length;k++){const c=i.checklist[k];
+      c.r==="si"?cuenta.bien++:c.r==="no"?cuenta.mal++:cuenta.sin++;
+      body.push([String(k+1),pdfTxt(CHECKLIST[k]),c.r==="si"?"X":"",c.r==="no"?"X":"",pdfTxt(c.obs||""),""]);meta.push({img:c.foto?await imgInfo(c.foto):null,estado:c.r==="no"?"mal":c.r==="si"?"bien":""})}
+  }else{
+    head=[["Código","Descripción","Clasificación según riesgo","Sujeciones primarias y secundarias","Retención de seguridad","Estado","Observaciones","Foto"]];fotoCol=7;
+    colStyles={0:{cellWidth:15},1:{cellWidth:40},2:{cellWidth:20},3:{cellWidth:58},4:{cellWidth:32},5:{cellWidth:19},6:{cellWidth:"auto"},7:{cellWidth:36}};
+    for(const z of lb.zonas.filter(z=>i.zonas.includes(z.id))){
+      body.push([{content:pdfTxt(z.nombre)+"  ("+RIESGO_TXT[z.riesgo||""]+")",colSpan:8,styles:{fillColor:ROJO,textColor:255,fontStyle:"bold",fontSize:9}}]);meta.push({zona:true});
+      for(const it of z.items){const r=i.resultados[it.id]||{};
+        r.estado?cuenta[r.estado]++:cuenta.sin++;
+        body.push([pdfTxt(codigo(eq,z,it)),pdfTxt(it.desc),RIESGO_TXT[it.riesgo||""],pdfTxt([it.primaria,it.secundaria].filter(Boolean).join(". ")),pdfTxt(it.seguridad),estadoTxt[r.estado]||"Sin verificar",pdfTxt([r.obs,r.responsable?"Responsable: "+r.responsable:""].filter(Boolean).join("\n")),""]);
+        meta.push({img:r.foto?await imgInfo(r.foto):null,estado:r.estado||""})}
+    }
+  }
+  cab();
+  doc.setFontSize(9);doc.setFont("helvetica","normal");
+  doc.text(pdfTxt(`Fecha: ${fmtF(i.fecha)}     Equipo: ${eq.nombre}     Lugar/Pozo: ${i.pozo||"-"}     Inspector: ${i.inspector||"-"}${i.motivo?"     Motivo: "+i.motivo:""}${i.fechaFin?"     Cierre: "+new Date(i.fechaFin).toLocaleString("es-AR"):""}`),10,19);
+  doc.text(pdfTxt(i.tipo==="checklist"?`Resultado: ${cuenta.bien} Sí, ${cuenta.mal} No${cuenta.sin?`, ${cuenta.sin} sin responder`:""}.`:`Resultado: ${cuenta.bien} Bien, ${cuenta.mal} Mal, ${cuenta.nc} No corresponde${cuenta.sin?`, ${cuenta.sin} sin verificar`:""}.  Estado de la inspección: ${i.estado==="cerrada"?"cerrada":"en curso"}.`),10,24);
+  doc.autoTable({head,body,startY:28,margin:{top:16,left:8,right:8,bottom:14},theme:"grid",
+    styles:{fontSize:7.5,cellPadding:1.6,valign:"top",lineColor:[120,120,120],lineWidth:.15,textColor:30},
+    headStyles:{fillColor:ACERO,textColor:255,fontStyle:"bold",valign:"middle"},columnStyles:colStyles,
+    didParseCell:d=>{if(d.section!=="body")return;const m=meta[d.row.index];if(!m||m.zona)return;
+      if(d.column.index===fotoCol&&m.img)d.cell.styles.minCellHeight=30;
+      const ec=i.tipo==="checklist"?(m.estado==="mal"?3:m.estado==="bien"?2:-1):5;
+      if(d.column.index===ec){if(m.estado==="mal"){d.cell.styles.fillColor=[246,213,207];d.cell.styles.fontStyle="bold";d.cell.styles.textColor=ROJO}else if(m.estado==="bien")d.cell.styles.fillColor=[220,239,226]}},
+    didDrawCell:d=>{if(d.section!=="body"||d.column.index!==fotoCol)return;const m=meta[d.row.index];if(!m||!m.img)return;
+      const pad=1.5,bw=d.cell.width-pad*2,bh=d.cell.height-pad*2,k=Math.min(bw/m.img.w,bh/m.img.h),w=m.img.w*k,h=m.img.h*k;
+      try{doc.addImage(m.img.data,m.img.fmt,d.cell.x+pad+(bw-w)/2,d.cell.y+pad+(bh-h)/2,w,h)}catch(e){}},
+    didDrawPage:d=>{if(d.pageNumber>1)cab()}});
+  let y=doc.lastAutoTable.finalY+8;
+  const hs=Object.values(S.data.hallazgos).filter(h=>h.inspeccionId===i.id);
+  if(hs.length){if(y>H-40){doc.addPage();cab();y=22}
+    doc.setFont("helvetica","bold");doc.setFontSize(10);doc.text("Hallazgos generados",10,y);
+    doc.autoTable({startY:y+3,margin:{top:16,left:8,right:8,bottom:14},theme:"grid",head:[["Código","Componente","Descripción","Responsable","Fecha límite","Estado"]],
+      body:hs.map(h=>[pdfTxt(h.codigo),pdfTxt(h.item),pdfTxt(h.descripcion),pdfTxt(h.responsable||"-"),h.fechaLimite?fmtF(h.fechaLimite):"-",h.estado==="cerrado"?"Cerrado":"Abierto"]),
+      styles:{fontSize:7.5,cellPadding:1.6,textColor:30},headStyles:{fillColor:ACERO,textColor:255},didDrawPage:d=>{if(d.pageNumber>1)cab()}});
+    y=doc.lastAutoTable.finalY+8}
+  if(y>H-34){doc.addPage();cab();y=30}
+  const firmas=i.tipo==="checklist"?[["Inspector",i.inspector],["Jefe de Equipo",i.jefe],["Encargado de Turno",i.encargado]]:[["Inspector",i.inspector],["Jefe de Equipo",""]];
+  doc.setFont("helvetica","normal");doc.setFontSize(9);
+  firmas.forEach(([rol,nom],k)=>{const x=firmas.length===3?20+k*((W-110)/2):40+k*(W-140);doc.line(x,y+18,x+70,y+18);
+    if(k===0&&i.firma){try{doc.addImage(i.firma,"PNG",x+12,y-4,46,16)}catch(e){}}doc.text(pdfTxt(nom||""),x+35,y+15,{align:"center"});doc.text("Firma y aclaración - "+rol,x+35,y+23,{align:"center"})});
+  const n=doc.getNumberOfPages();
+  for(let k=1;k<=n;k++){doc.setPage(k);doc.setFontSize(7.5);doc.setTextColor(110);
+    doc.text(pdfTxt(`Generado con Libro DROPS el ${new Date().toLocaleString("es-AR")}`),8,H-6);doc.text(`Página ${k} de ${n}`,W-8,H-6,{align:"right"})}
+  const nombre=`${i.tipo==="rcco"?"RCCO":i.tipo==="checklist"?"Checklist_A1":"Post_evento"}_${eq.nombre}_${i.fecha}.pdf`.replace(/[^\w.\-]/g,"_");
+  await guardarArchivo(nombre,doc.output("blob"));
+}
+async function csvHallazgos(){
+  const eq=eqAct();const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  const rows=[["Código","Zona","Ítem de origen","Riesgo","Desvío observado","Responsable","Fecha límite","Estado","Detectado","Cerrado","Acción de cierre","Cerrado por"]];
+  hallz(eq).forEach(h=>rows.push([h.codigo,h.zona,h.item,RIESGO_TXT[h.riesgo||""],h.descripcion,h.responsable,h.fechaLimite,h.estado,(h.creado||"").slice(0,10),h.cierre?h.cierre.fecha.slice(0,10):"",h.cierre?h.cierre.comentario:"",h.cierre&&h.cierre.por||""]));
+  await guardarArchivo(`Hallazgos_${eq.nombre}_${hoy()}.csv`,"\ufeff"+rows.map(r=>r.map(q).join(";")).join("\r\n"));
+}
+
+/* ============ Movimiento ============ */
+const reduce=()=>{try{return matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){return false}};
+function withVT(fn){if(document.startViewTransition&&!reduce()){try{document.startViewTransition(fn);return}catch(e){}}fn()}
+const lastCounts={};
+function afterRender(){
+  document.querySelectorAll("[data-count]").forEach((el,k)=>{
+    const key=UI.tab+(UI.todos?"T":"")+k,to=+el.dataset.count,from=lastCounts[key]===undefined?0:lastCounts[key];lastCounts[key]=to;
+    if(from===to||reduce()){el.textContent=to;return}
+    const t0=performance.now(),d=550;el.textContent=from;
+    const step=now=>{const p=Math.min(1,(now-t0)/d),e=1-Math.pow(1-p,3);el.textContent=Math.round(from+(to-from)*e);if(p<1&&el.isConnected)requestAnimationFrame(step)};
+    requestAnimationFrame(step);
+  });
+  document.querySelectorAll(".anim .mz").forEach((el,k)=>el.style.animationDelay=(k*35)+"ms");
+  if(UI.tab==="calc"&&!UI.todos){
+    const key=UI.calc.m+"|"+UI.calc.h;
+    if(UI.calcKey!==key){UI.calcKey=key;
+      document.querySelectorAll("#cPt animate").forEach(a=>{try{a.beginElement()}catch(e){}});
+      UI.calcPrev=UI.calcNext;
+      clearTimeout(UI.fallT);UI.fallT=setTimeout(caer,450);
+    }
+  }
+  const cv=document.getElementById("firmaCv");if(cv)montarFirma(cv);
+}
+function caer(){const b=document.getElementById("fallBox");if(!b)return;b.classList.remove("go");void b.offsetWidth;b.classList.add("go")}
+function sello(txt){
+  const d=document.createElement("div");d.className="stamp";d.setAttribute("role","status");
+  d.innerHTML=`<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke-width="2"/><path d="m7 12.5 3.2 3.2L17 9"/></svg>${esc(txt)}<small>${new Date().toLocaleString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"})}</small></div>`;
+  document.body.appendChild(d);setTimeout(()=>d.remove(),reduce()?900:1500);
+}
+
+/* ============ Firma ============ */
+function montarFirma(cv){
+  const i=UI.insp&&S.data.inspecciones[UI.insp];if(!i)return;
+  const dpr=window.devicePixelRatio||1,r=cv.getBoundingClientRect();cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);
+  const g=cv.getContext("2d");g.scale(dpr,dpr);g.lineWidth=2.4;g.lineCap="round";g.lineJoin="round";g.strokeStyle=getComputedStyle(document.body).color;
+  if(i.firma){const im=new Image();im.onload=()=>g.drawImage(im,0,0,r.width,r.height);im.src=i.firma}
+  if(S.readOnly)return;
+  let last=null,trazo=false;
+  const pos=e=>{const b=cv.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]};
+  cv.onpointerdown=e=>{cv.setPointerCapture(e.pointerId);UI.firmando=true;last=pos(e);trazo=false;e.preventDefault()};
+  cv.onpointermove=e=>{if(!last)return;const p=pos(e);g.beginPath();g.moveTo(last[0],last[1]);g.lineTo(p[0],p[1]);g.stroke();last=p;trazo=true};
+  cv.onpointerup=cv.onpointercancel=()=>{if(!last)return;last=null;UI.firmando=false;if(!trazo)return;
+    const o=document.createElement("canvas");o.width=480;o.height=Math.round(480*r.height/r.width);const og=o.getContext("2d");
+    og.drawImage(cv,0,0,o.width,o.height);
+    // trazo negro sobre transparente para que el PDF quede legible en cualquier tema
+    const d=og.getImageData(0,0,o.width,o.height);for(let k=0;k<d.data.length;k+=4){d.data[k]=d.data[k+1]=d.data[k+2]=20}og.putImageData(d,0,0);
+    i.firma=o.toDataURL("image/png");i.firmaFecha=new Date().toISOString();put("inspecciones",i);render()};
+}
+
+/* ============ Visor 3D (modelo CadQuery ilustrativo) ============ */
+const V3={libs:null,init:false,open:false};
+const COL3={rojo:0xE5533C,verde:0x4DAE70,ambar:0xF2B705,gris:0x7E8B90,acero:0x8FA3AC,sel:0xFFFFFF};
+function cargarScript(src){return new Promise((res,rej)=>{const sc=document.createElement("script");sc.src=src;sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)})}
+function libs3D(){
+  if(!V3.libs)V3.libs=cargarScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js")
+    .then(()=>cargarScript("https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"))
+    .catch(e=>{V3.libs=null;throw e});
+  return V3.libs;
+}
+function shell3D(){
+  let el=document.getElementById("v3d");if(el)return el;
+  el=document.createElement("div");el.id="v3d";el.setAttribute("role","dialog");el.setAttribute("aria-modal","true");el.setAttribute("aria-label","Modelo 3D del equipo");
+  el.innerHTML=`<div class="vh"><h2 id="v3t">Modelo 3D</h2><button id="v3x">Cerrar</button></div>
+  <div class="cv" id="v3c"><span class="rot">Modelo ilustrativo, no a escala del equipo real</span><div class="tip" id="v3tip"></div><div class="msg" id="v3m">Cargando el modelo…</div></div>
+  <div class="vl"><span><i style="background:#7E8B90"></i>Sin revisar</span><span><i style="background:#4DAE70"></i>Bien</span><span><i style="background:#E5533C"></i>Mal</span><span><i style="background:#F2B705"></i>Ficha incompleta</span><span style="margin-left:auto;color:#98A5AA">Tocá un punto o una zona; tocá de nuevo para abrir la ficha.</span></div>`;
+  document.body.appendChild(el);
+  el.querySelector("#v3x").onclick=cerrar3D;
+  return el;
+}
+function cerrar3D(){const el=document.getElementById("v3d");if(el)el.classList.remove("on");V3.open=false;V3.sel=null;if(V3.ret)V3.ret.focus&&V3.ret.focus()}
+async function abrir3D(zid,pid){
+  const eq=eqAct();if(!eq)return;V3.ret=document.activeElement;
+  const el=shell3D();el.classList.add("on");V3.open=true;el.querySelector("#v3t").textContent=eq.nombre+" · modelo 3D";
+  el.querySelector("#v3x").focus();
+  const msg=el.querySelector("#v3m");
+  try{await libs3D()}catch(e){msg.textContent="No se pudo cargar el visor 3D. Revisá la conexión a internet.";msg.style.display="flex";return}
+  if(!V3.init){try{await init3D(el)}catch(e){msg.textContent=e.message||"No se pudo abrir el modelo 3D en este dispositivo.";msg.style.display="flex";return}}
+  msg.style.display="none";
+  pintar3D();resize3D();
+  enfocar3D(zid,pid);
+  if(!V3.loop)loop3D();
+}
+function init3D(el){
+  return new Promise((res,rej)=>{
+    const T=window.THREE,box=el.querySelector("#v3c");
+    let rnd;try{rnd=new T.WebGLRenderer({antialias:true})}catch(e){rej(new Error("Este dispositivo no permite gráficos 3D (WebGL)."));return}
+    rnd.setPixelRatio(Math.min(2,window.devicePixelRatio||1));box.prepend(rnd.domElement);
+    const sc=new T.Scene();sc.background=new T.Color(0x0E1417);sc.fog=new T.Fog(0x0E1417,70,160);
+    const cam=new T.PerspectiveCamera(45,1,0.1,500);cam.position.set(30,20,30);
+    const ctl=new T.OrbitControls(cam,rnd.domElement);ctl.enableDamping=true;ctl.target.set(0,12,0);ctl.maxPolarAngle=Math.PI*0.495;ctl.minDistance=2;ctl.maxDistance=120;
+    sc.add(new T.HemisphereLight(0xDDE6EA,0x2A2F31,0.85));const dl=new T.DirectionalLight(0xffffff,0.8);dl.position.set(20,40,15);sc.add(dl);
+    const grid=new T.GridHelper(60,30,0x2B363B,0x1F282C);sc.add(grid);
+    Object.assign(V3,{T,rnd,sc,cam,ctl,zonas:{},marcas:new T.Group()});sc.add(V3.marcas);
+    fetch(MODELO_URL).then(r=>{if(!r.ok)throw 0;return r.json()}).then(js=>{
+      const grp=new T.Group();
+      Object.entries(js.zonas).forEach(([cod,d])=>{const g=new T.BufferGeometry();
+        g.setAttribute("position",new T.Float32BufferAttribute(Float32Array.from(d.v,x=>x/100),3));g.setIndex(d.f);g.computeVertexNormals();g.computeBoundingBox();
+        const o=new T.Mesh(g,new T.MeshStandardMaterial({color:COL3.acero,metalness:.3,roughness:.6,emissive:0x000000,flatShading:true}));
+        o.name="zona_"+cod;o.userData.zona=cod;V3.zonas[cod]=o;grp.add(o)});
+      sc.add(grp);grp.updateMatrixWorld(true);V3.init=true;
+      const rc=new T.Raycaster();let down=null;
+      const hit=e=>{const b=rnd.domElement.getBoundingClientRect();const m=new T.Vector2((e.clientX-b.left)/b.width*2-1,-(e.clientY-b.top)/b.height*2+1);rc.setFromCamera(m,cam);
+        const hm=rc.intersectObjects(V3.marcas.children,false)[0];if(hm)return hm.object;const hz=rc.intersectObjects(Object.values(V3.zonas),false)[0];return hz?hz.object:null};
+      rnd.domElement.addEventListener("pointerdown",e=>{down=[e.clientX,e.clientY]});
+      rnd.domElement.addEventListener("pointerup",e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>6)return;down=null;elegir3D(hit(e),e)});
+      rnd.domElement.addEventListener("pointermove",e=>{if(e.pointerType!=="mouse"||down)return;const o=hit(e);rnd.domElement.style.cursor=o?"pointer":"grab"});
+      window.addEventListener("resize",()=>V3.open&&resize3D());
+      res();
+    }).catch(()=>rej(new Error("No se pudo cargar el archivo del modelo 3D.")));
+  });
+}
+function resize3D(){const b=document.getElementById("v3c");if(!b||!V3.rnd)return;const w=b.clientWidth,h=b.clientHeight;V3.rnd.setSize(w,h,false);V3.rnd.domElement.style.width=w+"px";V3.rnd.domElement.style.height=h+"px";V3.cam.aspect=w/Math.max(1,h);V3.cam.updateProjectionMatrix()}
+function zonaCentro(cod){const o=V3.zonas[cod];if(!o)return null;const bb=o.geometry.boundingBox.clone().applyMatrix4(o.matrixWorld);const c=new V3.T.Vector3();bb.getCenter(c);return{c,r:bb.getSize(new V3.T.Vector3()).length()/2}}
+function pintar3D(){
+  const T=V3.T,eq=eqAct(),lb=libro(eq);if(!lb)return;
+  const ab=insps(eq).find(i=>i.estado==="abierta"&&i.tipo!=="checklist");
+  V3.zid={};
+  lb.zonas.forEach(z=>{V3.zid[z.cod]=z.id;const o=V3.zonas[z.cod];if(!o)return;const ez=estadoZona(ab,z);
+    o.material.color.setHex(ez?(ez.st==="mal"?COL3.rojo:ez.st==="ok"?COL3.verde:COL3.gris):COL3.acero);o.material.emissive.setHex(0);o.userData.z=z});
+  while(V3.marcas.children.length)V3.marcas.remove(V3.marcas.children[0]);
+  const geo=new T.SphereGeometry(0.17,16,12);
+  lb.zonas.forEach(z=>z.items.forEach(it=>{
+    const pid=codigo(eq,z,it);let p=PUNTOS3D[pid];
+    if(!p){const zc=zonaCentro(z.cod);if(!zc)return;p=[zc.c.x,zc.c.y,zc.c.z]}
+    const r=ab&&ab.resultados[it.id]&&ab.resultados[it.id].estado?{estado:ab.resultados[it.id].estado}:ultimoEstado(eq,it.id);
+    const st=r&&r.estado==="mal"?"mal":r&&r.estado==="bien"?"bien":fichaIncompleta(it)||sinSec(it)?"inc":"sin";
+    const col={mal:COL3.rojo,bien:COL3.verde,inc:COL3.ambar,sin:COL3.gris}[st];
+    const m=new T.Mesh(geo,new T.MeshBasicMaterial({color:col}));m.position.set(p[0],p[1],p[2]);
+    m.userData={pid,itemId:it.id,zid:z.id,desc:it.desc,st};V3.marcas.add(m);
+  }));
+}
+function tween3D(target,pos){
+  const c=V3.ctl,cam=V3.cam;if(reduce()){c.target.copy(target);cam.position.copy(pos);return}
+  const t0=performance.now(),a=c.target.clone(),b=cam.position.clone(),d=750;
+  V3.tw=now=>{const p=Math.min(1,(now-t0)/d),e=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;c.target.lerpVectors(a,target,e);cam.position.lerpVectors(b,pos,e);if(p>=1)V3.tw=null};
+}
+function enfocar3D(zid,pid){
+  const T=V3.T,eq=eqAct(),lb=libro(eq);V3.sel=null;tip3D(null);
+  Object.values(V3.zonas).forEach(o=>o.material.emissive.setHex(0));
+  let target=new T.Vector3(2,13,0),dist=48;
+  const mk=pid&&V3.marcas.children.find(m=>m.userData.pid===pid);
+  const z=zid&&lb.zonas.find(x=>x.id===zid);
+  if(mk){target=mk.position.clone();dist=7;V3.sel=mk;tip3D(mk)}
+  else if(z&&V3.zonas[z.cod]){const zc=zonaCentro(z.cod);target=zc.c;dist=Math.max(7,zc.r*2.6);V3.zonas[z.cod].material.emissive.setHex(0x333333);V3.sel=V3.zonas[z.cod];tip3D(V3.zonas[z.cod])}
+  const dir=new T.Vector3(1,.55,.9).normalize();
+  tween3D(target,target.clone().add(dir.multiplyScalar(dist)));
+}
+function tip3D(o){
+  const tp=document.getElementById("v3tip");if(!tp)return;V3.tipObj=o;
+  if(!o){tp.style.display="none";return}
+  const u=o.userData;tp.innerHTML=u.pid?`<b>${esc(u.pid)}</b> · ${esc(u.desc)}`:`<b>${esc(u.z?u.z.nombre:u.zona)}</b>`;tp.style.display="block";
+}
+function elegir3D(o){
+  if(!o){V3.sel=null;tip3D(null);Object.values(V3.zonas).forEach(z=>z.material.emissive.setHex(0));return}
+  if(V3.sel===o){
+    const u=o.userData;cerrar3D();UI.todos=false;UI.tab="equipo";UI.insp=null;UI.zona=u.zid||(u.z&&u.z.id);render();
+    if(u.itemId){const a=document.getElementById("it_"+u.itemId);if(a){a.scrollIntoView({behavior:reduce()?"auto":"smooth",block:"start"});a.style.outline="3px solid var(--amber)";setTimeout(()=>a.style.outline="",1800)}}else window.scrollTo(0,0);
+    return;
+  }
+  Object.values(V3.zonas).forEach(z=>z.material.emissive.setHex(0));
+  if(o.userData.zona)o.material.emissive.setHex(0x333333);
+  V3.sel=o;tip3D(o);
+}
+function loop3D(){
+  V3.loop=true;
+  const f=now=>{if(!V3.open){V3.loop=false;return}
+    if(V3.tw)V3.tw(now);V3.ctl.update();
+    const s=reduce()?1:1+0.25*Math.sin(now/260);
+    V3.marcas.children.forEach(m=>{const k=m===V3.sel?1.6:m.userData.st==="mal"?s:1;m.scale.setScalar(k)});
+    V3.rnd.render(V3.sc,V3.cam);
+    if(V3.tipObj){const tp=document.getElementById("v3tip");const p=(V3.tipObj.userData.pid?V3.tipObj.position.clone():zonaCentro(V3.tipObj.userData.zona).c).project(V3.cam);
+      const b=V3.rnd.domElement;tp.style.left=((p.x+1)/2*b.clientWidth)+"px";tp.style.top=((1-p.y)/2*b.clientHeight)+"px";tp.style.display=p.z<1?"block":"none"}
+    requestAnimationFrame(f)};
+  requestAnimationFrame(f);
+}
+
+/* ============ Eventos ============ */
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-act]");
+  if(!t){return}
+  if(t.dataset.act==="closeSheet"&&e.target.closest("[data-stop]")&&!e.target.closest("button[data-act=closeSheet]"))return;
+  const a=t.dataset.act,v=t.dataset.v,eq=eqAct();
+  let insp=UI.insp?S.data.inspecciones[UI.insp]:(UI.tab==="equipo"&&UI.zona&&eq?inspFicha(eq,false):null);
+  if(["res","fotoRes","obsTog"].includes(a)&&t.dataset.z&&!(t.dataset.it||"").startsWith("ck")){insp=insp&&insp.tipo!=="checklist"?inspFicha(eq,false,t.dataset.z)||insp:inspFicha(eq,true,t.dataset.z);if(!insp){render();return}}
+  switch(a){
+    case"irEq":UI.todos=false;setEquipo(v);UI.tab="equipo";UI.zona=null;UI.animZonas=true;break;
+    case"tab":UI.todos=false;UI.tab=v;UI.zona=null;if(v==="equipo")UI.animZonas=true;if(v!=="inspeccion")UI.insp=null;window.scrollTo(0,0);break;
+    case"zona":UI.zona=v;window.scrollTo(0,0);break;
+    case"back":UI.zona=null;UI.animZonas=true;break;
+    case"sheet":UI.sheet=v;draft=null;break;
+    case"closeSheet":UI.sheet=null;draft=null;break;
+    case"crearEquipo":{const n=($("#nEq").value||"").trim();if(!n){toast("Escribí el nombre del equipo.");return}
+      if(equipos().some(x=>x.nombre.toLowerCase()===n.toLowerCase())){toast("Ya existe un equipo con ese nombre.");return}
+      crearEquipo(n,$("#nPl").checked);UI.sheet=null;UI.tab="equipo";UI.zona=null;break}
+    case"renombrar":{const n=($("#rnEq").value||"").trim();if(!n)return;eq.nombre=n;put("equipos",eq);UI.sheet=null;toast("Nombre guardado.");break}
+    case"borrarEquipo":if(!confirm(`¿Borrar ${eq.nombre} con su libro, inspecciones y hallazgos? No se puede deshacer.`))return;
+      insps(eq).forEach(i=>del("inspecciones",i.id));hallz(eq).forEach(h=>del("hallazgos",h.id));del("libros",eq.id);del("equipos",eq.id);UI.sheet=null;UI.equipo=null;break;
+    case"editItem":{const lb=libro(eq);if(v==="__nuevo"){const z=lb.zonas.find(x=>x.id===UI.zona)||lb.zonas[0];draft={__nuevo:true,zonaId:z.id,comp:"",desc:"",primaria:"",secundaria:"",seguridad:"",criterio:"",riesgo:z.riesgo||"",masa:"",altura:"",foto:null}}
+      else{for(const z of lb.zonas){const it=z.items.find(x=>x.id===v);if(it){draft={...clone(it),zonaId:z.id};break}}}
+      UI.sheet="item:"+v;break}
+    case"guardarItem":{if(!draft.desc.trim()){toast("La descripción no puede quedar vacía.");return}
+      const lb=clone(libro(eq));const z=lb.zonas.find(x=>x.id===draft.zonaId);const {__nuevo,zonaId,...it}=draft;
+      if(__nuevo){it.id=uid();it.art=z.items.reduce((m,x)=>Math.max(m,x.art),0)+1;it.pid=z.cod+"-"+it.art;it.propio=true;z.items.push(it)}else{const k=z.items.findIndex(x=>x.id===it.id);z.items[k]=it}
+      guardarLibro(lb);UI.sheet=null;draft=null;toast("Ficha guardada.");break}
+    case"borrarItem":{if(!confirm("¿Borrar este componente del libro?"))return;const lb=clone(libro(eq));const z=lb.zonas.find(x=>x.id===draft.zonaId);z.items=z.items.filter(x=>x.id!==draft.id);guardarLibro(lb);UI.sheet=null;draft=null;break}
+    case"fotoItem":pedirFoto(f=>{draft.foto=f;render()});return;
+    case"quitarFotoItem":draft.foto=null;break;
+    case"nueva":if(insps(eq).some(i=>i.estado==="abierta")){toast("Terminá o borrá la inspección abierta antes de empezar otra.");return}nuevaInspeccion(v);window.scrollTo(0,0);break;
+    case"nuevaPost":if(insps(eq).some(i=>i.estado==="abierta")){toast("Terminá o borrá la inspección abierta antes de empezar otra.");return}{const m=$("#pMot").value;UI.sheet=null;nuevaInspeccion("post",m);window.scrollTo(0,0)}break;
+    case"continuar":UI.insp=v;UI.tab="inspeccion";UI.zona=null;window.scrollTo(0,0);break;
+    case"salirInsp":UI.insp=null;break;
+    case"res":{const r=insp.resultados[t.dataset.it]||(insp.resultados[t.dataset.it]={});r.estado=r.estado===v?"":v;put("inspecciones",insp,600);break}
+    case"ck":{const c=insp.checklist[+t.dataset.k];c.r=c.r===v?"":v;put("inspecciones",insp,600);break}
+    case"fotoRes":{const id=t.dataset.it,iid=insp.id;pedirFoto(f=>{const i=S.data.inspecciones[iid];(i.resultados[id]||(i.resultados[id]={})).foto=f;put("inspecciones",i);render()});return}
+    case"cerrarInsp":if(t.disabled)return;cerrarInspeccion(insp);window.scrollTo(0,0);sello("Inspección cerrada");break;
+    case"borrarFirma":if(insp){delete insp.firma;delete insp.firmaFecha;put("inspecciones",insp)}break;
+    case"v3d":abrir3D(t.dataset.z||null,t.dataset.p||null);return;
+    case"recaer":caer();return;
+    case"borrarInsp":if(!confirm("¿Borrar esta inspección del historial? Los hallazgos que generó se mantienen."))return;del("inspecciones",v);break;
+    case"pdf":exportarPDF(v);return;
+    case"obsTog":{const k=t.dataset.it;UI.obsOpen.has(k)?UI.obsOpen.delete(k):UI.obsOpen.add(k);render();const el=document.getElementById(k.startsWith("ck")?k:"o_"+k);if(el&&UI.obsOpen.has(k))el.focus();return}
+    case"quitarFotoRes":{const r=insp.resultados[t.dataset.it];if(r){delete r.foto;put("inspecciones",insp)}break}
+    case"fotoCk":{const k=+t.dataset.k,iid=insp.id;pedirFoto(f=>{const i=S.data.inspecciones[iid];i.checklist[k].foto=f;put("inspecciones",i);render()});return}
+    case"quitarFotoCk":{delete insp.checklist[+t.dataset.k].foto;put("inspecciones",insp);break}
+    case"csv":csvHallazgos();return;
+    case"hf":UI.hfilter=v;break;
+    case"fotoCierre":pedirFoto(f=>{draft=draft||{};draft.foto=f;render()});return;
+    case"cerrarH":{const h=S.data.hallazgos[v];const com=($("#hCom").value||"").trim();if(!com){toast("Contá qué se hizo para cerrar el hallazgo.");return}
+      if(!(draft&&draft.foto)){toast("Agregá la foto de evidencia de la corrección.");return}
+      if(!(h.responsable||"").trim()){toast("Asigná un responsable antes de cerrar.");return}
+      h.estado="cerrado";h.cierre={fecha:new Date().toISOString(),comentario:com,foto:draft.foto,por:UI.inspector||""};put("hallazgos",h);UI.sheet=null;draft=null;toast("Hallazgo cerrado.");break}
+    case"reabrir":{const h=S.data.hallazgos[v];h.estado="abierto";delete h.cierre;put("hallazgos",h);break}
+  }
+  if(["tab","zona","back","irEq","continuar","salirInsp"].includes(a))withVT(render);else render();
+});
+document.addEventListener("input",e=>{
+  const el=e.target,ds=el.dataset;const insp=UI.insp?S.data.inspecciones[UI.insp]:(UI.tab==="equipo"&&UI.zona&&eqAct()?inspFicha(eqAct(),false):null);
+  if(ds.bind&&insp){insp[ds.bind]=el.value;if(ds.bind==="inspector"){UI.inspector=el.value;try{localStorage.setItem("libroDrops.inspector",el.value)}catch(x){}}put("inspecciones",insp,900)}
+  else if(ds.obs&&insp){const r=insp.resultados[ds.obs]||(insp.resultados[ds.obs]={});const was=!!(r.obs||"").trim();r.obs=el.value;put("inspecciones",insp,900);if(was!==!!el.value.trim())render()}
+  else if(ds.resp&&insp){(insp.resultados[ds.resp]||(insp.resultados[ds.resp]={})).responsable=el.value;put("inspecciones",insp,900)}
+  else if(ds.ckobs&&insp){insp.checklist[+ds.ckobs].obs=el.value;put("inspecciones",insp,900)}
+  else if(ds.draft&&draft){draft[ds.draft]=el.value;if(ds.draft==="masa"||ds.draft==="altura")render()}
+  else if(ds.calc){UI.calc[ds.calc]=el.value;render()}
+  else if(el.id==="hCom"){draft=draft||{};draft.com=el.value}
+});
+document.addEventListener("change",e=>{
+  const el=e.target;
+  if(el.id==="eqSel"){if(el.value==="__nuevo"){UI.sheet="nuevoEquipo";el.value=UI.todos?"__todos":UI.equipo}else if(el.value==="__todos"){UI.todos=true;UI.zona=null;UI.insp=null}else{UI.todos=false;setEquipo(el.value);UI.zona=null;UI.insp=null;UI.animZonas=true}withVT(render)}
+  else if(el.dataset.hb){const h=S.data.hallazgos[el.dataset.h];h[el.dataset.hb]=el.value.trim();put("hallazgos",h);render()}
+  else if(el.dataset.draft==="riesgo"||el.dataset.draft==="zonaId"||el.dataset.draft==="comp"){draft[el.dataset.draft]=el.value}
+});
+document.addEventListener("toggle",e=>{const d=e.target;if(d.dataset&&d.dataset.det){d.open?UI.open.add(d.dataset.det):UI.open.delete(d.dataset.det)}},true);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&V3.open){cerrar3D();return}if(e.key==="Escape"&&UI.sheet){UI.sheet=null;draft=null;render()}});
+
+initStore();
+</script>
+</body>
+</html>
+
+</body></html>
