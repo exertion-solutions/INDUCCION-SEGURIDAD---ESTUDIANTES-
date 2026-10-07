@@ -1,0 +1,16 @@
+{
+  "name": "Formación HSE · Material para estudiantes",
+  "short_name": "Formación HSE",
+  "description": "Guías, herramientas y modelos 3D para futuros profesionales HSE en servicios de pozo. Funciona sin conexión.",
+  "lang": "es-AR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a1018",
+  "theme_color": "#0a1018",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
