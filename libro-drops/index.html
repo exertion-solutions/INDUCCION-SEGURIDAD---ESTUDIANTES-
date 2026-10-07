@@ -5,9 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Libro DROPS (Copy)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/fonts.css">
 <style>
 :root{
   --bg:#E9ECEA; --surface:#FFFFFF; --sunk:#F3F5F4; --ink:#1C262B; --muted:#5B686E; --line:#CBD2CF;
@@ -902,11 +900,18 @@ function vSheet(eq){
 /* ============ Exportar ============ */
 async function fotoData(f){if(!f)return"";if(f.data)return f.data;try{const r=await fetch("/_blob/"+f.asset);const b=await r.blob();return await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(b)})}catch(e){return""}}
 async function guardarArchivo(nombre,contenido){
-  if(!S.downloads){toast("La descarga no está disponible en esta vista. Abrí la app publicada.");return}
+  if(!S.downloads){
+    try{
+      const blob=contenido instanceof Blob?contenido:new Blob([contenido],{type:"text/csv;charset=utf-8"});
+      const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=nombre;
+      document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+    }catch(e){toast("No se pudo descargar el archivo.")}
+    return;
+  }
   try{await S.downloads.save({filename:nombre,data:contenido})}
   catch(e){if(e&&e.code==="declined")return;if(e&&e.code==="extension_not_enabled"){toast("La descarga de PDF no está habilitada en esta vista.");return}if(e&&e.code==="rate_limited"){toast("Ya hay una descarga pendiente de confirmar.");return}toast("No se pudo descargar el archivo.")}
 }
-const PDF_LIBS=["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js","https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"];
+const PDF_LIBS=["../assets/vendor/jspdf.umd.min.js","../assets/vendor/jspdf.plugin.autotable.min.js"];
 let pdfLibs=null;
 function cargarPDF(){
   if(window.jspdf&&window.jspdf.jsPDF&&window.jspdf.jsPDF.API.autoTable)return Promise.resolve();
@@ -921,9 +926,8 @@ async function imgInfo(f){
 const pdfTxt=v=>String(v??"").replace(/[\u2013\u2014]/g,"-").replace(/[\u201c\u201d]/g,'"').replace(/[\u2018\u2019]/g,"'").replace(/\u2082/g,"2");
 async function exportarPDF(id){
   const eq=eqAct(),lb=libro(eq),i=S.data.inspecciones[id];if(!i)return;
-  if(!S.downloads){toast("La descarga no está disponible en esta vista. Abrí la app publicada.");return}
   toast("Preparando el PDF…");
-  try{await cargarPDF()}catch(e){toast("No se pudo cargar el generador de PDF. Revisá la conexión a internet.");return}
+  try{await cargarPDF()}catch(e){toast("No se pudo cargar el generador de PDF.");return}
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
   const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
