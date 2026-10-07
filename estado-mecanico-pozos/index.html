@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="es"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png"><meta name="theme-color" content="#0a1018"><meta name="description" content="Modelo 3D y esquema en corte para estudiar terminación y reparación de pozos."><meta property="og:type" content="website"><meta property="og:locale" content="es_AR"><meta property="og:title" content="Estado mecánico de pozos terminados"><meta property="og:description" content="Modelo 3D y esquema en corte para estudiar terminación y reparación de pozos."><meta property="og:image" content="https://exertion-solutions.github.io/INDUCCION-SEGURIDAD---ESTUDIANTES-/assets/og.png"><meta name="twitter:card" content="summary_large_image"></head><body>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1250,5 +1250,53 @@ window.__tabs=show;
 </body>
 </html>
 
+<style id="tour-css">
+.tour-btn{font:600 1rem "Barlow Condensed",sans-serif;background:var(--ink);color:var(--paper);border:0;padding:8px 16px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.tour-btn:disabled{opacity:.45;cursor:default}.tour-btn[aria-pressed=true]{background:#c2410c}
+.tour-cap{position:absolute;left:12px;top:12px;width:min(460px,calc(100% - 24px));background:var(--ink);color:var(--paper);padding:12px 14px;box-shadow:0 6px 24px #0004;font-size:.92rem;line-height:1.45;z-index:3}
+.tour-cap[hidden]{display:none}
+.tour-cap .tc-x{display:block}.tour-cap b{display:block;font:700 1.2rem "Barlow Condensed",sans-serif;margin-bottom:4px}
+.tour-cap .tc-n{font:600 .75rem "Barlow Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.tour-cap .tc-bar{height:3px;background:#fff3;margin:10px 0 8px}.tour-cap .tc-bar i{display:block;height:100%;width:0;background:#fb923c}
+.tour-cap .tc-btns{display:flex;gap:8px}.tour-cap button{font:600 .9rem "Barlow Condensed",sans-serif;background:#fff2;color:inherit;border:0;padding:5px 12px;cursor:pointer}
+.tour-cap button:hover{background:#fff4}
+</style>
+<script id="tour-js">
+(function(){
+  var bar=document.querySelector(".visor-barra"),lienzo=document.getElementById("lienzo"),selV=document.getElementById("sel-vista");
+  if(!bar||!lienzo||!selV)return;
+  var T={"arbol": "Conjunto de válvulas sobre el cabezal que controla y dirige el flujo en superficie. La válvula maestra cierra el pozo; por arriba queda la válvula de corona (o de suaveo) para intervenir y por el costado sale la línea de producción.", "cabB": "Aloja el colgador del tubing: soporta su peso y sella el espacio anular entre el casing de producción y el tubing.", "packer": "Herramienta que se fija en el casing por encima de los punzados. Las cuñas lo anclan contra la pared y los elementos de empaque (gomas) sellan el anular, obligando al fluido a subir por el tubing.", "tun": "Disparos que perforan el casing, el cemento y la roca para que el fluido de la formación entre al pozo. Se ubican solo frente a la zona productiva.", "collar": "Válvula de retención dentro del casing, unas pocas cañerías sobre el zapato. Durante la cementación impide que el cemento vuelva a subir por dentro. Su tope marca el fondo de pozo artificial (PBTD).", "zprod": "Extremo inferior del casing de producción. Entre el zapato y el collar queda cemento dentro del casing."};  // textos copiados de INFO (la página los define dentro de otro ámbito)
+  var info=function(k){return T[k]||""};
+  var STEPS=[
+    {v:"todo",t:"Pozo completo",x:"De la boca al fondo: casing guía 9 5/8″, casing de producción 5 1/2″ y, por dentro, el tubing 2 7/8″ con el packer. El cemento une cada cañería con la formación. Girá el modelo con el mouse cuando termine el recorrido."},
+    {v:"boca",t:"Boca de pozo",x:info("arbol")+" "+info("cabB")},
+    {v:"pk",t:"Packer y punzados",x:info("packer")+" "+info("tun")},
+    {v:"fondo",t:"Fondo de pozo",x:info("collar")+" "+info("zprod")}
+  ];
+  var DUR=9000,btn=document.createElement("button"),cap=document.createElement("div"),i=-1,t0=0,raf=0,prog=false,on=false;
+  btn.type="button";btn.className="tour-btn";btn.setAttribute("aria-pressed","false");btn.textContent="▶ Recorrido guiado";btn.disabled=true;
+  bar.insertBefore(btn,bar.firstChild);
+  cap.className="tour-cap";cap.hidden=true;cap.setAttribute("role","status");cap.setAttribute("aria-live","polite");
+  cap.innerHTML='<span class="tc-n"></span><b></b><span class="tc-x"></span><div class="tc-bar"><i></i></div><div class="tc-btns"><button type="button" data-a="prev">‹ Anterior</button><button type="button" data-a="next">Siguiente ›</button><button type="button" data-a="stop">Salir</button></div>';
+  lienzo.appendChild(cap);
+  var carga=document.getElementById("carga");
+  (function espera(){if(!carga||carga.hidden){btn.disabled=false}else setTimeout(espera,300)})();
+  function go(n){
+    i=(n+STEPS.length)%STEPS.length;var s=STEPS[i];
+    var b=selV.querySelector('button[data-v="'+s.v+'"]');prog=true;b&&b.click();prog=false;
+    cap.querySelector(".tc-n").textContent="Paso "+(i+1)+" de "+STEPS.length;cap.querySelector("b").textContent=s.t;cap.querySelector(".tc-x").textContent=s.x;
+    t0=performance.now();
+  }
+  function tick(ts){if(!on)return;var k=Math.min(1,(ts-t0)/DUR);cap.querySelector(".tc-bar i").style.width=(k*100)+"%";if(k>=1)go(i+1);raf=requestAnimationFrame(tick)}
+  function start(){on=true;btn.setAttribute("aria-pressed","true");btn.textContent="■ Detener recorrido";cap.hidden=false;go(0);raf=requestAnimationFrame(tick)}
+  function stop(){on=false;cancelAnimationFrame(raf);btn.setAttribute("aria-pressed","false");btn.textContent="▶ Recorrido guiado";cap.hidden=true}
+  btn.addEventListener("click",function(){on?stop():start()});
+  cap.addEventListener("click",function(e){var a=e.target.dataset&&e.target.dataset.a;if(a==="next")go(i+1);else if(a==="prev")go(i-1);else if(a==="stop")stop()});
+  selV.addEventListener("click",function(){if(on&&!prog)stop()},true);                 // el usuario toma el control
+  lienzo.addEventListener("pointerdown",function(e){if(on&&!cap.contains(e.target))stop()},true);
+  document.addEventListener("keydown",function(e){if(on&&e.key==="Escape")stop()});
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches)DUR=14000;
+})();
+</script>
 <script src="../nav.js" defer></script>
 </body></html>

@@ -1,10 +1,10 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="es"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png"><meta name="theme-color" content="#0a1018"><meta name="description" content="Libro de objetos caídos: modelo 3D del equipo e inspecciones RCCO."><meta property="og:type" content="website"><meta property="og:locale" content="es_AR"><meta property="og:title" content="Libro DROPS"><meta property="og:description" content="Libro de objetos caídos: modelo 3D del equipo e inspecciones RCCO."><meta property="og:image" content="https://exertion-solutions.github.io/INDUCCION-SEGURIDAD---ESTUDIANTES-/assets/og.png"><meta name="twitter:card" content="summary_large_image"></head><body>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Libro DROPS (Copy)</title>
+<title>Libro DROPS</title>
 <link rel="stylesheet" href="../assets/fonts.css">
 <style>
 :root{
@@ -583,7 +583,7 @@ function render(){
     ${equipos().length?`<select class="eq-select" id="eqSel" aria-label="Equipo">${equipos().length>1?`<option value="__todos" ${UI.todos?"selected":""}>Todos los equipos</option>`:""}${equipos().map(e=>`<option value="${e.id}" ${eq&&e.id===eq.id&&!UI.todos?"selected":""}>${esc(e.nombre)}</option>`).join("")}<option value="__nuevo">+ Nuevo equipo</option></select>`:""}
   </div></header>
   <main class="wrap">
-    ${S.mode==="local"?`<div class="banner">Vista previa: los datos se guardan solo en este navegador. En la versión publicada se comparten con el equipo.</div>`:""}
+    ${S.mode==="local"?`<div class="banner">Los datos se guardan solo en este navegador. Hacé una copia de seguridad si cambiás de equipo o borrás los datos del navegador.<span class="row wrapflex" style="margin-top:8px;gap:8px"><button class="btn ghost" data-act="backup">Guardar copia (.json)</button><button class="btn ghost" data-act="restore">Restaurar copia</button></span></div>`:""}
     ${S.readOnly?`<div class="banner">Acceso de solo lectura: podés consultar el libro, pero los cambios no se guardan.</div>`:""}
     ${body}
   </main>
@@ -897,6 +897,28 @@ function vSheet(eq){
   return "";
 }
 
+/* ============ Copia de seguridad (modo local) ============ */
+async function backupExport(){
+  const n=Object.keys(S.data.equipos).length;
+  await guardarArchivo(`LibroDROPS_copia_${hoy()}.json`,new Blob([JSON.stringify({app:"libroDrops",v:1,fecha:new Date().toISOString(),data:S.data})],{type:"application/json"}));
+  toast(n?"Copia guardada ("+n+" equipo"+(n>1?"s":"")+").":"Copia guardada (todavía no hay equipos cargados).");
+}
+function backupImport(){
+  const inp=document.createElement("input");inp.type="file";inp.accept="application/json,.json";
+  inp.onchange=()=>{const f=inp.files&&inp.files[0];if(!f)return;
+    const fr=new FileReader();
+    fr.onload=()=>{
+      let o;try{o=JSON.parse(fr.result)}catch(e){toast("El archivo no es una copia válida.");return}
+      const d=o&&o.app==="libroDrops"&&o.data;
+      if(!d||!COLS.every(c=>d[c]&&typeof d[c]==="object")){toast("El archivo no es una copia del Libro DROPS.");return}
+      const ne=Object.keys(d.equipos).length,ni=Object.keys(d.inspecciones).length;
+      if(!confirm("Restaurar la copia reemplaza los datos actuales de este navegador por: "+ne+" equipo(s) y "+ni+" inspección(es). ¿Continuar?"))return;
+      COLS.forEach(c=>S.data[c]=d[c]);localSave();migrar();render();toast("Copia restaurada.");
+    };
+    fr.readAsText(f);
+  };
+  inp.click();
+}
 /* ============ Exportar ============ */
 async function fotoData(f){if(!f)return"";if(f.data)return f.data;try{const r=await fetch("/_blob/"+f.asset);const b=await r.blob();return await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(b)})}catch(e){return""}}
 async function guardarArchivo(nombre,contenido){
@@ -1220,6 +1242,8 @@ document.addEventListener("click",e=>{
     case"fotoCk":{const k=+t.dataset.k,iid=insp.id;pedirFoto(f=>{const i=S.data.inspecciones[iid];i.checklist[k].foto=f;put("inspecciones",i);render()});return}
     case"quitarFotoCk":{delete insp.checklist[+t.dataset.k].foto;put("inspecciones",insp);break}
     case"csv":csvHallazgos();return;
+    case"backup":backupExport();return;
+    case"restore":backupImport();return;
     case"hf":UI.hfilter=v;break;
     case"fotoCierre":pedirFoto(f=>{draft=draft||{};draft.foto=f;render()});return;
     case"cerrarH":{const h=S.data.hallazgos[v];const com=($("#hCom").value||"").trim();if(!com){toast("Contá qué se hizo para cerrar el hallazgo.");return}
