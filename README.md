@@ -10,6 +10,9 @@ Herramientas de consulta para futuros profesionales HSE en servicios de pozo. HT
 | Herramientas en Equipos de Torre | `herramientas-torre/` |
 | Estado mecánico de pozos terminados | `estado-mecanico-pozos/` |
 | Libro DROPS | `libro-drops/` |
+| Instructivo IPCR | `instructivo-ipcr/` |
+| Carga de fuego paso a paso | `carga-de-fuego/` |
+| Investigación de incidentes | `investigacion-incidentes/` |
 
 ## Publicar
 Settings → Pages → Deploy from a branch → `main` / root.
