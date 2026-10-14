@@ -9,9 +9,6 @@ const SITES = [
   ["herramientas-torre/", "Herramientas en Equipos de Torre"],
   ["estado-mecanico-pozos/", "Estado mecánico de pozos"],
   ["libro-drops/", "Libro DROPS"],
-  ["instructivo-ipcr/", "Instructivo IPCR"],
-  ["carga-de-fuego/", "Carga de fuego paso a paso"],
-  ["investigacion-incidentes/", "Investigación de incidentes"],
 ];
 (async () => {
   const b = await chromium.launch({ executablePath: process.env.CHROMIUM || undefined });

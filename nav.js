@@ -17,10 +17,7 @@
     { dir: "guia-mediciones-srt/", name: "Guía de Mediciones SRT", sub: "Higiene y seguridad", ico: "M3 17l6-6 4 4 8-8M14 7h7v7" },
     { dir: "herramientas-torre/", name: "Herramientas en Equipos de Torre", sub: "Qué es y cómo se usa", ico: "M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.1-.6-.6-2.1z" },
     { dir: "estado-mecanico-pozos/", name: "Estado mecánico de pozos", sub: "Lectura de pozos terminados", ico: "M12 2v20M8 6h8M7 11h10M6 16h12" },
-    { dir: "libro-drops/", name: "Libro DROPS", sub: "Objetos caídos · 3D e inspecciones", ico: "M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" },
-    { dir: "instructivo-ipcr/", name: "Instructivo IPCR", sub: "Peligros y control de riesgos", ico: "M12 3l9 16H3zM12 10v4M12 17h.01" },
-    { dir: "carga-de-fuego/", name: "Carga de fuego paso a paso", sub: "Cálculo y protección contra incendio", ico: "M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 1.5 1 2.5 2 3 3 .5-2 0-4 0-6z" },
-    { dir: "investigacion-incidentes/", name: "Investigación de incidentes", sub: "Del reporte al cierre", ico: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-5-5" }
+    { dir: "libro-drops/", name: "Libro DROPS", sub: "Objetos caídos · 3D e inspecciones", ico: "M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" }
   ];
 
   var path = location.pathname;
