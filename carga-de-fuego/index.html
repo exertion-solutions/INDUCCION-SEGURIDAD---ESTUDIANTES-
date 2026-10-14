@@ -1,0 +1,985 @@
+<!doctype html><html lang="es"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="manifest" href="../manifest.webmanifest"><link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png"><meta name="theme-color" content="#0a1018"><meta name="description" content="Cálculo de carga de fuego, resistencia al fuego y potencial extintor, con ejemplo resuelto."><meta property="og:type" content="website"><meta property="og:locale" content="es_AR"><meta property="og:title" content="Carga de fuego paso a paso"><meta property="og:description" content="Cálculo de carga de fuego, resistencia al fuego y potencial extintor, con ejemplo resuelto."><meta property="og:image" content="https://exertion-solutions.github.io/INDUCCION-SEGURIDAD---ESTUDIANTES-/assets/og.png"><meta name="twitter:card" content="summary_large_image"></head><body>
+<title>Carga de fuego paso a paso</title>
+<link rel="stylesheet" href="../assets/fonts.css">
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: banda de resultados arriba, luego 8 pasos reales en secuencia (figura CAD | explicación + cálculo).
+   Paleta de señalización de seguridad: rojo de equipos contra incendio, verde de salida, hormigón como neutro. */
+:root{
+  --bg:#EEF0EE; --surface:#FFFFFF; --fig:#E4E7E4; --ink:#1A2024; --muted:#59646B; --line:#D3D8D5;
+  --red:#B8231F; --red-soft:#F7E3E1; --green:#1C7A45; --green-soft:#DDEFE4; --amber:#9A6412; --amber-soft:#F6EBD6;
+  --chip:#E8ECEA;
+  --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --m-madera:#C47F3C; --m-carton:#CFA470; --m-papel:#E6E0C6; --m-caucho:#2E2F33; --m-film:#86C3E6;
+  --m-gasoil:#EE7B16; --m-aceite:#93670F; --m-otro:#8A8FA3;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121517; --surface:#1A1F22; --fig:#22282B; --ink:#E6EAE8; --muted:#9CA6AC; --line:#2F373B;
+  --red:#F0625C; --red-soft:#3A1F1E; --green:#55B982; --green-soft:#1B3127; --amber:#E2A84B; --amber-soft:#36290F;
+  --chip:#262D30; --m-caucho:#6B6E75; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121517; --surface:#1A1F22; --fig:#22282B; --ink:#E6EAE8; --muted:#9CA6AC; --line:#2F373B;
+  --red:#F0625C; --red-soft:#3A1F1E; --green:#55B982; --green-soft:#1B3127; --amber:#E2A84B; --amber-soft:#36290F;
+  --chip:#262D30; --m-caucho:#6B6E75; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4rem);letter-spacing:.01em;text-transform:uppercase}
+h2{font-size:clamp(1.7rem,3.4vw,2.3rem);text-transform:uppercase;letter-spacing:.015em}
+h3{font-size:1.25rem;text-transform:uppercase;letter-spacing:.03em}
+p{margin:0;max-width:66ch}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+a{color:inherit}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--red);outline-offset:2px}
+
+/* Cabecera */
+header.top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:28px;align-items:center;padding-block:36px 20px}
+header.top .intro{display:grid;gap:14px}
+.signal{display:inline-flex;align-items:center;gap:10px}
+.signal i{display:block;width:30px;height:30px;background:var(--red);border-radius:3px;position:relative}
+.signal i::after{content:"";position:absolute;inset:7px 11px;background:var(--surface);border-radius:2px 2px 4px 4px}
+.lede{font-size:1.1rem;color:var(--muted)}
+.hero-fig{background:var(--fig);border-radius:6px;padding:14px;margin:0}
+.hero-fig img{display:block;width:100%;height:auto}
+figcaption{font-size:.8rem;color:var(--muted);margin-top:8px}
+
+/* Banda de resultados */
+.results{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line)}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:8px 10px;display:grid;gap:2px;min-width:0;text-decoration:none}
+.tile:hover{border-color:var(--muted)}
+.tile .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v{font-family:var(--f-display);font-size:1.6rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.tile .v small{font-family:var(--f-mono);font-size:.7rem;font-weight:500;color:var(--muted);margin-left:3px}
+.tile.hot{border-color:var(--red)}
+.tile.hot .v{color:var(--red)}
+
+/* Navegación de pasos */
+nav.steps{display:flex;gap:6px;overflow-x:auto;padding-block:14px 4px;scrollbar-width:thin}
+nav.steps a{flex:0 0 auto;display:flex;gap:8px;align-items:center;text-decoration:none;font-size:.9rem;padding:6px 12px 6px 6px;border-radius:99px;background:var(--surface);border:1px solid var(--line)}
+nav.steps a b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--surface);font-family:var(--f-mono);font-size:.75rem}
+nav.steps a:hover{border-color:var(--ink)}
+
+/* Pasos */
+section.paso{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:28px;padding-block:44px;border-bottom:1px solid var(--line);scroll-margin-top:110px}
+section.paso.wide{grid-template-columns:minmax(0,1fr)}
+.paso .fig{margin:0;align-self:start;position:sticky;top:120px}
+.paso .fig .canvas{background:var(--fig);border-radius:6px;padding:12px;display:grid;place-items:center}
+.paso .fig img{display:block;width:100%;height:auto}
+.paso .body{display:grid;gap:16px;align-content:start;min-width:0}
+.stepno{display:flex;gap:12px;align-items:baseline}
+.stepno span{font-family:var(--f-display);font-size:3rem;font-weight:700;line-height:.8;color:var(--red);font-variant-numeric:tabular-nums}
+.formula{font-family:var(--f-mono);background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:4px;padding:12px 14px;overflow-x:auto;font-size:.92rem;line-height:1.7}
+.formula .res{color:var(--red);font-weight:600}
+.note{font-size:.92rem;color:var(--muted)}
+.callout{background:var(--amber-soft);border-radius:4px;padding:10px 12px;font-size:.92rem}
+.callout.ok{background:var(--green-soft)}
+.callout.bad{background:var(--red-soft)}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;padding:1px 6px;border-radius:3px;vertical-align:middle;white-space:nowrap}
+.tag.of{background:var(--green-soft);color:var(--green)}
+.tag.se{background:var(--chip);color:var(--muted)}
+.tag.ve{background:var(--amber-soft);color:var(--amber)}
+label.field{display:grid;gap:4px;font-size:.88rem;color:var(--muted)}
+.inline{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+input[type=number],select{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:6px 8px;min-width:0}
+input[type=number]{width:7.5em;font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--surface)}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:6px 12px;cursor:pointer}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+
+/* Tabla de inventario */
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:var(--f-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500;background:var(--surface)}
+td.r,th.r{text-align:right}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:var(--chip)}
+tbody tr.sel td{background:var(--chip)}
+tbody tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--red)}
+tfoot td{font-weight:700;border-bottom:0}
+.sw{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:7px;vertical-align:-1px;border:1px solid var(--line)}
+.del{border:0;background:none;color:var(--muted);cursor:pointer;font-size:1.1rem;line-height:1;padding:0 4px}
+.del:hover{color:var(--red)}
+td input[type=number]{width:6.2em;padding:3px 6px}
+
+/* Barra de aporte de calor */
+.stack{display:flex;height:34px;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.stack div{min-width:2px;transition:flex-basis .3s}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.85rem}
+
+/* Escala de Qf */
+.scale{position:relative;padding-top:30px}
+.scale .bands{display:grid;grid-template-columns:15fr 15fr 30fr 40fr 20fr;height:30px;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.scale .bands div{display:grid;place-items:center;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);border-right:1px solid var(--line);background:var(--surface)}
+.scale .bands div.on{background:var(--red-soft);color:var(--red);font-weight:600}
+.scale .ticks{position:relative;height:18px;font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.scale .ticks span{position:absolute;transform:translateX(-50%)}
+.scale .pin{position:absolute;top:0;transform:translateX(-50%);display:grid;justify-items:center;transition:left .4s}
+.scale .pin b{font-family:var(--f-mono);font-size:.78rem;background:var(--red);color:#fff;padding:1px 7px;border-radius:3px;white-space:nowrap}
+.scale .pin i{width:2px;height:38px;background:var(--red)}
+
+/* Riesgo */
+.riesgos{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.riesgos button{border:1px solid var(--line);background:var(--surface);border-radius:5px;padding:8px 4px;cursor:pointer;display:grid;gap:2px;justify-items:center;text-align:center}
+.riesgos button b{font-family:var(--f-display);font-size:1.5rem;line-height:1}
+.riesgos button span{font-size:.7rem;color:var(--muted);line-height:1.15}
+.riesgos button[aria-pressed=true]{border-color:var(--red);background:var(--red-soft)}
+.riesgos button[aria-pressed=true] b{color:var(--red)}
+
+/* Tablas normativas */
+.grid-tab td,.grid-tab th{text-align:center}
+.grid-tab td:first-child,.grid-tab th:first-child{text-align:left}
+.grid-tab td.hit{background:var(--red);color:#fff;font-weight:600}
+.grid-tab td.row{background:var(--chip)}
+.grid-tab tbody tr{cursor:default}
+.grid-tab tbody tr:hover td{background:inherit}
+.grid-tab tbody tr:hover td.hit{background:var(--red)}
+
+/* Plano */
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px}
+.plan svg{display:block;width:100%;height:auto;max-width:560px;margin:0 auto}
+.plan svg text{font-family:var(--f-mono);fill:var(--ink)}
+.checks{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.checks li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-size:.92rem}
+.pill{font-family:var(--f-mono);font-size:.72rem;padding:1px 8px;border-radius:99px;font-weight:600}
+.pill.ok{background:var(--green-soft);color:var(--green)}
+.pill.no{background:var(--red-soft);color:var(--red)}
+.pill.ad{background:var(--amber-soft);color:var(--amber)}
+
+/* Texto de la memoria */
+.memoria{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 20px;display:grid;gap:10px}
+.memoria p{max-width:none}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+ol.err{margin:0;padding-left:1.2em;display:grid;gap:6px}
+footer{padding-block:30px;color:var(--muted);font-size:.85rem;display:grid;gap:8px}
+
+@media (max-width:900px){
+  header.top{grid-template-columns:minmax(0,1fr)}
+  section.paso{grid-template-columns:minmax(0,1fr)}
+  .paso .fig{position:static}
+  .tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .riesgos{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tile .v{font-size:1.3rem}
+  .results{position:static}
+}
+
+/* Barra de la app y pestañas */
+.appbar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;padding-block:14px;border-bottom:1px solid var(--line)}
+.appbar .brand{display:flex;gap:10px;align-items:center;font-family:var(--f-display);font-weight:700;font-size:1.25rem;text-transform:uppercase;letter-spacing:.03em}
+.tabs{display:flex;gap:4px;background:var(--chip);padding:4px;border-radius:7px}
+.tabs button{border:0;background:none;padding:8px 14px;border-radius:5px;cursor:pointer;font-weight:600;color:var(--muted)}
+.tabs button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+/* Libro */
+#tab-libro{padding-block:24px 40px}
+.lb-top{display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between}
+.lb-top .acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.lb-layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;margin-top:20px}
+#lb-nav{display:grid;gap:6px;align-content:start;position:sticky;top:12px}
+.lb-paso{display:flex;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:9px 10px;cursor:pointer}
+.lb-paso b{display:grid;place-items:center;flex:0 0 26px;height:26px;border-radius:50%;background:var(--chip);font-family:var(--f-mono);font-size:.8rem}
+.lb-paso span{display:grid;line-height:1.2;font-weight:600;font-size:.93rem}
+.lb-paso small{font-weight:400;font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.lb-paso small.ok{color:var(--green)}
+.lb-paso[aria-current=step]{border-color:var(--ink)}
+.lb-paso[aria-current=step] b{background:var(--red);color:#fff}
+#lb-etapa{display:grid;gap:18px;min-width:0}
+.lb-head{display:grid;gap:6px}
+.lb-head h2{font-size:clamp(1.5rem,3vw,2rem)}
+.lb-card{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px 16px 16px;display:grid;gap:12px;min-width:0;margin:0}
+.lb-card legend{font-family:var(--f-display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:1.1rem;padding:0 6px}
+.lb-card h3{font-size:1.1rem}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px}
+.fgrid .span2{grid-column:1/-1}
+.field input:not([type=checkbox]),.field select,.field textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:7px 9px;color:var(--ink);font:inherit;font-size:.95rem}
+.field textarea{resize:vertical}
+.field small{font-size:.78rem;color:var(--muted)}
+.field.chk{display:flex;gap:8px;align-items:center;color:var(--ink)}
+details.qv{background:var(--amber-soft);border-radius:6px;padding:8px 12px;font-size:.9rem}
+details.qv summary{cursor:pointer;font-weight:600}
+details.qv ul{margin:6px 0 2px;padding-left:1.2em;display:grid;gap:3px}
+.lb-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 14px;cursor:pointer;font-weight:600}
+.chip[aria-selected=true]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chip.add{border-style:dashed;color:var(--muted)}
+.lb-split{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:20px;align-items:start}
+.lb-col{display:grid;gap:18px;min-width:0}
+.lb-res{position:sticky;top:12px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--red);border-radius:8px;padding:14px;display:grid;gap:6px}
+.lb-res .big{display:flex;align-items:baseline;gap:6px}
+.lb-res .big .num{font-family:var(--f-display);font-weight:700;font-size:2.6rem;line-height:1;color:var(--red)}
+.rrow{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;border-top:1px solid var(--line);padding-top:5px}
+.rrow b{font-family:var(--f-mono);font-weight:600;text-align:right}
+.okc{color:var(--green)} .noc{color:var(--red)}
+.lb-tab td{white-space:nowrap}
+.lb-tab input,.lb-tab select{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:4px 6px;font:inherit;font-size:.88rem;color:var(--ink);width:6.5em}
+.lb-tab input.w-s{width:4.5em}.lb-tab input.w-l{width:13em}.lb-tab input[type=date]{width:auto}
+.lb-tab input[type=number]{text-align:right;font-family:var(--f-mono)}
+.lb-tab tbody tr{cursor:default}
+.lb-row-end{display:flex;justify-content:flex-end}
+.btn.ghost{background:none}.btn.danger{color:var(--red)}.btn.small{padding:4px 10px;font-size:.88rem}.btn.big{padding:10px 18px;font-size:1rem;font-weight:600}
+label.btn{display:inline-flex;align-items:center;cursor:pointer}
+.link{border:0;background:none;color:var(--red);cursor:pointer;padding:0;font:inherit;font-size:.9rem;text-decoration:underline;text-underline-offset:2px;justify-self:start;text-align:left}
+.fotos{display:flex;flex-wrap:wrap;gap:10px}
+.foto{position:relative;margin:0;width:160px;display:grid;gap:4px}
+.foto img{width:160px;height:110px;object-fit:cover;border-radius:5px;border:1px solid var(--line)}
+.foto input{font-size:.8rem;padding:3px 6px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.foto .del{position:absolute;top:4px;right:4px;background:var(--surface);border-radius:50%;width:24px;height:24px}
+.foto.add{height:110px;border:1.5px dashed var(--line);border-radius:5px;place-items:center;cursor:pointer;color:var(--muted);font-weight:600}
+.lb-prog{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.lb-prog .bar{flex:1 1 200px;height:8px;background:var(--chip);border-radius:99px;overflow:hidden}
+.lb-prog .bar i{display:block;height:100%;background:var(--green);transition:width .3s}
+.lb-grupo{display:grid;gap:10px}
+.lb-grupo h3{font-size:1.15rem;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.vitem{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:7px;padding:12px 14px;display:grid;gap:7px}
+.vitem.st-C{border-left-color:var(--green)}.vitem.st-NC{border-left-color:var(--red)}.vitem.st-NA{border-left-color:var(--muted)}
+.vhead{display:flex;gap:10px;justify-content:space-between;align-items:start}
+.vhead h4{margin:0;font-size:1rem}
+.vq{font-size:.92rem;max-width:none}
+.vbase{font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
+.vsug{font-size:.88rem;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.vrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.seg button.sug{outline:2px dashed var(--muted);outline-offset:-4px}
+.seg button.b-C[aria-pressed=true]{background:var(--green);color:#fff}
+.seg button.b-NC[aria-pressed=true]{background:var(--red);color:#fff}
+.seg button.b-NA[aria-pressed=true]{background:var(--muted);color:var(--surface)}
+.pill.na{background:var(--chip);color:var(--muted)}
+.vfoto{margin:0;display:flex;gap:10px;align-items:end}.vfoto img{width:140px;height:96px;object-fit:cover;border-radius:5px}
+.hcard{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;display:grid;gap:10px;border-top:4px solid var(--amber)}
+.hcard.pri-Alta{border-top-color:var(--red)}.hcard.pri-Baja{border-top-color:var(--muted)}
+.hhead{display:flex;gap:12px;align-items:start}.hhead h4{margin:0}
+.hnum{font-family:var(--f-display);font-weight:700;font-size:1.8rem;line-height:1;color:var(--red)}
+.hobs{background:var(--red-soft);border-radius:5px;padding:6px 10px;font-size:.92rem}
+.hfoto{width:200px;border-radius:6px}
+.empty{border:1.5px dashed var(--line);border-radius:8px;padding:24px;text-align:center;display:grid;gap:4px;justify-items:center}
+ul.falt{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.lb-export{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.lb-next{display:flex;justify-content:flex-end}
+.lb-confirm{background:var(--red-soft);border-radius:6px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+@media (max-width:980px){.lb-layout{grid-template-columns:minmax(0,1fr)}#lb-nav{position:static;grid-auto-flow:column;grid-auto-columns:minmax(150px,1fr);overflow-x:auto}.lb-split{grid-template-columns:minmax(0,1fr)}.lb-res{position:static}}
+@media (max-width:560px){.fgrid{grid-template-columns:minmax(0,1fr)}}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ===== Pestañas MASE, Pulling y Comparativa ===== */
+:root{
+  /* magnitud de Qf: una sola gama, más oscuro = más carga (tramos del Anexo VII) */
+  --h0:#F2C98A; --h1:#EBA85A; --h2:#DC8530; --h3:#BF5E14; --h4:#8A3A0C;
+  /* combustibles: serie categórica validada */
+  --c-celu:#EDA100; --c-plas:#2A78D6; --c-elec:#1BAF7A; --c-gasoil:#EB6834; --c-petro:#6250D6; --c-grasa:#E87BA4;
+  --cmp-a:#2A78D6; --cmp-b:#EB6834;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --h0:#5B4426; --h1:#8A6228; --h2:#BF8230; --h3:#E5A04A; --h4:#FFC77A;
+  --c-celu:#C98500; --c-plas:#3987E5; --c-elec:#199E70; --c-gasoil:#D95926; --c-petro:#9085E9; --c-grasa:#D55181;
+  --cmp-a:#3987E5; --cmp-b:#D95926}}
+:root[data-theme="dark"]{
+  --h0:#5B4426; --h1:#8A6228; --h2:#BF8230; --h3:#E5A04A; --h4:#FFC77A;
+  --c-celu:#C98500; --c-plas:#3987E5; --c-elec:#199E70; --c-gasoil:#D95926; --c-petro:#9085E9; --c-grasa:#D55181;
+  --cmp-a:#3987E5; --cmp-b:#D95926}
+
+.tabs{overflow-x:auto;max-width:100%;scrollbar-width:none}
+.tabs button{white-space:nowrap}
+.pl{padding-block:28px 40px}
+.pl h1{font-size:clamp(2rem,5vw,3.2rem)}
+.pl-head{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:end;padding-bottom:22px}
+.pl-ht{display:grid;gap:12px}
+.pl-ctl{display:grid;gap:10px;justify-items:start}
+.field.chk{display:flex;gap:8px;align-items:center;color:var(--ink)}
+
+/* KPIs */
+.pl-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;padding-block:6px 4px}
+.pl-k{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;display:grid;gap:3px;min-width:0;position:relative;overflow:hidden}
+.pl-kl{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pl-kv{font-family:var(--f-display);font-weight:700;font-size:2.1rem;line-height:1;font-variant-numeric:tabular-nums}
+.pl-kv small{font-family:var(--f-mono);font-size:.7rem;font-weight:500;color:var(--muted);margin-left:5px}
+.pl-ks{font-size:.78rem;color:var(--muted);line-height:1.3}
+.pl-k.hot{border-color:var(--red)}
+.pl-k.hot .pl-kv{color:var(--red)}
+.pl-k.hot::after{content:"";position:absolute;right:10px;top:10px;width:16px;height:22px;background:var(--red);
+  clip-path:path("M8 0C9 5 14 8 14 14C14 18.5 11.3 22 8 22C4.7 22 2 18.5 2 14C2 11 3.5 9 4.5 7C5 9 6 10 7 10C6 7 6.5 3 8 0Z");
+  transform-origin:50% 100%;animation:pl-flame 1.6s ease-in-out infinite alternate}
+@keyframes pl-flame{from{transform:scale(1,1) skewX(0)}to{transform:scale(.92,1.1) skewX(-4deg)}}
+
+/* secciones */
+.pl-sec{padding-block:30px;border-bottom:1px solid var(--line);display:block}
+.pl-st{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;margin-bottom:14px}
+.pl-st h2{font-size:clamp(1.5rem,3vw,2rem)}
+.pl-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}
+.pl-two>div{min-width:0}
+
+/* tablero */
+.pl-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.pl-tile{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:0 0 10px;cursor:pointer;display:grid;gap:6px;text-align:left;overflow:hidden;min-width:0;
+  opacity:0;transform:translateY(10px)}
+.pl-on .pl-tile{opacity:1;transform:none;transition:opacity .45s var(--ease) calc(var(--d)*45ms),transform .45s var(--ease) calc(var(--d)*45ms),border-color .15s}
+.pl-tile:hover{border-color:var(--muted)}
+.pl-tile.on{outline:2.5px solid var(--ink);outline-offset:-2px;border-color:var(--ink)}
+.pl-ph-w{display:block;aspect-ratio:16/9;background:var(--fig);overflow:hidden}
+.pl-ph-w img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.pl-tile:hover .pl-ph-w img{transform:scale(1.05)}
+.pl-ph{display:grid;place-items:center;width:100%;height:100%;font-family:var(--f-display);font-weight:700;font-size:2.6rem;color:var(--muted)}
+.pl-tn,.pl-tq,.pl-tm,.pl-tf{margin-inline:12px;display:flex}
+.pl-tn{font-weight:600;gap:6px;align-items:baseline;flex-wrap:wrap}
+.pl-x{font-family:var(--f-mono);font-size:.72rem;background:var(--chip);color:var(--muted);padding:0 5px;border-radius:3px}
+.pl-tq{font-family:var(--f-display);font-weight:700;font-size:1.9rem;line-height:1;align-items:baseline;font-variant-numeric:tabular-nums}
+.pl-tq small{font-family:var(--f-mono);font-size:.68rem;font-weight:500;color:var(--muted);margin-left:5px}
+.pl-tm{height:6px;background:var(--chip);border-radius:3px;overflow:hidden}
+.pl-tm i{display:block;height:100%;background:var(--hb);transform-origin:left;transform:scaleX(0)}
+.pl-on .pl-tm i{transform:scaleX(1);transition:transform .9s var(--ease) calc(var(--d)*45ms + .25s)}
+.pl-tf{justify-content:space-between;align-items:center;font-size:.82rem}
+
+/* gráficos */
+.pl-chart svg{display:block;width:100%;height:auto;overflow:visible}
+.pl-chart text{font-family:var(--f-body)}
+.pl-grow{transform-origin:left center;transform-box:fill-box;transform:scaleX(0);stroke:var(--ink);stroke-opacity:.16}
+.pl-on .pl-grow{transform:scaleX(1);transition:transform 1s var(--ease) calc(var(--d)*70ms)}
+.pl-fade{opacity:0}
+.pl-on .pl-fade{opacity:1;transition:opacity .5s ease calc(var(--d)*70ms + .45s)}
+.pl-leg{margin-bottom:10px}
+.pl-leg .sw{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.pl-tip{position:fixed;z-index:60;background:var(--ink);color:var(--surface);padding:6px 10px;border-radius:4px;font-size:.8rem;line-height:1.35;pointer-events:none;max-width:280px}
+.pl [data-tip]{cursor:default}
+
+/* plano */
+.pl-seg-tabs{margin-bottom:10px;flex-wrap:wrap}
+.pl-plano{position:relative;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.pl-plano img{display:block;width:100%;height:auto}
+.pl-scan{position:absolute;top:0;bottom:0;left:-6%;width:5%;background:linear-gradient(90deg,transparent,rgba(184,35,31,.32),transparent);animation:pl-scan 1.1s var(--ease) 1 both;pointer-events:none}
+@keyframes pl-scan{from{left:-6%}to{left:104%}}
+.pl-eq{display:flex;flex-wrap:wrap;gap:14px;align-items:end;background:var(--fig);border-radius:6px;padding:16px}
+.pl-eq figure{margin:0;display:grid;gap:6px;justify-items:center;flex:1 1 120px;min-width:0}
+.pl-eq img{max-height:170px;width:auto;max-width:100%;object-fit:contain}
+.pl-eq figcaption{text-align:center}
+
+/* detalle */
+.pl-chips{margin-bottom:18px}
+.pl-calc{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}
+.pl-left,.pl-right{min-width:0;display:grid;gap:14px}
+.pl-foto{margin:0}
+.pl-foto img{display:block;width:100%;max-height:240px;object-fit:cover;border-radius:6px}
+.pl-ed .lb-card,.pl-ed{gap:12px}
+.pl-mat input,.pl-mat select{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:4px 6px;font:inherit;font-size:.88rem;color:var(--ink)}
+.pl-mat input{width:5.2em;text-align:right;font-family:var(--f-mono)}
+.pl-mat td,.pl-mat th{padding:6px 5px}
+.pl-mat th{white-space:normal;line-height:1.2}
+.pl-mat tbody tr{cursor:default}
+.pl-mat tfoot td{font-weight:700}
+.pl-replay{display:flex;justify-content:flex-end}
+.pl-steps{list-style:none;margin:0;padding:0}
+.pl-step{display:grid;grid-template-columns:34px minmax(0,1fr) minmax(84px,auto);gap:12px;padding-block:6px 14px;position:relative;opacity:.12;transform:translateX(-12px)}
+.pl-step::before{content:"";position:absolute;left:16px;top:38px;bottom:-4px;width:2px;background:var(--line);transform-origin:top;transform:scaleY(0)}
+.pl-step:last-child::before{display:none}
+.pl-on .pl-step{opacity:1;transform:none;transition:opacity .5s var(--ease) calc(var(--i)*170ms),transform .5s var(--ease) calc(var(--i)*170ms)}
+.pl-on .pl-step::before{transform:scaleY(1);transition:transform .45s var(--ease) calc(var(--i)*170ms + .25s)}
+.pl-sn{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--surface);font-family:var(--f-mono);font-size:.8rem}
+.pl-step.hot .pl-sn{background:var(--red);color:#fff}
+.pl-sb{display:grid;gap:8px;min-width:0}
+.pl-sh{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.pl-sh h4{margin:0;font-size:1.02rem}
+.pl-sh code{font-family:var(--f-mono);font-size:.72rem;background:var(--chip);color:var(--muted);padding:1px 6px;border-radius:3px}
+.pl-sb .formula{padding:8px 12px;font-size:.84rem;line-height:1.5}
+.pl-sv{display:grid;justify-items:end;align-content:start;text-align:right}
+.pl-sv .num{font-family:var(--f-display);font-weight:700;font-size:1.9rem;line-height:1;font-variant-numeric:tabular-nums}
+.pl-step.hot .pl-sv .num{color:var(--red)}
+.pl-sv small{font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.pl-scale{padding-top:34px}
+.pl-scale .pin{transition:none}
+.pl-on .pl-scale .pin{animation:pl-pin 1s var(--ease) both}
+@keyframes pl-pin{from{transform:translateX(-50%) translateY(-18px);opacity:0}to{transform:translateX(-50%);opacity:1}}
+.pl-three{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:18px;margin-top:22px;align-items:start}
+.pl-donut{display:grid;grid-template-columns:minmax(120px,170px) minmax(0,1fr);gap:16px;align-items:center}
+.pl-seg{transition:none}
+.pl-on .pl-seg{stroke-dasharray:var(--len) 400;transition:stroke-dasharray 1s var(--ease) .15s}
+.pl-dl{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.86rem}
+.pl-dl li{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center}
+.pl-dl .sw{display:inline-block;width:11px;height:11px;border-radius:2px}
+.pl-tab-w{display:grid;gap:10px;min-width:0}
+.pl-chk li{grid-template-columns:auto 1fr auto}
+
+/* resumen y auditoría */
+.pl-sum{font-size:.84rem}
+.pl-sum th,.pl-sum td{padding:6px 8px}
+.pl-sum tbody tr{cursor:default}
+.pl-sum tfoot td{font-weight:700;border-top:2px solid var(--ink)}
+.pl-aud{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.pl-h{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:6px;padding:10px 12px}
+.pl-h.alta{border-left-color:var(--red)}
+.pl-h.media{border-left-color:var(--amber)}
+.pl-h h4{margin:0;font-size:1rem}
+.pl-h h4 small{font-family:var(--f-mono);font-weight:400;font-size:.72rem;color:var(--muted);margin-left:6px}
+.pl-h p{font-size:.9rem;max-width:72ch;margin-top:3px}
+.pl-h code{font-family:var(--f-mono);font-size:.74rem;background:var(--chip);color:var(--muted);padding:1px 6px;border-radius:3px;white-space:nowrap}
+
+/* comparativa */
+.pl-legend2{display:flex;gap:16px;justify-self:end;font-size:.9rem}
+.pl-legend2 .sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.pl-cmpkpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.pl-cmpk{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;display:grid;gap:6px;min-width:0}
+.pl-cmpv{display:flex;gap:16px;flex-wrap:wrap}
+.pl-cmpv span{display:grid}
+.pl-cmpv small{font-family:var(--f-mono);font-size:.66rem;color:var(--muted)}
+.pl-cmpv b{font-family:var(--f-display);font-size:1.5rem;line-height:1.05}
+.pl-d.up::before{content:"▲ "}
+.pl-d.dn::before{content:"▼ "}
+.pl-d,.pl-d0{font-family:var(--f-mono);font-size:.76rem;color:var(--muted)}
+.pl-chg{margin:0;padding-left:1.2em;display:grid;gap:6px;max-width:80ch}
+
+@media (max-width:980px){
+  .pl-head,.pl-two,.pl-calc,.pl-three{grid-template-columns:minmax(0,1fr)}
+  .pl-kpis,.pl-cmpkpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pl-legend2{justify-self:start}
+}
+@media (max-width:560px){
+  .pl-kpis,.pl-cmpkpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pl-step{grid-template-columns:30px minmax(0,1fr)}
+  .pl-sv{grid-column:2;justify-items:start;text-align:left;display:flex;gap:8px;align-items:baseline}
+  .pl-donut{grid-template-columns:minmax(0,1fr)}
+  .pl-h{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  .pl-k.hot::after,.pl-scan{animation:none}
+  .pl-tile,.pl-grow,.pl-fade,.pl-step,.pl-tm i{opacity:1!important;transform:none!important;transition:none!important}
+  .pl-seg{transition:none!important}
+}
+@media (max-width:560px){ .pl-board{grid-template-columns:repeat(2,minmax(0,1fr))} .pl-tq{font-size:1.6rem} .pl-ph{font-size:2rem} }
+
+.pl-loc{display:block;width:100%;height:auto}
+.pl-loc .lbg{fill:var(--surface)} .pl-loc .lax{stroke:var(--line);stroke-dasharray:4 4}
+.pl-loc .lc{stroke:var(--ink);stroke-width:1;transition:opacity .2s} .pl-loc g:hover .lc{opacity:.75}
+.pl-loc .lt,.pl-loc .ls{fill:var(--ink);font-family:var(--f-mono)} .pl-loc .ls{fill:var(--muted)}
+.pl-loc .eq{fill:var(--line)} .pl-loc .acu,.pl-loc .bom,.pl-loc .pla{fill:var(--c-plas);fill-opacity:.35}
+.pl-loc .pil,.pl-legend .lk.pil{fill:var(--c-petro);fill-opacity:.4} .pl-loc .tr,.lk.tr{fill:var(--c-celu);fill-opacity:.4}
+.pl-loc .tk,.lk.tk{fill:var(--c-gasoil);fill-opacity:.45} .pl-loc .lab,.lk.lab{fill:var(--c-elec);fill-opacity:.4} .pl-loc .us,.lk.us{fill:var(--c-grasa);fill-opacity:.5}
+.pl-loc .lan{fill:none;stroke:var(--ink);stroke-width:1.5} .pl-loc .lpoz{fill:var(--c-gasoil);stroke:var(--ink)}
+.pl-locw{background:var(--surface)}
+.pl-legend{display:flex;flex-wrap:wrap;gap:6px 14px;list-style:none;margin:8px 0 0;padding:0;font-size:.78rem;color:var(--muted)}
+.pl-legend .lk{display:inline-block;width:12px;height:12px;border:1px solid var(--ink);margin-right:6px;vertical-align:-1px}
+.pl-legend .lk{background:var(--c-celu)} .pl-legend .lk.lab{background:var(--c-elec)} .pl-legend .lk.tk{background:var(--c-gasoil)} .pl-legend .lk.us{background:var(--c-grasa)} .pl-legend .lk.pil{background:var(--c-petro)}
+.pl-foto img.pl-x{margin-top:8px;max-height:200px;object-fit:contain;background:var(--surface)}
+.pl-recT{display:flex;gap:10px;align-items:center;padding:4px 9px 8px;flex-wrap:wrap}.pl-rec .note{padding:4px 9px 9px}.pl-rec .note i{display:block;color:var(--muted);margin-top:4px}
+</style>
+
+<div class="wrap">
+<div class="appbar">
+  <span class="brand"><span class="signal"><i aria-hidden="true"></i></span>Carga de fuego</span>
+  <div class="tabs" role="tablist" aria-label="Secciones">
+    <button type="button" role="tab" id="tb-guia" aria-controls="tab-guia" aria-selected="true">Guía paso a paso</button>
+    <button type="button" role="tab" id="tb-libro" aria-controls="tab-libro" aria-selected="false">Libro de carga de fuego</button>
+    <button type="button" role="tab" id="tb-mase" aria-controls="tab-mase" aria-selected="false">MASE</button>
+    <button type="button" role="tab" id="tb-pull" aria-controls="tab-pull" aria-selected="false">Equipo de pulling</button>
+    <button type="button" role="tab" id="tb-comp" aria-controls="tab-comp" aria-selected="false">Comparativa</button>
+  </div>
+</div>
+</div>
+<div id="tab-guia" role="tabpanel" aria-labelledby="tb-guia">
+<div class="wrap">
+<header class="top">
+  <div class="intro">
+    <span class="signal"><i aria-hidden="true"></i><span class="eyebrow">Dec. 351/79 · Anexo VII · Guía práctica</span></span>
+    <h1>Carga de fuego paso a paso</h1>
+    <p class="lede">Cómo se calcula la carga de fuego de un local y qué se obtiene con ella, con un ejemplo resuelto: un pañol de 400 m² de un taller de servicios. Cambiá las cantidades y todos los resultados se recalculan.</p>
+    <p class="note">Cada dato lleva su estado: <span class="tag of">oficial</span> sale del texto del decreto, <span class="tag se">secundario</span> viene de cátedras o manuales, <span class="tag ve">verificar</span> hay que cotejarlo antes de firmar.</p>
+  </div>
+  <figure class="hero-fig">
+    <img src="img/interior_foto.webp" alt="Interior del galpón de ejemplo: pórticos de acero, cubierta de chapa con traslúcidas, rack con cajas de cartón, neumáticos, rollos de film y tambores sobre bateas" width="1300" height="806">
+    <figcaption>Render del modelo CAD del pañol de ejemplo (nave de 20 × 20 m). Ilustrativo: no es un local real.</figcaption>
+  </figure>
+</header>
+</div>
+
+<div class="results" aria-label="Resultados del ejemplo">
+  <div class="wrap tiles">
+    <a class="tile hot" href="#paso4"><span class="k">Carga de fuego</span><span class="v" id="t-qf">—</span></a>
+    <a class="tile" href="#paso5"><span class="k">Riesgo</span><span class="v" id="t-r">—</span></a>
+    <a class="tile" href="#paso6"><span class="k">Resistencia al fuego</span><span class="v" id="t-f">—</span></a>
+    <a class="tile" href="#paso7"><span class="k">Potencial mínimo</span><span class="v" id="t-pot">—</span></a>
+    <a class="tile" href="#paso7"><span class="k">Extintores</span><span class="v" id="t-ext">—</span></a>
+    <a class="tile" href="#paso8"><span class="k">Ancho de salida</span><span class="v" id="t-esc">—</span></a>
+  </div>
+</div>
+
+<div class="wrap">
+<nav class="steps" aria-label="Pasos">
+  <a href="#paso1"><b>1</b>Sector</a><a href="#paso2"><b>2</b>Inventario</a><a href="#paso3"><b>3</b>Calor total</a>
+  <a href="#paso4"><b>4</b>Carga de fuego</a><a href="#paso5"><b>5</b>Riesgo</a><a href="#paso6"><b>6</b>Resistencia</a>
+  <a href="#paso7"><b>7</b>Extintores</a><a href="#paso8"><b>8</b>Escape</a><a href="#memoria"><b>✓</b>En la memoria</a>
+</nav>
+
+<!-- PASO 1 -->
+<section class="paso" id="paso1">
+  <figure class="fig"><div class="canvas"><img src="img/superficie.webp" alt="Pañol con el piso resaltado: un único sector de incendio de 400 metros cuadrados" width="1200" height="744"></div>
+    <figcaption>Un solo sector de incendio: el piso completo de la nave.</figcaption></figure>
+  <div class="body">
+    <div class="stepno"><span>1</span><h2>Definí el sector y medí su superficie</h2></div>
+    <p>La carga de fuego se calcula <strong>por sector de incendio</strong>: el local o grupo de locales que queda separado del resto por muros y puertas con resistencia al fuego. No es lo mismo que un sector funcional (taller, oficina, depósito). Si el pañol comparte el aire y no tiene un muro resistente al fuego con el taller, el sector es todo el conjunto.</p>
+    <p>La superficie es la de piso del sector, <strong>descontando medios de escape, sanitarios y locales de uso común</strong> <span class="tag of">oficial</span>.</p>
+    <div class="inline">
+      <label class="field" for="in-s">Superficie del sector (m²)
+        <input type="number" id="in-s" min="10" max="20000" step="1" value="400"></label>
+      <span class="note">Ejemplo: nave de 20 × 20 m, planta baja, muros de bloque, cubierta de chapa.</span>
+    </div>
+    <div class="callout">Si un sector tiene un depósito de inflamables cerrado y separado, ese recinto se calcula como <strong>sector aparte</strong>, con su propia carga de fuego.</div>
+  </div>
+</section>
+
+<!-- PASO 2 -->
+<section class="paso" id="paso2">
+  <figure class="fig"><div class="canvas"><img id="img-mat" src="img/madera.webp" alt="" width="1200" height="744"></div>
+    <figcaption id="cap-mat">Tocá una fila de la tabla para ver dónde está ese material en el pañol.</figcaption></figure>
+  <div class="body">
+    <div class="stepno"><span>2</span><h2>Relevá todo lo que puede arder</h2></div>
+    <p>Recorré el sector y anotá cada material combustible con su cantidad: madera de pallets y estanterías, cartón de embalajes, papel, plásticos, caucho, y los líquidos. Separá los <strong>sólidos (clase A)</strong> de los <strong>líquidos inflamables (clase B)</strong>, porque después se usan en tablas distintas. Si falta un dato, estimá por exceso.</p>
+    <p>Los líquidos se anotan en litros y se pasan a kilos con la densidad de su hoja de seguridad. El decreto los considera <strong>repartidos en todo el sector</strong> aunque estén en un rincón <span class="tag of">oficial</span>.</p>
+    <div class="tablebox">
+      <table id="tab-inv">
+        <thead><tr><th>Material</th><th>Clase</th><th class="r">Cantidad</th><th>Unidad</th><th class="r">Densidad</th><th class="r">Peso (kg)</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="inline">
+      <label class="field" for="add-mat">Agregar un material
+        <select id="add-mat"></select></label>
+      <button class="btn" id="btn-add" type="button">Agregar</button>
+      <button class="btn" id="btn-reset" type="button">Volver al ejemplo</button>
+    </div>
+    <p class="note">En el ejemplo, los 1.200 kg de madera son 48 pallets de unos 25 kg cada uno (6 pilas de 8). Pesá o contá; no adivines.</p>
+  </div>
+</section>
+
+<!-- PASO 3 -->
+<section class="paso" id="paso3">
+  <figure class="fig"><div class="canvas"><img src="img/solidos.webp" alt="Pañol con todos los combustibles sólidos resaltados" width="1200" height="744"></div>
+    <figcaption>Sólidos resaltados: madera, cartón, papel, caucho y film.</figcaption></figure>
+  <div class="body">
+    <div class="stepno"><span>3</span><h2>Multiplicá cada peso por su poder calorífico</h2></div>
+    <p>Cada material libera una cantidad de calor por kilo: su <strong>poder calorífico inferior (PCI)</strong>. Multiplicá peso × PCI y sumá. El decreto <strong>no trae una tabla de poderes caloríficos</strong>, así que en la memoria tenés que declarar de dónde sacaste cada valor <span class="tag of">oficial</span>.</p>
+    <div class="tablebox">
+      <table id="tab-cal">
+        <thead><tr><th>Material</th><th class="r">Peso (kg)</th><th class="r">PCI (kcal/kg)</th><th class="r">Calor (kcal)</th><th>Estado del PCI</th></tr></thead>
+        <tbody></tbody>
+        <tfoot></tfoot>
+      </table>
+    </div>
+    <div>
+      <p class="eyebrow" style="margin-bottom:6px">Cuánto calor aporta cada material</p>
+      <div class="stack" id="stack" role="img" aria-label="Aporte de calor por material"></div>
+      <div class="legend" id="legend" style="margin-top:8px"></div>
+    </div>
+    <div class="callout bad"><strong>Ojo con dos errores que circulan:</strong> un apunte da el GLP a 23.000 kcal/kg (el valor real ronda 11.000), y un informe de 2026 cargó el caucho a 100 kcal/kg. Revisá siempre el orden de magnitud.</div>
+  </div>
+</section>
+
+<!-- PASO 4 -->
+<section class="paso wide" id="paso4">
+  <div class="body">
+    <div class="stepno"><span>4</span><h2>Pasá a madera equivalente y dividí por la superficie</h2></div>
+    <p>La carga de fuego es el <strong>peso de madera por metro cuadrado que daría el mismo calor</strong>. La madera patrón tiene 18,41 MJ/kg, que se redondea a 4.400 kcal/kg <span class="tag of">oficial</span>. Calculala también por clase: la parte A y la parte B se usan por separado en el paso 7.</p>
+    <div class="formula" id="f-qf"></div>
+    <div class="scale" id="scale" aria-label="Escala de carga de fuego">
+      <div class="pin" id="pin"><b id="pin-v">—</b><i></i></div>
+      <div class="bands" id="bands"><div>hasta 15</div><div>16 a 30</div><div>31 a 60</div><div>61 a 100</div><div>más de 100</div></div>
+      <div class="ticks"><span style="left:0%">0</span><span style="left:12.5%">15</span><span style="left:25%">30</span><span style="left:50%">60</span><span style="left:83.3%">100</span></div>
+    </div>
+    <p class="note">Los rangos de la escala son las filas de las tablas del Anexo VII. Si el resultado cae entre dos rangos (por ejemplo 15,4 kg/m²), no hay regla escrita: tomá el rango superior.</p>
+  </div>
+</section>
+
+<!-- PASO 5 -->
+<section class="paso" id="paso5">
+  <figure class="fig"><div class="canvas"><img src="img/liquidos_foto.webp" alt="Tambores de aceite y gasoil sobre bateas de contención amarillas, con el extintor E3 en un poste señalizado" width="1000" height="620"></div>
+    <figcaption>Gasoil (tambores azules) y aceite (verdes) sobre bateas, con el extintor E3. El gasoil es inflamable de 2.ª categoría.</figcaption></figure>
+  <div class="body">
+    <div class="stepno"><span>5</span><h2>Clasificá el riesgo del sector</h2></div>
+    <p>El Anexo VII ordena los materiales en siete riesgos según cómo arden <span class="tag of">oficial</span>. El riesgo del sector lo da el material <strong>predominante</strong>. El decreto no trae una regla para mezclas; ante la duda, la práctica es tomar <strong>riesgo 3</strong>.</p>
+    <div class="riesgos" id="riesgos" role="group" aria-label="Riesgo del sector"></div>
+    <div class="callout" id="r-hint"></div>
+  </div>
+</section>
+
+<!-- PASO 6 -->
+<section class="paso" id="paso6">
+  <figure class="fig"><div class="canvas"><img src="img/completo.webp" alt="Vista en corte del galpón: muros de bloque y cerramiento de chapa, pórtico de acero del hastial y contenido del pañol" width="1200" height="744"></div>
+    <figcaption>Muros y cubierta son los que tienen que resistir: la F exigida se compara con la que tienen.</figcaption></figure>
+  <div class="body">
+    <div class="stepno"><span>6</span><h2>Buscá la resistencia al fuego exigida</h2></div>
+    <p>Con la carga de fuego y el riesgo entrás al cuadro que corresponde a la ventilación del local. El resultado es una <strong>F</strong>: los minutos que muros, columnas y cubierta deben resistir el fuego.</p>
+    <div class="inline">
+      <div class="seg" role="group" aria-label="Ventilación">
+        <button type="button" id="v-nat" aria-pressed="true">Ventilación natural · Cuadro 2.2.1</button>
+        <button type="button" id="v-mec" aria-pressed="false">Mecánica · Cuadro 2.2.2</button>
+      </div>
+    </div>
+    <div class="tablebox"><table class="grid-tab" id="tab-f"></table></div>
+    <div class="callout" id="f-hint"></div>
+    <p class="note">Los cuadros no dicen en su título cuál es de ventilación natural y cuál de mecánica; la práctica toma el 2.2.1 como natural. Cotejá la alineación de columnas con el Boletín Oficial <span class="tag ve">verificar</span>. La F existente se acredita con ensayos IRAM 11950 y 11949.</p>
+  </div>
+</section>
+
+<!-- PASO 7 -->
+<section class="paso" id="paso7">
+  <div class="fig">
+    <div class="plan" id="plan-ext"></div>
+    <div class="inline" style="margin-top:10px;justify-content:center">
+      <div class="seg" role="group" aria-label="Radio de cobertura">
+        <button type="button" id="c-a" aria-pressed="true">Recorrido clase A · 20 m</button>
+        <button type="button" id="c-b" aria-pressed="false">Clase B · 15 m</button>
+      </div>
+    </div>
+    <p class="note" style="margin-top:8px">Planta del ejemplo. Los círculos son el alcance en línea recta; en la memoria trazá el recorrido real esquivando estibas.</p>
+  </div>
+  <div class="body">
+    <div class="stepno"><span>7</span><h2>Calculá el potencial extintor y cuántos equipos van</h2></div>
+    <p>La parte A de la carga de fuego entra a la Tabla 1 y la parte B a la Tabla 2. Te dan el <strong>potencial mínimo</strong> que debe figurar en el marbete de cada extintor <span class="tag of">oficial</span>. Las clases C, D y K no se calculan con la carga de fuego.</p>
+    <div class="tablebox"><table class="grid-tab" id="tab-pa"></table></div>
+    <div class="tablebox"><table class="grid-tab" id="tab-pb"></table></div>
+    <label class="field" style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="chk-r2" checked> Tomar la columna de riesgo 2 en clase B por haber inflamables (criterio conservador)</label>
+    <div class="formula" id="f-ext"></div>
+    <ul class="checks" id="checks-ext"></ul>
+  </div>
+</section>
+
+<!-- PASO 8 -->
+<section class="paso" id="paso8">
+  <div class="fig">
+    <div class="plan" id="plan-esc"></div>
+    <figure style="margin:12px 0 0"><div class="canvas" style="background:var(--fig);border-radius:6px;padding:10px"><img src="img/salida.webp" alt="Galpón con la puerta de salida resaltada en el muro sur" width="1200" height="744"></div></figure>
+  </div>
+  <div class="body">
+    <div class="stepno"><span>8</span><h2>Verificá los medios de escape</h2></div>
+    <p>Este paso no usa la carga de fuego, pero va en el mismo estudio. Primero calculás cuántas personas hay que evacuar con el <strong>factor de ocupación</strong>, y de ahí el ancho de salida en <strong>unidades de 0,55 m</strong> <span class="tag of">oficial</span>.</p>
+    <label class="field" for="in-uso">Uso del sector (factor de ocupación, m² por persona)
+      <select id="in-uso"></select></label>
+    <div class="formula" id="f-esc"></div>
+    <ul class="checks" id="checks-esc"></ul>
+  </div>
+</section>
+
+<!-- MEMORIA -->
+<section class="paso wide" id="memoria">
+  <div class="body">
+    <div class="stepno"><span>✓</span><h2>Cómo queda escrito en la memoria</h2></div>
+    <p>Este texto se arma solo con los resultados de arriba. Usalo como base del capítulo de carga de fuego y completá lo que está entre corchetes.</p>
+    <div class="memoria" id="txt-mem"></div>
+    <div class="inline"><button class="btn primary" id="btn-copy" type="button">Copiar texto</button><span class="note" id="copy-msg" aria-live="polite"></span></div>
+    <div class="cols">
+      <div style="display:grid;gap:10px">
+        <h3>Errores que bajan la nota</h3>
+        <ol class="err">
+          <li>Calcular un solo número para todo el edificio en vez de uno por sector.</li>
+          <li>Usar el poder calorífico superior en lugar del inferior.</li>
+          <li>Cargar litros como si fueran kilos (falta la densidad).</li>
+          <li>Redondear para abajo los extintores: 810 / 200 = 4,05 son <strong>5</strong> equipos.</li>
+          <li>No separar la carga A de la B antes de ir a las tablas.</li>
+          <li>Poner "PQS 5 kg" sin el potencial real del marbete (por ejemplo 3A-40BC).</li>
+          <li>No citar la fuente de cada poder calorífico.</li>
+        </ol>
+      </div>
+      <div style="display:grid;gap:10px">
+        <h3>Antes de firmar</h3>
+        <ol class="err">
+          <li>Cotejar los cuadros 2.2.1 y 2.2.2 contra el Boletín Oficial del 22/5/1979.</li>
+          <li>Reemplazar las densidades por las de la hoja de seguridad de cada producto.</li>
+          <li>Pedir al Colegio de Técnicos del Neuquén los requisitos de visado de memorias de incendio.</li>
+          <li>La firma la pone un profesional matriculado (Res. CTN 12/19 en Neuquén).</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Modelo CAD ilustrativo hecho en CadQuery y renderizado con Blender: el local y las cantidades son de práctica, no de un establecimiento real. Verificaciones del modelo: estibas a 1 m o más de los muros (condición E13), punto más alejado a 13,9 m del extintor más cercano, tambores a 4,3 m de un extintor apto para clase B, esquina más alejada a 22,4 m de la salida.</p>
+  <p>Fuentes: Decreto 351/79, Anexo VII (InfoLEG y argentina.gob.ar); poderes caloríficos de práctica de UTN FRRQ y TP IAS 2023; criterios de Red Proteger (Botta). Detalle completo en la guía "Guía memoria contra incendios".</p>
+</footer>
+</div>
+</div><!-- fin tab-guia -->
+
+<div id="tab-libro" role="tabpanel" aria-labelledby="tb-libro" hidden>
+<div class="wrap">
+  <div class="lb-top">
+    <div style="display:grid;gap:6px">
+      <span class="eyebrow">Relevamiento · verificación · informe</span>
+      <h1 style="font-size:clamp(2rem,5vw,3rem)">Libro de carga de fuego</h1>
+      <p class="lede">Cargá el establecimiento y sus sectores, recorré la lista de verificación en el lugar y exportá el informe formal en Word para enviar.</p>
+    </div>
+    <div class="acts">
+      <span class="note" id="lb-guardado"></span>
+      <button type="button" class="btn" data-act="ejemplo">Cargar el ejemplo</button>
+      <button type="button" class="btn" data-act="nuevo">Empezar un libro nuevo</button>
+    </div>
+  </div>
+  <div class="lb-confirm" id="lb-confirm" hidden><span>Se borran los datos cargados en este navegador. Si los necesitás, guardá antes un respaldo en el paso 5.</span>
+    <button type="button" class="btn primary" data-act="okNuevo">Sí, empezar de cero</button><button type="button" class="btn" data-act="cancelNuevo">Cancelar</button></div>
+  <div class="lb-layout">
+    <nav id="lb-nav" aria-label="Etapas del libro"></nav>
+    <div id="lb-etapa"></div>
+  </div>
+</div>
+</div>
+
+<div id="tab-mase" role="tabpanel" aria-labelledby="tb-mase" hidden></div>
+<div id="tab-pull" role="tabpanel" aria-labelledby="tb-pull" hidden></div>
+<div id="tab-comp" role="tabpanel" aria-labelledby="tb-comp" hidden></div>
+
+<script src="guia-motor.js"></script>
+<script>
+(function(){
+const {LIB,RIESGOS,RANGOS,FNAT,FMEC,PA,PB,USOS,idx} = FF;
+const EJEMPLO = FF.EJEMPLO;
+const IMGCAP = {madera:"Pilas de pallets de madera a 1 m del muro norte.",carton:"Cajas de cartón en la estantería metálica.",papel:"Cajas de archivo con papel.",caucho:"Pilas de neumáticos en el centro del pañol.",film:"Rollos de film de polietileno.",liquidos:"Tambores de gasoil y aceite sobre bateas de contención."};
+const PLAN = {ext:[["E1",0.3,10,"PQS"],["E2",19.7,10,"PQS"],["E3",18.665,2.0,"PQS"],["E4",6.35,0.3,"CO₂"]],puerta:[10,0]};
+
+const st = {S:400, rows:EJEMPLO.map(([id,q])=>({id,q})), sel:0, R:3, vent:"nat", r2:true, cob:"A", uso:30};
+const $ = s=>document.querySelector(s);
+const fmt = (x,d=0)=>Number(x).toLocaleString("es-AR",{minimumFractionDigits:d,maximumFractionDigits:d});
+const cssv = v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const tagH = e=>`<span class="tag ${e}">${e==="of"?"oficial":e==="se"?"secundario":"verificar"}</span>`;
+
+function calc(){
+  const r = FF.calc(st.rows.map(x=>Object.assign({id:x.id,q:x.q}, LIB[x.id])), {sup:st.S, uso:st.uso, vent:st.vent, R:st.R, r2:st.r2});
+  return r;
+}
+
+function renderInv(r){
+  const tb = $("#tab-inv tbody");
+  tb.innerHTML = r.items.map((i,k)=>`<tr data-k="${k}" class="${k===st.sel?"sel":""}">
+    <td><span class="sw" style="background:var(${i.col})"></span>${i.n}</td><td>${i.c}</td>
+    <td class="r"><input type="number" id="q-${i.id}-${k}" data-k="${k}" min="0" step="1" value="${i.q}" aria-label="Cantidad de ${i.n}"></td>
+    <td>${i.u==="l"?"litros":"kg"}</td><td class="r num">${i.dens?fmt(i.dens,2)+" kg/l":"—"}</td>
+    <td class="r num">${fmt(i.kg)}</td>
+    <td><button class="del" type="button" data-del="${k}" aria-label="Quitar ${i.n}">×</button></td></tr>`).join("");
+  const sel = r.items[st.sel];
+  const img = $("#img-mat");
+  if(sel && sel.img){ img.src = "img/"+sel.img+".webp"; img.alt = "Pañol con "+sel.n.toLowerCase()+" resaltado"; $("#cap-mat").textContent = IMGCAP[sel.img]; }
+  else if(sel){ img.src="img/completo.webp"; img.alt="Pañol completo"; $("#cap-mat").textContent = sel.n+" no está en el modelo del ejemplo."; }
+  const used = new Set(st.rows.map(x=>x.id));
+  $("#add-mat").innerHTML = Object.entries(LIB).filter(([id])=>!used.has(id)).map(([id,m])=>`<option value="${id}">${m.n} (clase ${m.c})</option>`).join("") || `<option value="">No quedan materiales en la lista</option>`;
+}
+
+function renderCal(r){
+  $("#tab-cal tbody").innerHTML = r.items.map(i=>`<tr><td><span class="sw" style="background:var(${i.col})"></span>${i.n}</td>
+    <td class="r num">${fmt(i.kg)}</td><td class="r num">${fmt(i.pci)}</td><td class="r num">${fmt(i.kcal)}</td>
+    <td>${tagH(i.est)} <span class="note">${i.src}</span></td></tr>`).join("");
+  $("#tab-cal tfoot").innerHTML = `<tr><td>Subtotal clase A</td><td></td><td></td><td class="r num">${fmt(r.totA)}</td><td></td></tr>
+    <tr><td>Subtotal clase B</td><td></td><td></td><td class="r num">${fmt(r.totB)}</td><td></td></tr>
+    <tr><td>Total</td><td></td><td></td><td class="r num">${fmt(r.tot)}</td><td></td></tr>`;
+  $("#stack").innerHTML = r.items.filter(i=>i.kcal>0).map(i=>`<div title="${i.n}: ${fmt(i.kcal/r.tot*100,1)} %" style="flex:0 0 ${i.kcal/r.tot*100}%;background:var(${i.col})"></div>`).join("");
+  $("#legend").innerHTML = r.items.filter(i=>i.kcal>0).map(i=>`<span><span class="sw" style="background:var(${i.col})"></span>${i.n.split(" (")[0]} <span class="num">${fmt(i.kcal/r.tot*100,1)} %</span></span>`).join("");
+}
+
+function renderQf(r){
+  $("#f-qf").innerHTML =
+   `Qf = Σ(P × PCI) / (4.400 × S)<br>`+
+   `Qf = ${fmt(r.tot)} kcal / (4.400 kcal/kg × ${fmt(r.S)} m²)<br>`+
+   `Qf = ${fmt(r.tot/4400,1)} kg de madera / ${fmt(r.S)} m² = <span class="res">${fmt(r.qf,2)} kg/m²</span><br>`+
+   `Qf clase A = ${fmt(r.totA)} / (4.400 × ${fmt(r.S)}) = <span class="res">${fmt(r.qa,2)} kg/m²</span><br>`+
+   `Qf clase B = ${fmt(r.totB)} / (4.400 × ${fmt(r.S)}) = <span class="res">${fmt(r.qb,2)} kg/m²</span>`;
+  const pos = r.qf<=15? r.qf/15*12.5 : r.qf<=30? 12.5+(r.qf-15)/15*12.5 : r.qf<=60? 25+(r.qf-30)/30*25 : r.qf<=100? 50+(r.qf-60)/40*33.3 : Math.min(83.3+(r.qf-100)/100*16.7, 99);
+  $("#pin").style.left = pos+"%"; $("#pin-v").textContent = fmt(r.qf,2)+" kg/m²";
+  [...$("#bands").children].forEach((d,k)=>d.classList.toggle("on",k===r.iT));
+}
+
+function renderRiesgo(r){
+  $("#riesgos").innerHTML = RIESGOS.map(([n,t])=>`<button type="button" data-r="${n}" aria-pressed="${n===st.R}"><b>R${n}</b><span>${t}</span></button>`).join("");
+  let h = "";
+  if(st.R===3) h = "<strong>Riesgo 3</strong>: predominan sólidos muy combustibles (madera, cartón, papel). El gasoil es inflamable de 2.ª categoría (punto de inflamación entre 41 y 120 °C); en el ejemplo se lo deja dentro del sector y se compensa en el paso 7 tomando la columna de riesgo 2 para la clase B.";
+  else if(st.R===2) h = "<strong>Riesgo 2</strong>: el más desfavorable. Corresponde si los inflamables son relevantes en el sector. Lo prudente suele ser darles un recinto propio y calcularlo como sector aparte.";
+  else if(st.R===1) h = "<strong>Riesgo 1</strong>: explosivos. Se considera solo como fuente de ignición y necesita tratamiento especial; no entra en estas tablas.";
+  else h = `<strong>Riesgo ${st.R}</strong>: justificá en la memoria por qué los materiales predominantes son ${RIESGOS[st.R-1][1].toLowerCase()}.`;
+  if(r.inflam1) h += " <br><strong>Atención:</strong> cargaste un inflamable de 1.ª categoría (punto de inflamación hasta 40 °C). En usos residenciales, administrativos y de espectáculos el riesgo 2 no está permitido.";
+  $("#r-hint").innerHTML = h;
+}
+
+function gridTable(el, caption, cols, data, colKey, rowIdx, colLabel){
+  const head = `<caption class="eyebrow" style="text-align:left;padding:8px 9px">${caption}</caption><thead><tr><th>Qf (kg/m²)</th>${cols.map(c=>`<th>${colLabel(c)}</th>`).join("")}</tr></thead>`;
+  const body = RANGOS.map((rg,k)=>`<tr><td class="${k===rowIdx?"row":""}">${rg}</td>${cols.map(c=>`<td class="${c===colKey&&k===rowIdx?"hit":k===rowIdx?"row":""}">${data[c][k]}</td>`).join("")}</tr>`).join("");
+  el.innerHTML = head+"<tbody>"+body+"</tbody>";
+}
+
+function renderF(r){
+  $("#v-nat").setAttribute("aria-pressed", st.vent==="nat"); $("#v-mec").setAttribute("aria-pressed", st.vent==="mec");
+  gridTable($("#tab-f"), st.vent==="nat"?"Cuadro 2.2.1 · ventilación natural":"Cuadro 2.2.2 · ventilación mecánica", [2,3,4,5], st.vent==="nat"?FNAT:FMEC, st.R, r.iT, c=>"Riesgo "+c);
+  const fh = $("#f-hint");
+  if(r.Fnote){ fh.className="callout"; fh.innerHTML = r.Fnote; }
+  else if(r.F==="NP"){ fh.className="callout bad"; fh.innerHTML = "<strong>NP: no permitido.</strong> Con esa ventilación y ese riesgo el sector no se admite; hay que cambiar la condición (sectorizar, ventilar, reducir la carga)."; }
+  else if(r.F==="—"){ fh.className="callout"; fh.innerHTML = "El cuadro no fija una resistencia para esta combinación."; }
+  else { fh.className="callout ok"; fh.innerHTML = `Resultado: <strong>${r.F}</strong>. Muros, columnas y cubierta del sector deben resistir al menos ${r.F.replace("F ","")} minutos. ${st.vent==="nat"&&st.R===3&&r.iT===0?"Con ventilación mecánica serían F 60.":""}`; }
+}
+
+function renderExt(r){
+  gridTable($("#tab-pa"), "Tabla 1 · potencial extintor clase A", [3,4,5], PA, PA[st.R]?st.R:-1, r.iA, c=>"Riesgo "+c);
+  gridTable($("#tab-pb"), "Tabla 2 · potencial extintor clase B", [2,3], PB, PB[r.colB]?r.colB:-1, r.iB, c=>"Riesgo "+c);
+  $("#chk-r2").checked = st.r2; $("#chk-r2").disabled = !r.hasB;
+  const lineA = r.A? `Tabla 1 (Qf A = ${fmt(r.qa,2)}, riesgo ${st.R}) → ${r.A}` : `Tabla 1: sin columna para riesgo ${st.R} → se toma el mínimo 1A`;
+  const lineB = r.hasB? (r.B? `Tabla 2 (Qf B = ${fmt(r.qb,2)}, riesgo ${r.colB}) → ${r.B}` : `Tabla 2: sin columna para riesgo ${r.colB}`) : "Sin líquidos inflamables: no se usa la Tabla 2";
+  $("#f-ext").innerHTML = `${lineA}<br>${lineB}<br>Mínimo por equipo (punto 7.1.1): 1A y 5BC<br>`+
+    `Potencial de cada extintor ≥ <span class="res">${r.Anum}A – ${r.Bnum}B</span><br>`+
+    `Cantidad: ${fmt(r.S)} m² / 200 m² = ${fmt(r.S/200,2)} → <span class="res">${r.nExt} extintores como mínimo</span>`;
+  const ej = r.S===400;
+  const li = [];
+  li.push([`Regla de 1 cada 200 m² o fracción`, `${r.nExt} equipos`, "ok"]);
+  if(ej){
+    li.push([`Recorrido máximo clase A (20 m)`, `13,9 m con E1 y E2`, "ok"]);
+    li.push([`Recorrido máximo clase B (15 m) desde los tambores`, `4,3 m con E3`, "ok"]);
+    li.push([`Tablero eléctrico: agente apto clase C`, `E4 de CO₂`, "ad"]);
+  } else {
+    li.push([`Distancias de 20 m (A) y 15 m (B)`, `trazar en tu plano`, "ad"]);
+  }
+  $("#checks-ext").innerHTML = li.map(([a,b,c])=>`<li><span class="pill ${c}">${c==="ok"?"cumple":c==="no"?"no cumple":"agregado"}</span><span>${a}</span><span class="num">${b}</span></li>`).join("");
+  drawPlan($("#plan-ext"),"ext",r);
+}
+
+function renderEsc(r){
+  const sel = $("#in-uso");
+  if(!sel.options.length) sel.innerHTML = USOS.map(([x,t])=>`<option value="${x}">${t} · ${x} m²/persona</option>`).join("");
+  sel.value = String(st.uso);
+  $("#f-esc").innerHTML = `N = ${fmt(r.S)} m² / ${st.uso} m² por persona = ${fmt(r.S/st.uso,1)} → <span class="res">${r.N} personas</span><br>`+
+   `n = N / 100 = ${fmt(r.nraw,2)} unidades → mínimo 2 → <span class="res">${r.n} unidades</span><br>`+
+   `Ancho = ${r.n<=2?"0,55 + 0,55":"0,55 + 0,55 + 0,45 × "+(r.n-2)} = <span class="res">${fmt(r.ancho,2)} m</span><br>`+
+   `Medios de escape: ${r.n<4?"hasta 3 unidades → 1":`n/4 + 1 = ${fmt(r.n/4+1,2)} → ${r.salidas}`}`;
+  const ej = r.S===400;
+  const li = [[`Ancho de la puerta ≥ ${fmt(r.ancho,2)} m`, ej?"1,10 m en el modelo":"medir en obra", ej&&r.ancho<=1.1001?"ok":"ad"]];
+  if(ej) li.push([`Ningún punto a más de 40 m de la salida`, `22,4 m (esquina norte)`, "ok"]);
+  li.push([`Puerta abre en el sentido de la evacuación`, `verificar en obra`, "ad"]);
+  li.push([`Más de 300 personas en planta baja: 2 salidas`, `${r.N} personas`, r.N>300?"no":"ok"]);
+  $("#checks-esc").innerHTML = li.map(([a,b,c])=>`<li><span class="pill ${c}">${c==="ok"?"cumple":c==="no"?"revisar":"a verificar"}</span><span>${a}</span><span class="num">${b}</span></li>`).join("");
+  drawPlan($("#plan-esc"),"esc",r);
+}
+
+function drawPlan(el, modo, r){
+  const ink = "var(--ink)", line="var(--line)";
+  const Y = y=>21-y; const X = x=>x+1;
+  let s = `<svg viewBox="0 0 22 23.2" role="img" aria-label="Planta del pañol de 20 por 20 metros">`;
+  s += `<rect x="1" y="1" width="20" height="20" fill="var(--fig)" stroke="${ink}" stroke-width=".22"/>`;
+  // grilla de 5 m
+  for(let k=5;k<20;k+=5){ s+=`<line x1="${X(k)}" y1="1" x2="${X(k)}" y2="21" stroke="${line}" stroke-width=".05"/><line x1="1" y1="${Y(k)}" x2="21" y2="${Y(k)}" stroke="${line}" stroke-width=".05"/>`; }
+  const R = (x,y,w,h,c,lbl)=>`<rect x="${X(x)}" y="${Y(y+h)}" width="${w}" height="${h}" fill="var(${c})" stroke="${ink}" stroke-width=".04"><title>${lbl}</title></rect>`;
+  for(let i=0;i<6;i++) s+=R(2+i*1.8,18,1.2,1.0,"--m-madera","Pallets de madera");
+  s+=R(1,6,1.2,5.6,"--m-carton","Rack con cajas de cartón");
+  s+=R(1,13.5,0.6,3,"--m-papel","Archivo (papel)");
+  [[11.5,9],[12.8,9],[11.5,10.3],[12.8,10.3]].forEach(([x,y])=>s+=`<circle cx="${X(x)}" cy="${Y(y)}" r=".52" fill="var(--m-caucho)"><title>Neumáticos</title></circle>`);
+  s+=R(15.3,9.3,2.45,1.0,"--m-film","Rollos de film sobre pallets");
+  s+=R(14,1.5,1.45,0.83,"--m-gasoil","Gasoil 400 l");
+  s+=R(16.05,1.5,2.12,0.83,"--m-aceite","Aceite 600 l");
+  s+=`<rect x="${X(6.85)}" y="${Y(0.3)}" width=".8" height=".3" fill="var(--muted)"><title>Tablero eléctrico</title></rect>`;
+  // camino de ronda (E13)
+  s+=`<rect x="1.5" y="1.5" width="19" height="19" fill="none" stroke="var(--muted)" stroke-width=".05" stroke-dasharray=".3 .25"/>`;
+  // puerta
+  s+=`<rect x="${X(9.45)}" y="${Y(0)-.18}" width="1.1" height=".36" fill="var(--green)"/>`;
+  s+=`<text x="${X(10)}" y="22.4" font-size=".62" text-anchor="middle" style="fill:var(--green)">SALIDA 1,10 m</text>`;
+  if(modo==="ext"){
+    const rad = st.cob==="A"?20:15;
+    const lista = st.cob==="A"? PLAN.ext.filter(e=>e[3]==="PQS").slice(0,2) : PLAN.ext.filter(e=>e[0]==="E3");
+    s+=`<defs><clipPath id="cp-${modo}"><rect x="1" y="1" width="20" height="20"/></clipPath></defs><g clip-path="url(#cp-${modo})">`;
+    lista.forEach(e=>{ s+=`<circle cx="${X(e[1])}" cy="${Y(e[2])}" r="${rad}" fill="var(--red)" fill-opacity=".07" stroke="var(--red)" stroke-width=".07" stroke-dasharray=".4 .25"/>`; });
+    s+=`</g>`;
+    PLAN.ext.forEach(e=>{ s+=`<circle cx="${X(e[1])}" cy="${Y(e[2])}" r=".42" fill="var(--red)" stroke="var(--surface)" stroke-width=".1"><title>${e[0]} ${e[3]}</title></circle>`;
+      const tx = e[1]<2? X(e[1])+.6 : e[1]>18? X(e[1])-.6 : X(e[1]); const anc = e[1]<2?"start":e[1]>18?"end":"middle";
+      const ty = e[2]<1? Y(e[2])-.7 : Y(e[2])+1.15;
+      s+=`<text x="${tx}" y="${ty}" font-size=".62" text-anchor="${anc}" font-weight="600" style="fill:var(--red)">${e[0]} ${e[3]}</text>`; });
+    if(st.cob==="B"){ s+=`<line x1="${X(18.665)}" y1="${Y(2)}" x2="${X(14.4)}" y2="${Y(1.91)}" stroke="var(--red)" stroke-width=".08"/><text x="${X(16.4)}" y="${Y(3.1)}" font-size=".6" text-anchor="middle" style="fill:var(--red)">4,3 m</text>`; }
+    else { s+=`<line x1="${X(0.3)}" y1="${Y(10)}" x2="${X(10)}" y2="${Y(20)}" stroke="var(--red)" stroke-width=".07"/><text x="${X(5.6)}" y="${Y(15.6)}" font-size=".6" style="fill:var(--red)" transform="rotate(-45 ${X(5.6)} ${Y(15.6)})">13,9 m al más lejano</text>`; }
+  } else {
+    s+=`<line x1="${X(10)}" y1="${Y(0)}" x2="${X(0)}" y2="${Y(20)}" stroke="var(--green)" stroke-width=".08" stroke-dasharray=".35 .2"/>`;
+    s+=`<circle cx="${X(0)}" cy="${Y(20)}" r=".25" fill="var(--green)"/>`;
+    s+=`<text x="${X(5.6)}" y="${Y(10.4)}" font-size=".62" style="fill:var(--green)" transform="rotate(63.4 ${X(5.6)} ${Y(10.4)})">22,4 m ≤ 40 m</text>`;
+    s+=`<text x="${X(10)}" y="${Y(13.3)}" font-size=".7" text-anchor="middle" style="fill:var(--muted)">N = ${r.N} personas</text>`;
+  }
+  s+=`<text x="1" y=".72" font-size=".6" style="fill:var(--muted)">N ↑  ·  grilla de 5 m  ·  línea punteada gris: camino de ronda (E13)</text>`;
+  s+=`</svg>`;
+  el.innerHTML = s;
+}
+
+function renderTiles(r){
+  $("#t-qf").innerHTML = `${fmt(r.qf,2)}<small>kg/m²</small>`;
+  $("#t-r").textContent = "R"+st.R;
+  $("#t-f").textContent = r.F||"—";
+  $("#t-pot").innerHTML = `${r.Anum}A<small>${r.hasB?r.Bnum+"B":"5BC"}</small>`;
+  $("#t-ext").innerHTML = `${r.nExt}<small>${r.S===400?"+ E3 y CO₂":"mínimo"}</small>`;
+  $("#t-esc").innerHTML = `${fmt(r.ancho,2)}<small>m</small>`;
+}
+
+function renderMem(r){
+  const lista = r.items.filter(i=>i.q>0).map(i=>`${i.n.split(" (")[0].toLowerCase()} ${fmt(i.q)} ${i.u==="l"?"l":"kg"}`).join(", ");
+  const usoT = USOS.find(u=>u[0]===st.uso)[1].toLowerCase();
+  $("#txt-mem").innerHTML =
+  `<p><strong>Sector 1 – [nombre del sector].</strong> Superficie de cálculo: ${fmt(r.S)} m². Ventilación ${st.vent==="nat"?"natural":"mecánica"}. Materiales relevados: ${lista}. Los poderes caloríficos inferiores se tomaron de [fuente de cada valor] y las densidades de las hojas de seguridad de los productos.</p>`+
+  `<p>El calor total del sector es de ${fmt(r.tot)} kcal (clase A: ${fmt(r.totA)} kcal; clase B: ${fmt(r.totB)} kcal). Según el Anexo VII del Dec. 351/79, la carga de fuego resulta <strong>Qf = ${fmt(r.tot)} / (4.400 × ${fmt(r.S)}) = ${fmt(r.qf,2)} kg/m²</strong> (Qf A = ${fmt(r.qa,2)} kg/m²; Qf B = ${fmt(r.qb,2)} kg/m²).</p>`+
+  `<p>Por predominar ${RIESGOS[st.R-1][1].toLowerCase()}, el sector se clasifica como <strong>riesgo ${st.R}</strong>. Con el Cuadro ${st.vent==="nat"?"2.2.1":"2.2.2"} corresponde una resistencia al fuego <strong>${r.F}</strong>. Las Tablas 1 y 2 fijan un potencial extintor mínimo de <strong>${r.Anum}A${r.hasB?" – "+r.Bnum+"B":""}</strong> por equipo${r.hasB&&st.r2?" (en clase B se adoptó la columna de riesgo 2 por la presencia de inflamables)":""}, con un mínimo de ${r.nExt} extintores (1 cada 200 m² o fracción), ubicados de modo que el recorrido no supere 20 m para fuegos clase A y 15 m para clase B.</p>`+
+  `<p>Para medios de escape se adoptó el factor de ocupación de ${usoT} (${st.uso} m²/persona): N = ${r.N} personas, ${r.n} unidades de ancho de salida, ancho mínimo ${fmt(r.ancho,2)} m y ${r.salidas} medio${r.salidas>1?"s":""} de escape.</p>`;
+}
+
+function render(){
+  const r = calc();
+  renderInv(r); renderCal(r); renderQf(r); renderRiesgo(r); renderF(r); renderExt(r); renderEsc(r); renderTiles(r); renderMem(r);
+}
+
+// eventos
+$("#in-s").addEventListener("input",e=>{const v=parseFloat(e.target.value); if(v>0){st.S=v; render();}});
+$("#tab-inv").addEventListener("input",e=>{ if(e.target.matches("input[data-k]")){ const k=+e.target.dataset.k; const v=parseFloat(e.target.value); st.rows[k].q = v>=0?v:0; const r=calc();
+  renderCal(r); renderQf(r); renderRiesgo(r); renderF(r); renderExt(r); renderEsc(r); renderTiles(r); renderMem(r);
+  const kgCell = e.target.closest("tr").children[5]; kgCell.textContent = fmt(r.items[k].kg); }});
+$("#tab-inv").addEventListener("click",e=>{
+  const d = e.target.closest("[data-del]"); if(d){ st.rows.splice(+d.dataset.del,1); st.sel=Math.min(st.sel,st.rows.length-1); render(); return; }
+  const tr = e.target.closest("tr[data-k]"); if(tr && !e.target.matches("input")){ st.sel=+tr.dataset.k; renderInv(calc()); }
+  else if(tr){ st.sel=+tr.dataset.k; [...tr.parentNode.children].forEach(x=>x.classList.toggle("sel",x===tr)); const sel=calc().items[st.sel]; if(sel&&sel.img){$("#img-mat").src="img/"+sel.img+".webp";$("#cap-mat").textContent=IMGCAP[sel.img];} }
+});
+$("#btn-add").addEventListener("click",()=>{const id=$("#add-mat").value; if(id&&LIB[id]){st.rows.push({id,q:100}); st.sel=st.rows.length-1; render();}});
+$("#btn-reset").addEventListener("click",()=>{st.rows=EJEMPLO.map(([id,q])=>({id,q})); st.S=400; $("#in-s").value=400; st.sel=0; st.R=3; st.vent="nat"; st.r2=true; st.uso=30; render();});
+$("#riesgos").addEventListener("click",e=>{const b=e.target.closest("[data-r]"); if(b){st.R=+b.dataset.r; render();}});
+$("#v-nat").addEventListener("click",()=>{st.vent="nat"; render();});
+$("#v-mec").addEventListener("click",()=>{st.vent="mec"; render();});
+$("#chk-r2").addEventListener("change",e=>{st.r2=e.target.checked; render();});
+$("#c-a").addEventListener("click",()=>{st.cob="A"; $("#c-a").setAttribute("aria-pressed",true); $("#c-b").setAttribute("aria-pressed",false); drawPlan($("#plan-ext"),"ext",calc());});
+$("#c-b").addEventListener("click",()=>{st.cob="B"; $("#c-b").setAttribute("aria-pressed",true); $("#c-a").setAttribute("aria-pressed",false); drawPlan($("#plan-ext"),"ext",calc());});
+$("#in-uso").addEventListener("change",e=>{st.uso=+e.target.value; render();});
+$("#btn-copy").addEventListener("click",()=>{
+  const t = $("#txt-mem").innerText;
+  const ok = ()=>{$("#copy-msg").textContent="Texto copiado.";};
+  const fall = ()=>{const rg=document.createRange(); rg.selectNodeContents($("#txt-mem")); const s=getSelection(); s.removeAllRanges(); s.addRange(rg); $("#copy-msg").textContent="Seleccioné el texto: copialo con Ctrl+C.";};
+  try{ navigator.clipboard.writeText(t).then(ok,fall); }catch(e){ fall(); }
+});
+render();
+})();
+</script>
+
+<script>
+(function(){
+  const T = {guia:"tb-guia",libro:"tb-libro",mase:"tb-mase",pull:"tb-pull",comp:"tb-comp"};
+  const alias = {pulling:"pull",comparativa:"comp"};
+  function ver(cual){
+    if(!T[cual]) cual="guia";
+    Object.keys(T).forEach(k=>{
+      const b=document.getElementById(T[k]), p=document.getElementById("tab-"+k);
+      b.setAttribute("aria-selected",k===cual); p.hidden = k!==cual;
+    });
+    try{ sessionStorage.setItem("cf-tab",cual);}catch(e){}
+    if(cual==="mase"||cual==="pull"||cual==="comp") document.dispatchEvent(new CustomEvent("cf-tab",{detail:cual}));
+  }
+  Object.keys(T).forEach(k=>document.getElementById(T[k]).addEventListener("click",()=>{ver(k); window.scrollTo({top:0});}));
+  let ini="guia"; const h=location.hash.replace("#","");
+  if(T[h]||alias[h]) ini=alias[h]||h; else { try{ ini=sessionStorage.getItem("cf-tab")||"guia"; }catch(e){} }
+  window.addEventListener("load",()=>ver(ini));
+})();
+</script>
+<script src="motor.js"></script>
+<script src="informe.js"></script>
+<script src="libro.js"></script>
+<script src="plantas-motor.js"></script>
+<script src="plantas.js"></script>
+<script src="../nav.js" defer></script>
+</body></html>
