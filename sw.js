@@ -1,5 +1,5 @@
 /* GENERADO por tools/build_sw.py — no editar a mano. */
-const VERSION = "ecd0077d5c";
+const VERSION = "37a777165e";
 const CACHE = "hse-" + VERSION;
 const FILES = [
  "./",

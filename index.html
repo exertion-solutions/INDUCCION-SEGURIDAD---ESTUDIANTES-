@@ -94,6 +94,7 @@ a.card.vis .seen{display:inline-flex}
 .st span{color:var(--mut);font-size:.9rem}
 
 footer{position:relative;z-index:1;text-align:center;padding:50px 20px 90px;color:var(--mut);font-size:.85rem}
+#vis{display:none;margin-top:10px}#vis.on{display:block}#vis b{color:var(--acc);font-variant-numeric:tabular-nums}
 
 @media (max-width:820px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:40px}.scene{max-width:440px;margin:0 auto}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}h1 .ln span{transform:none}a.card{opacity:1;transform:none}}
@@ -210,7 +211,7 @@ footer{position:relative;z-index:1;text-align:center;padding:50px 20px 90px;colo
   </section>
 </div>
 
-<footer>Material de formación HSE · Después de la primera visita, todo funciona sin conexión.</footer>
+<footer>Material de formación HSE · Después de la primera visita, todo funciona sin conexión.<div id="vis" aria-live="polite">Visitas: <b id="visn"></b></div></footer>
 
 <script>
 /* Red de partículas */
@@ -256,6 +257,19 @@ footer{position:relative;z-index:1;text-align:center;padding:50px 20px 90px;colo
   document.getElementById("progx").textContent=n===0?"Todavía no abriste ningún recurso":n+" de "+cards.length+" recursos vistos"+(n===cards.length?" · ¡completaste el recorrido!":"");
   setTimeout(function(){document.getElementById("progb").style.width=(n/cards.length*100)+"%"},300);
   if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.ready.then(function(){document.getElementById("off").classList.add("on")}).catch(function(){});
+})();
+</script>
+<script>
+/* Contador de visitas (Abacus): suma 1 por sesión del navegador; sin conexión queda oculto */
+(function(){
+  if(!/^https?:$/.test(location.protocol))return;
+  var base="https://abacus.jasoncameron.dev/",key="exertion-induccion-hse/visitas",counted=false;
+  try{counted=sessionStorage.getItem("hse.hit")==="1"}catch(e){}
+  fetch(base+(counted?"get/":"hit/")+key).then(function(r){return r.json()}).then(function(d){
+    if(typeof d.value!=="number")return;
+    try{sessionStorage.setItem("hse.hit","1")}catch(e){}
+    document.getElementById("visn").textContent=d.value.toLocaleString("es-AR");
+    document.getElementById("vis").classList.add("on")}).catch(function(){});
 })();
 </script>
 <script src="assets/pumpjack.js"></script>
