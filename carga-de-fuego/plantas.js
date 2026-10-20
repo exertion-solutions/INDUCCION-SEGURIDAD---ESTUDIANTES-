@@ -291,8 +291,8 @@ function planoHTML(k){
   const p = ST[k].plano;
   return `<div class="seg pl-seg-tabs" role="group" aria-label="Plano">${PLANOS.map(([id,t])=>`<button type="button" data-act="plano" data-p="${id}" aria-pressed="${id===p}">${t}</button>`).join("")}</div>
     ${p==="loc"?`<div class="pl-plano pl-locw">${locSVG()}</div>
-    <p class="note">Locación del <b>TKR-10</b> tomada del repositorio visor-equipo-de-torre (LAYOUT TKR-10): tamaños y cotas rotuladas confirmadas, posiciones medidas del vector (confianza C). Es la referencia de un equipo vecino: la planilla TACKER 06 no trae esta distribución, así que no se asigna aquí ningún sector del cálculo (trailer, command center) a un tráiler en particular.</p>`:`<div class="pl-plano"><img id="pull-planoimg" src="img/plano_${p}.webp" alt="Plano ${PLANOS.find(x=>x[0]===p)[1]} del equipo TACKER 06 Pulling" width="835" height="530"><i class="pl-scan" aria-hidden="true"></i></div>
-    <p class="note">Plano de las hojas LAY OUT, AREAS DE PELIGROS y DISTRIBUCION EXTINTORES de la planilla TACKER 06.</p>`}`;
+    <p class="note">Locación del <b>TKR-10</b> tomada del repositorio visor-equipo-de-torre (LAYOUT TKR-10): tamaños y cotas rotuladas confirmadas, posiciones medidas del vector (confianza C). Es la referencia de un equipo vecino: la planilla del equipo de pulling no trae esta distribución, así que no se asigna aquí ningún sector del cálculo (trailer, command center) a un tráiler en particular.</p>`:`<div class="pl-plano"><img id="pull-planoimg" src="img/plano_${p}.webp" alt="Plano ${PLANOS.find(x=>x[0]===p)[1]} del equipo de pulling" width="835" height="530"><i class="pl-scan" aria-hidden="true"></i></div>
+    <p class="note">Plano de las hojas LAY OUT, AREAS DE PELIGROS y DISTRIBUCION EXTINTORES de la planilla del equipo de pulling.</p>`}`;
 }
 
 /* ---------- armado de cada proyecto ---------- */
@@ -303,7 +303,7 @@ function build(k){
   <header class="pl-head">
     <div class="pl-ht"><span class="signal"><i aria-hidden="true"></i><span class="eyebrow">Planilla ${esc(D.equipo)} · Dec. 351/79 Anexo VII</span></span>
       <h1>${isP?"Carga de fuego del equipo de pulling":"Carga de fuego MASE"}</h1>
-      <p class="lede">${isP?"Los 9 sectores de la planilla del TACKER 06: boca de pozo, trailer, command center, tanque de gasoil, piletas y usinas. Elegí un sector y seguí el cálculo celda por celda.":"Los 9 sectores de la planilla MASE 2024 con sus superficies y volúmenes. Elegí un sector y seguí el cálculo celda por celda."}</p></div>
+      <p class="lede">${isP?"Los 9 sectores de la planilla del equipo de pulling: boca de pozo, trailer, command center, tanque de gasoil, piletas y usinas. Elegí un sector y seguí el cálculo celda por celda.":"Los 9 sectores de la planilla MASE 2024 con sus superficies y volúmenes. Elegí un sector y seguí el cálculo celda por celda."}</p></div>
     <div class="pl-ctl">
       <div class="seg" role="group" aria-label="Ventilación"><button type="button" data-act="vent" data-v="nat" aria-pressed="${ST[k].vent==="nat"}">Ventilación natural</button><button type="button" data-act="vent" data-v="mec" aria-pressed="${ST[k].vent==="mec"}">Mecánica</button></div>
       <label class="field chk"><input type="checkbox" id="${k}-fix" data-act="fix"> Corregir PCI sospechosos</label>
@@ -415,7 +415,7 @@ function comparativa(anim){
     if(a.r.R!==b.r.R) cambios.push(`<b>${esc(a.s.n)}</b>: el riesgo cambia de ${a.r.R} a ${b.r.R}.`);
   });
   const kp = (lab,va,vb,d,u)=>`<div class="pl-cmpk"><span class="pl-kl">${lab}</span><div class="pl-cmpv"><span><small>Pulling</small><b class="num"><span data-count="${va}" data-dec="${d}">${fmt(va,d)}</span></b></span><span><small>MASE</small><b class="num"><span data-count="${vb}" data-dec="${d}">${fmt(vb,d)}</span></b></span></div><span class="pl-ks">${u} ${dl(va,vb,d)}</span></div>`;
-  paint(root, `<div class="wrap pl"><header class="pl-head"><div class="pl-ht"><span class="signal"><i aria-hidden="true"></i><span class="eyebrow">Pulling TACKER 06 frente a MASE 2024</span></span><h1>Qué cambia entre las dos planillas</h1><p class="lede">Los mismos nueve sectores con superficies, cantidades y equipos distintos. Se recalcula con los datos que tengas cargados en cada pestaña.</p></div>
+  paint(root, `<div class="wrap pl"><header class="pl-head"><div class="pl-ht"><span class="signal"><i aria-hidden="true"></i><span class="eyebrow">Equipo de pulling frente a MASE 2024</span></span><h1>Qué cambia entre las dos planillas</h1><p class="lede">Los mismos nueve sectores con superficies, cantidades y equipos distintos. Se recalcula con los datos que tengas cargados en cada pestaña.</p></div>
     <div class="pl-legend2"><span><i class="sw" style="background:var(--cmp-a)"></i>Pulling</span><span><i class="sw" style="background:var(--cmp-b)"></i>MASE</span></div></header>
     <div class="pl-cmpkpis">${kp("Calor total (Gcal)",A.kcal/1e9,B.kcal/1e9,2,"")}${kp("Combustible (kg)",A.kg,B.kg,0,"")}${kp("Área de sectores (m²)",A.m2,B.m2,0,"")}${kp("Extintores requeridos",A.req,B.req,0,"")}${kp("Extintores instalados",A.inst,B.inst,1,"")}${kp("Personas a evacuar",A.personas,B.personas,0,"")}</div>
     <section class="pl-sec"><div class="pl-st"><h2>Carga de fuego por sector</h2><p class="note">Escala logarítmica, igual que en cada pestaña.</p></div><div class="pl-chart" id="comp-c1">${s}</div></section>
