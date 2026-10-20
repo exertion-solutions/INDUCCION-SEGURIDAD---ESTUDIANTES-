@@ -1,4 +1,4 @@
-/* Motor de las planillas "Cálculo de Carga de Fuego" (MASE 2024 y TACKER 06 Pulling).
+/* Motor de las planillas "Cálculo de Carga de Fuego" (MASE 2024 y Pulling).
    Replica fórmula por fórmula las hojas "Qf ..." y agrega las tablas del Anexo VII (Dec. 351/79)
    que ya usa la guía (FF). Cada resultado indica la celda de la planilla de la que sale. */
 var PL = (function(){
@@ -45,8 +45,8 @@ var PL = (function(){
 
   const DATOS = {
     pull:{
-      id:"pull", nombre:"Equipo de pulling", corto:"Pulling", equipo:"TACKER 06",
-      archivo:"Cálculo de Carga de Fuego · TACKER 06 Pulling",
+      id:"pull", nombre:"Equipo de pulling", corto:"Pulling", equipo:"Pulling",
+      archivo:"Cálculo de Carga de Fuego · Equipo de pulling",
       sectores:[
         {id:"boca",n:"Boca de pozo",foto:"p_boca",extra:["p_bop","p_acum"],sup:4,R:1,nsec:1,uso:30,mats:[mk("petroleo",0,12900),mk("gas",0,8540)],inst:null,xl:{Qf:0}},
         {id:"trailer",n:"Trailer habitacional",foto:"p_habitacional",sup:24,R:4,nsec:2,uso:16,mats:[mk("madera",300,4400),mk("carton",100,4000),mk("plastico",200,7839),mk("telas",30,5000),mk("matelec",100,4290),mk("apelec",300,8200)],
